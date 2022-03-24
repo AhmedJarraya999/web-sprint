@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stay{% endblock %}
+
+{% block body %}
+    <h1>Stay</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ stay.id }}</td>
+            </tr>
+            <tr>
+                <th>Capacity</th>
+                <td>{{ stay.capacity }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ stay.description }}</td>
+            </tr>
+            <tr>
+                <th>Photo</th>
+                <td>{{ stay.photo }}</td>
+            </tr>
+            <tr>
+                <th>Startdateav</th>
+                <td>{{ stay.startdateav ? stay.startdateav|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Enddateav</th>
+                <td>{{ stay.enddateav ? stay.enddateav|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_stay_index') }}">back to list</a>
+
+    <a href="{{ path('app_stay_edit', {'id': stay.id}) }}">edit</a>
+
+    {{ include('stay/_delete_form.html.twig') }}
+{% endblock %}
