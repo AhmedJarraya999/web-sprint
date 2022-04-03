@@ -4,6 +4,7 @@
 
 {% block body %}
     <h1>User index</h1>
+     {% include 'user/_filtre.html.twig' with {form : form} only %}
 
     <table class="table">
         <thead>

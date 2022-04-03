@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
@@ -10,6 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -61,6 +63,31 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->persist($user);
         $this->_em->flush();
     }
+    /** 
+     *@return User[]
+     */
+    public function findSearch(SearchData $search): array
+    {
+        $query = $this->createQueryBuilder('u')->select('u');
+
+
+
+        if ($search->q || $search->p) {
+            $query =
+                $query
+                ->where('u.firstname LIKE :q')
+                ->setParameter('q', '%' . $search->q . '%')
+                ->andWhere('u.lastname LIKE :p ')
+                ->setParameter('p', '%' . $search->p . '%');
+        }
+
+
+
+
+        return $query->getQuery()->getResult();
+    }
+
+
 
     // /**
     //  * @return User[] Returns an array of User objects
