@@ -4,7 +4,7 @@
 //mazel nasnaa functionstaysearch fel stayrepository
 namespace App\Data;
 
-class SearchData
+class SearchStay
 {
 
     /**
