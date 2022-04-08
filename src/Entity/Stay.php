@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StayRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -47,6 +49,16 @@ class Stay
      * @ORM\JoinColumn(nullable=false)
      */
     private $users;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="stay")
+     */
+    private $bookings;
+
+    public function __construct()
+    {
+        $this->bookings = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -115,12 +127,47 @@ class Stay
 
     public function getUsers(): ?User
     {
+
         return $this->users;
     }
 
     public function setUsers(?User $users): self
     {
         $this->users = $users;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Booking>
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    public function addBooking(Booking $booking): self
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->setStay($this);
+        }
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return strval($this->getId());
+    }
+
+    public function removeBooking(Booking $booking): self
+    {
+        if ($this->bookings->removeElement($booking)) {
+            // set the owning side to null (unless already changed)
+            if ($booking->getStay() === $this) {
+                $booking->setStay(null);
+            }
+        }
 
         return $this;
     }

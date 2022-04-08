@@ -2,30 +2,30 @@
 
 namespace App\Repository;
 
-use App\Entity\Stay;
+use App\Entity\Booking;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Stay|null find($id, $lockMode = null, $lockVersion = null)
- * @method Stay|null findOneBy(array $criteria, array $orderBy = null)
- * @method Stay[]    findAll()
- * @method Stay[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Booking|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Booking|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Booking[]    findAll()
+ * @method Booking[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class StayRepository extends ServiceEntityRepository
+class BookingRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Stay::class);
+        parent::__construct($registry, Booking::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Stay $entity, bool $flush = true): void
+    public function add(Booking $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -37,7 +37,7 @@ class StayRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Stay $entity, bool $flush = true): void
+    public function remove(Booking $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -45,17 +45,16 @@ class StayRepository extends ServiceEntityRepository
         }
     }
 
-
     // /**
-    //  * @return Stay[] Returns an array of Stay objects
+    //  * @return Booking[] Returns an array of Booking objects
     //  */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
+            ->orderBy('b.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -64,10 +63,10 @@ class StayRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Stay
+    public function findOneBySomeField($value): ?Booking
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
