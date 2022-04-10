@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\UploaderService;
 use App\Entity\Stay;
 use App\Form\StayType;
 use App\Repository\StayRepository;
@@ -35,6 +36,18 @@ class StayController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            #test here
+            $photo = $form->get('photo')->getData();
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            $uploads_directory = $this->getParameter('kernel.project_dir') . '/public/uploads';
+            $filename = md5(uniqid()) . '.' . $photo->guessExtension();
+            $photo->move(
+                $uploads_directory,
+                $filename
+            );
+            $stay->setPhoto($filename);
+
             $stayRepository->add($stay);
             return $this->redirectToRoute('app_stay_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -79,7 +92,7 @@ class StayController extends AbstractController
      */
     public function delete(Request $request, Stay $stay, StayRepository $stayRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$stay->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $stay->getId(), $request->request->get('_token'))) {
             $stayRepository->remove($stay);
         }
 

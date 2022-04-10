@@ -15,7 +15,7 @@
           <div class="col-lg-4 col-md-6 mb-4 aos-init aos-animate" data-aos="fade-up">
             <div class="listing-item" >
               <div class="listing-image" >
-                <img  src="/front/images/img_1.jpg" alt="Image" class="img-fluid">
+                <img  src="{{ asset('uploads/'~stay.photo) }}" alt="Image" class="img-fluid">
               </div>
               <div class="listing-item-content">
                 <a class="px-3 mb-3 category bg-primary" href="{{ path('app_stay_show', {'id':stay.id}) }}">Consult</a>
