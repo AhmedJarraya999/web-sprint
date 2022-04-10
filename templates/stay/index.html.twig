@@ -2,8 +2,106 @@
 
 {% block title %}Stay index{% endblock %}
 
+ {% block stylesheets %}
+ 
+ {% endblock %}
+
 {% block body %}
-    <h1>Stay index</h1>
+    {#<h1>Stay index</h1>#}
+    
+<div class="row" style="display: flex;align-items: center;background-color:white;">
+{% for stay in stays %}
+        
+          <div class="col-lg-4 col-md-6 mb-4 aos-init aos-animate" data-aos="fade-up">
+            <div class="listing-item" >
+              <div class="listing-image" >
+                <img  src="/front/images/img_1.jpg" alt="Image" class="img-fluid">
+              </div>
+              <div class="listing-item-content">
+                <a class="px-3 mb-3 category bg-primary" href="{{ path('app_stay_show', {'id':stay.id}) }}">Consult</a>
+                <h2 class="mb-1"><a href="{{ path('app_stay_show', {'id':stay.id}) }}">{{stay.description}}</a></h2>
+              </div>
+            </div>
+          </div>
+{% endfor %}       
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <table class="table">
         <thead>
