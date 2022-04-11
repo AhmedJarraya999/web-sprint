@@ -1,6 +1,7 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button type="button" class="btn btn-primary" style="width: 100%;
-			background: #c0392b !important;
+    <button type="button" class="btn btn-success" style="width: 100%";
+			background:!important;
 			color: white !important">{{ button_label|default('Save') }}</button>
+            <a href="{{ path('app_stay_index') }}" class="btn btn-primary"  >Back to list</a>
 {{ form_end(form) }}
