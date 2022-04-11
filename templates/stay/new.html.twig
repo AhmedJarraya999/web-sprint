@@ -3,9 +3,17 @@
 {% block title %}New Stay{% endblock %}
 
 {% block body %}
-    <h1>Create new Stay</h1>
+    <div class="content" style="display: flex;align-items: center; border: 10px solid orange
+;justify-content: center;">
 
     {{ include('stay/_form.html.twig') }}
+    <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp" class="img-fluid" alt="Sample image">
+
+              </div>
 
     <a href="{{ path('app_stay_index') }}">back to list</a>
+    </div>
+    
 {% endblock %}
