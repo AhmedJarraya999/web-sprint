@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 
+
+
 {% block title %}Stay index{% endblock %}
+
+
+   
 
  {% block stylesheets %}
  
@@ -8,6 +13,9 @@
 
 {% block body %}
     {#<h1>Stay index</h1>#}
+     <h1>Stay index</h1>
+
+{% include 'stay/_filtre.html.twig' with {form : form} only %}
     
 <div class="row" style="display: flex;align-items: center;background-color:white;padding:100px; border: 60px solid orange">
 {% for stay in stays %}

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData2;
 use App\Entity\Stay;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
@@ -44,6 +45,25 @@ class StayRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+    public function findSearch(SearchData2 $search): array
+    {
+        $query = $this->createQueryBuilder('s')->select('s');
+
+
+
+        if ($search->i) {
+            $query =
+                $query
+                ->where('s.description LIKE :i')
+                ->setParameter('i', '%' . $search->i . '%');
+        }
+
+
+
+
+        return $query->getQuery()->getResult();
+    }
+
 
 
     // /**

@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Data\SearchData2;
+use App\Data\SearchStay;
 use App\Service\UploaderService;
 use App\Entity\Stay;
+use App\Form\Advancedresearch;
+use App\Form\SearchFormType2;
 use App\Form\StayType;
 use App\Repository\StayRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,10 +23,18 @@ class StayController extends AbstractController
     /**
      * @Route("/", name="app_stay_index", methods={"GET"})
      */
-    public function index(StayRepository $stayRepository): Response
+    public function index(StayRepository $stayRepository, Request $request): Response
     {
+        $data = new SearchData2();
+        $form = $this->createForm(SearchFormType2::class, $data);
+        $form->handleRequest($request);
+        $stays = $stayRepository->findSearch($data);
+
+
+
         return $this->render('stay/index.html.twig', [
-            'stays' => $stayRepository->findAll(),
+            'stays' => $stays,
+            'form' => $form->createView()
         ]);
     }
 
