@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('app_experience_delete_back', {'id': experience.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ experience.id) }}">
+   <br> 
+    <button class="btn btn-danger">Delete</button>
+</form>

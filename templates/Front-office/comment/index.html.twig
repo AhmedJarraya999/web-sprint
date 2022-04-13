@@ -1,0 +1,41 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Comment index{% endblock %}
+
+{% block body %}
+    <h1>Comment index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Author</th>
+                <th>Content</th>
+                <th>Date</th>
+                <th>Likes</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for comment in comments %}
+            <tr>
+                <td>{{ comment.id }}</td>
+                <td>{{ comment.author }}</td>
+                <td>{{ comment.content }}</td>
+                <td>{{ comment.date }}</td>
+                <td>{{ comment.likes }}</td>
+                <td>
+                    <a href="{{ path('app_comment_show_front', {'id': comment.id}) }}">show</a>
+                    <a href="{{ path('app_comment_edit_front', {'id': comment.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_comment_new_front') }}">Create new</a>
+{% endblock %}

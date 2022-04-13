@@ -1,0 +1,37 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Experience index{% endblock %}
+
+{% block body %}
+<div class="site-section">
+<div class="container">
+<div class="row">
+<div class="col-md-20 blog-content">
+
+    <h1>Experience </h1>
+
+    <div class="row">
+
+    {% for experience in experiences %}
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="post-entry-1 h-100">
+              <a href="single.html"> </a>
+              <div class="post-entry-1-contents">
+                
+                <h2><a href="{{ path('app_experience_show_front', {'id': experience.id}) }}">{{ experience.title }}</a></h2>
+                <span class="meta d-inline-block mb-3">{{ experience.date }}<span class="mx-2">by</span> <a></a> {{ experience.idAuthor }}</span>
+                <p>{{ experience.content }}</p>
+              </div>
+            </div>
+          </div>
+    {% endfor %}
+        </div>
+
+
+    <a href="{{ path('app_experience_new_front') }}" class="btn btn-primary">Add Experience</a>
+
+    </div>
+    </div>
+    </div>
+</div>
+{% endblock %}

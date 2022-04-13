@@ -1,0 +1,48 @@
+{% extends 'base-back.html.twig' %}
+
+
+
+{% block body %}
+<div>
+    <br>
+    <h1>Experience</h1>
+    <br>
+<div class="card">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>IdAuthor</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Likes</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for experience in experiences %}
+            <tr>
+                <td>{{ experience.id }}</td>
+                <td>{{ experience.idAuthor }}</td>
+                <td>{{ experience.title }}</td>
+                <td>{{ experience.content }}</td>
+                <td>{{ experience.likes }}</td>
+                <td>{{ experience.date }}</td>
+                <td>
+                    <a href="{{ path('app_experience_show_back', {'id': experience.id}) }}" class="btn btn-outline-success btn-fw">show</a>
+                    <a href="{{ path('app_experience_edit_back', {'id': experience.id}) }}" class="btn btn-outline-warning btn-fw">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+     <a href="{{ path('app_experience_new_back') }} " class="btn btn-info">Create new</a>
+</div>
+   
+{% endblock %}

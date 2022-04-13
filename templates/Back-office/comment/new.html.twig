@@ -1,0 +1,11 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}New Comment{% endblock %}
+
+{% block body %}
+    <h1>Create new Comment</h1>
+
+    {{ include('Back-office/comment/_form.html.twig') }}
+
+    <a href="{{ path('app_comment_index_back') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Edit Experience{% endblock %}
+
+{% block body %}
+<div>
+    <h1>Edit Experience</h1>
+    <div class="card">
+    {{ include('Back-office/experience/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
+    <a href="{{ path('app_experience_index_back') }}">back to list</a>
+
+    {{ include('Back-office/experience/_delete_form.html.twig') }}
+<div>
+{% endblock %}

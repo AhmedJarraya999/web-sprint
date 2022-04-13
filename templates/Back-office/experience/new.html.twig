@@ -1,0 +1,67 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}New Experience{% endblock %}
+
+{% block body %}
+<div>
+    <h1>Create new Experience</h1>
+    {#{{ include('Back-office/experience/_form.html.twig') }}#}
+
+    <div class="card">
+    {{form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+    <form class="forms-sample">
+      <div class="form-group">
+          <div class="form-row">
+                <div class="col-md-10 mb-3">
+                {{form_label(form.title)}}
+                 {{ form_widget(form.title,{'attr' : {'class' : 'form-control' , "placeholder":"Title" }} ) }}
+                 {{ form_errors(form.title) }}
+                 </div>   
+            </div>
+
+            <div class="form-row">
+                 <div class="col-md-10 mb-30">
+                {{form_label(form.content)}}
+                 {{ form_widget(form.content,{'attr' : {'class' : 'form-control' , "placeholder":"Content" }} ) }}
+                 {{ form_errors(form.content) }}
+                 </div>
+            </div>
+
+            <div class="form-row">
+                 <div class="col-md-5 mb-3">
+                {{form_label(form.likes)}}
+                 {{ form_widget(form.likes,{'attr' : {'class' : 'form-control' , "placeholder":"Likes" }} ) }}
+                 {{ form_errors(form.likes) }}
+                 </div>
+            </div>
+
+            <div class="form-row">
+                 <div class="col-md-5 mb-5">
+                {{form_label(form.date)}}
+                 {{ form_widget(form.date,{'attr' : {'class' : 'form-control' , "placeholder":"Date" }} ) }}
+                 {{ form_errors(form.date) }}
+                 </div>
+            </div>
+
+              <div class="form-row">
+                 <div class="col-md-5 mb-5">
+                {{form_label(form.idAuthor)}}
+                 {{ form_widget(form.idAuthor,{'attr' : {'class' : 'form-control' , "placeholder":"idAuthor" }} ) }}
+                 {{ form_errors(form.idAuthor) }}
+                 </div>
+            </div>
+
+            <br>
+            <button class="btn btn-success btn-rounded btn-fw">{{ button_label|default('Save') }}</button>
+             {{ form_end(form) }}
+         </div>
+        </form>
+           
+          
+
+    </div>
+    <a class="btn btn-primary mr-2" href="{{ path('app_experience_index_back') }}">back to list</a>
+</div>
+{% endblock %}
+
+

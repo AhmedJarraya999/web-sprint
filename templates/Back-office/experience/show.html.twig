@@ -1,0 +1,46 @@
+{% extends 'base-back.html.twig' %}
+
+
+
+{% block body %}
+<div>
+<br>
+<br>
+<h3 class="font-weight-bold">Experiences</h3>
+<br>
+<div class="card">
+    <table class="table table-striped table-borderless">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ experience.id }}</td>
+            </tr>
+            <tr>
+                <th>IdAuthor</th>
+                <td>{{ experience.idAuthor }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ experience.title }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ experience.content }}</td>
+            </tr>
+            <tr>
+                <th>Likes</th>
+                <td>{{ experience.likes }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ experience.date }}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    <a href="{{ path('app_experience_edit_back', {'id': experience.id}) }}" class="btn btn-warning">Edit</a>
+    <a href="{{ path('app_experience_index_back') }}" class="btn btn-primary">back to list <br></a>
+      {{ include('Back-office/experience/_delete_form.html.twig') }}
+    </div>
+ 
+{% endblock %}

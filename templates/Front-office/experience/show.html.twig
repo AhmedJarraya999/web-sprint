@@ -1,0 +1,36 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Experience{% endblock %}
+
+{% block body %}
+<div class="site-section">
+<div class="container">
+<div class="row">
+<div class="col-md-20 blog-content">
+    <div class="col-md-8 blog-content"> 
+        <h3 > {{ experience.title }} </h3>
+        <p > {{ experience.content }}</p>
+
+    <div class="pt-5">
+        <p> 
+        <a style="color:#f2c05f"> Author:</a> {{ experience.idAuthor }} 
+        <a style="color:#f2c05f">Likes:</a> {{ experience.likes }}
+        <a style="color:#f2c05f">Date:</a> {{ experience.date }}</p>
+    </div>
+    {{ include('Front-office/experience/_delete_form.html.twig') }}
+    <br>
+    <a href="{{ path('app_experience_edit_front', {'id': experience.id}) }}">edit</a>
+    <br>
+    <br>
+    <a href="{{ path('app_experience_index_front') }}">back to list </a>
+    </div>
+      </div>
+        </div>
+          </div>
+            </div>
+    
+    
+    
+
+    
+{% endblock %}
