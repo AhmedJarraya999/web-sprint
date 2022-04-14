@@ -12,4 +12,9 @@ class SearchData2
      * @var string
      */
     public $i;
+
+    /**
+     * @var date
+     */
+    public $j;
 }

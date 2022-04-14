@@ -11,6 +11,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Repository\ProductsRepository;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -45,11 +47,24 @@ class SearchFormType2 extends AbstractType
     {
 
         $builder
-            ->add('i', TextType::class, [
-                'label' => false,
+            ->add(
+                'i',
+                TextType::class,
+                [
+                    'label' => false,
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'a key word please '
+                    ]
+
+                ]
+            )
+
+            ->add('j', DateType::class, [
+                'label' => 'Select a starting date for your stay',
                 'required' => false,
                 'attr' => [
-                    'placeholder' => 'a key word please '
+                    'placeholder' => 'Please choose a date for your stay'
                 ]
             ]);
     }

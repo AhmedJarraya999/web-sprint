@@ -51,11 +51,13 @@ class StayRepository extends ServiceEntityRepository
 
 
 
-        if ($search->i) {
+        if ($search->i || $search->j) {
             $query =
                 $query
                 ->where('s.description LIKE :i')
-                ->setParameter('i', '%' . $search->i . '%');
+                ->setParameter('i', '%' . $search->i . '%')
+                ->andWhere('s.startdateav LIKE :j ')
+                ->setParameter('j', '%' . $search->j . '%');
         }
 
 
