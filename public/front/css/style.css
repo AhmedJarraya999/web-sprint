@@ -2512,3 +2512,51 @@ h5,
   bottom: -20px;
   right: -20px;
 }
+
+.maskImg {
+  width: 25px;
+  background-color: none;
+}
+.login1-container {
+  background-attachment: purple;
+  border: 2px solid #71bc42;
+  text-align: center;
+  justify-content: center;
+  width: 600px;
+  align-items: center;
+  text-align: center;
+  margin: auto;
+}
+.signup-container {
+  border: 20px solid orange;
+  text-align: center;
+  justify-content: center;
+  width: 800px;
+  align-items: center;
+  text-align: center;
+  margin: auto;
+}
+.addstay-container {
+  border: 5px solid orange;
+  text-align: center;
+  justify-content: center;
+  width: 800px;
+  align-items: center;
+  text-align: center;
+  margin: auto;
+}
+#btnsignin {
+  background-color: #71bc42;
+  width: 300px;
+  margin: auto;
+}
+#inputUsername {
+  background-color: #71bc42;
+  width: 500px;
+  margin: auto;
+}
+#inputPassword {
+  background-color: #71bc42;
+  width: 500px;
+  margin: auto;
+}
