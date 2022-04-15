@@ -29,6 +29,10 @@
             label: 'phone number', 'attr': {'placeholder' :'Enter your phone number please' }
         }) }}
         </br>
+        {{ form_row(registrationForm.captchaCode , {
+            label: 'captcha code', 'attr': {'placeholder' :'Enter the captcha code' }
+        }) }}
+        </br>
         <button class ="btn btn-primary"  href="{{path('app_register')}}">
            <img src="/front/images/add-user.png" alt="Image"
   class="maskImg"
