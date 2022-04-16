@@ -1,5 +1,8 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <a href="{{ path('app_booking_index') }}" class=" btn btn-primary">back to list</a>
-    <button class=" btn btn-success">{{ button_label|default('Save') }}</button>
+    <a href="{{ path('app_stay_index') }}" class=" btn btn-primary" style="margin:5px;width:400px"><img src="/front/images/return.png" alt="Image"
+  class="maskImg"</a>   Back To List</a>
+    <br></br>
+    <button class=" btn btn-success" style="margin:5px;width:400px" href="{{ path('app_booking_new') }}"><img src="/front/images/save.png" alt="Image"
+  class="maskImg"</a>  Save</button>
 {{ form_end(form) }}

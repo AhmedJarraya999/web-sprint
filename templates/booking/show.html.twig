@@ -4,29 +4,35 @@
 
 {% block body %}
     <h1>Booking</h1>
-
+<div class="login1-container">
     <table class="table">
         <tbody>
+        </br>
             <tr>
                 <th>Id</th>
-                <td>{{ booking.id }}</td>
+                <td>{{ booking.id }}</td>  
             </tr>
+            </br>
             <tr>
                 <th>BookingDate</th>
                 <td>{{ booking.bookingDate ? booking.bookingDate|date('Y-m-d') : '' }}</td>
             </tr>
+            </br>
             <tr>
                 <th>FirstDate</th>
                 <td>{{ booking.firstDate ? booking.firstDate|date('Y-m-d') : '' }}</td>
             </tr>
+            </br>
             <tr>
                 <th>EndDate</th>
+                </br>
                 <td>{{ booking.endDate ? booking.endDate|date('Y-m-d') : '' }}</td>
             </tr>
         </tbody>
     </table>
+    </div>
 
-    <a href="{{ path('app_booking_index') }}">back to list</a>
+    <a  href="{{ path('app_booking_index') }}">back to list</a>
 
     <a href="{{ path('app_booking_edit', {'id': booking.id}) }}">edit</a>
 

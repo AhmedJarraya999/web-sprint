@@ -2527,8 +2527,28 @@ h5,
   text-align: center;
   margin: auto;
 }
+.showstay-container {
+  background-attachment: purple;
+  border: 2px solid orange;
+  text-align: center;
+  justify-content: center;
+  width: 1100px;
+  align-items: center;
+  text-align: center;
+  margin: auto;
+}
 .signup-container {
   border: 20px solid orange;
+  text-align: center;
+  justify-content: center;
+  width: 800px;
+  align-items: center;
+  text-align: center;
+  margin: auto;
+}
+.add-a-booking
+{
+  border: 2px solid #71bc42;
   text-align: center;
   justify-content: center;
   width: 800px;

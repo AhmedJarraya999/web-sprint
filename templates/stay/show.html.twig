@@ -3,9 +3,12 @@
 {% block title %}Stay{% endblock %}
 
 {% block body %}
-<div class="content" style="display: flex;align-items: center; border: 30px solid orange
-;justify-content: center;">
-    
+<div class="showstay-container">
+
+<p style="font-size:25px;font-family:Arial Black;color:#ffa233">More informations about the stay</p>
+</br>
+
+<br></br>
 
     <table class="table">
         <tbody>
@@ -36,15 +39,18 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_stay_index') }}" class="btn btn-primary"style="margin:5px;" >back 
+    <a href="{{ path('app_stay_index') }}" class="btn btn-primary"style="margin:30px;width:400px"  >back 
      <img src="/front/images/return.png" alt="Image"
   class="maskImg"</a>
 
-    <a href="{{ path('app_stay_edit', {'id': stay.id}) }}" class="btn btn-info" style="margin:5px;">edit
-     <img src="/front/images/edit.png" alt="Image"
+  </br>
+
+    <a href="{{ path('app_booking_new', {'id': stay.id}) }}" class="btn btn-info" style="margin:5px;width:400px">Book now
+     <img src="/front/images/book.png" alt="Image"
   class="maskImg"
     </a>
  
-    {{ include('stay/_delete_form.html.twig') }}
+   {# {{ include('stay/_delete_form.html.twig') }} #}
+    </div>
     </div>
 {% endblock %}
