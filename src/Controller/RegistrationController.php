@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+
+use Twilio\Rest\Client;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,7 +28,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
-            $userPasswordEncoder->encodePassword(
+                $userPasswordEncoder->encodePassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
@@ -35,6 +37,22 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
+            $receiverPhone = $user->getPhone();
+            $sid    = "AC0590a507c82a4dedf7e2b59eeb81baf7";
+            $token  = "03a962dc2346d5266946e3de591776f8";
+            $twilio = new Client($sid, $token);
+
+
+            $message = $twilio->messages
+                ->create(
+                    $receiverPhone, // to 
+                    array(
+                        "messagingServiceSid" => "MG6bab091d610907bb2021edc85f426141",
+                        "body" => "TEST  SMS"
+                    )
+                );
+
+            print($message->sid);
 
             return $this->redirectToRoute('app_login');
         }
