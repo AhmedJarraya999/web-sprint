@@ -3,9 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Experience;
+use App\Entity\Comment;
+
+use App\Repository\ExperienceRepository;
 use App\Form\ExperienceType;
+use App\Form\SearchExperienceType;
+use App\Form\CommentType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,11 +24,23 @@ class ExperienceController extends AbstractController
     /**
      * @Route("/Front", name="app_experience_index_front", methods={"GET"})
      */
-    public function indexFront(EntityManagerInterface $entityManager): Response
+    public function indexFront(EntityManagerInterface $entityManager, Request $request): Response
     {
         $experiences = $entityManager
             ->getRepository(Experience::class)
             ->findAll();
+
+            //search
+        $searchForm = $this->createForm(SearchExperienceType::class);
+        $searchForm->add("Search", SubmitType::class);
+        $searchForm->handleRequest($request);
+        if ($searchForm->isSubmitted()) {
+            $title = $searchForm['title']->getData();
+            $resultOfSearch = $repository->searchExperience($title);
+            return $this->render('Front-office/experience/index.html.twig', array(
+                'resultOfSearch' => $resultOfSearch,
+                'searchForm' => $searchForm->createView()));
+        }
 
         return $this->render('Front-office/experience/index.html.twig', [
             'experiences' => $experiences,
@@ -54,10 +72,26 @@ class ExperienceController extends AbstractController
     /**
      * @Route("/Front/{id}", name="app_experience_show_front", methods={"GET"})
      */
-    public function showFront(Experience $experience): Response
-    {
+    public function showFront(Request $request ,Experience $id): Response
+    {   $experience = $this->getDoctrine()->getRepository(Experience::class)->find($id);
+        $comments= $this->getDoctrine()->getRepository(Comment::class)->listCommentByExperience($experience->getId());
+
+        $commentnew = new Comment();
+        $form = $this->createForm(CommentType::class, $commentnew);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            return $this->render('app_experience_show_front', [], Response::HTTP_SEE_OTHER);
+        }
+
+
         return $this->render('Front-office/experience/show.html.twig', [
+            'form' => $form->createView(),
             'experience' => $experience,
+            'comments'=>$comments
         ]);
     }
 
@@ -91,9 +125,33 @@ class ExperienceController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_experience_index_fronts', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_experience_index_front', [], Response::HTTP_SEE_OTHER);
     }
 
+
+    
+    /**
+     * @Route("/Front/Search", name="app_experience_search_front", methods={"GET"})
+     */
+    public function listExperienceSearch(Request $request, ExperienceRepository $repository)
+    {
+        //All of experiences
+        $experiences = $repository->findAll();
+        
+        //search
+        $searchForm = $this->createForm(SearchExperienceType::class);
+        $searchForm->add("Search", SubmitType::class);
+        $searchForm->handleRequest($request);
+        if ($searchForm->isSubmitted()) {
+            $title = $searchForm['title']->getData();
+            $resultOfSearch = $repository->searchExperience($title);
+            return $this->render('Front-office/experience/searchExperience.html.twig', array(
+                'resultOfSearch' => $resultOfSearch,
+                'searchExperience' => $searchForm->createView()));
+        }
+        return $this->render('Front-office/experience/index.html.twig', array(
+            "experiences" => $experiences));
+    } 
 
 
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use App\Repository\CommentRepository;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Comment
  *
  * @ORM\Table(name="comment", indexes={@ORM\Index(name="id_exp", columns={"id_exp"}), @ORM\Index(name="author", columns={"author"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=CommentRepository::class)
  */
 class Comment
 {
@@ -38,14 +39,14 @@ class Comment
     /**
      * @var string
      *
-     * @ORM\Column(name="date", type="string", length=255, nullable=false)
+     * @ORM\Column(name="date", type="string", length=255)
      */
     private $date;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="likes", type="integer", nullable=false)
+     * @ORM\Column(name="likes", type="integer")
      */
     private $likes;
 
@@ -96,6 +97,7 @@ class Comment
     public function setDate(string $date): self
     {
         $this->date = $date;
+        $this->date = $date;
 
         return $this;
     }
@@ -108,6 +110,7 @@ class Comment
     public function setLikes(int $likes): self
     {
         $this->likes = $likes;
+        $this->likes = 0;
 
         return $this;
     }
@@ -123,6 +126,9 @@ class Comment
 
         return $this;
     }
-
+    public function __toString()
+    {
+        return(string)$this->getIdExp();
+    }
 
 }

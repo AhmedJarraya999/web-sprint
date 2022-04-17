@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Entity;
+use App\Repository\ExperienceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Experience
  *
  * @ORM\Table(name="experience", indexes={@ORM\Index(name="id_author", columns={"id_author"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=ExperienceRepository::class)
  */
 class Experience
 {
@@ -55,6 +58,11 @@ class Experience
      * @ORM\Column(name="date", type="string", length=255, nullable=false)
      */
     private $date;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="experience", orphanRemoval=true)
+     */
+    private $comments;
 
     public function getId(): ?int
     {
@@ -121,5 +129,38 @@ class Experience
         return $this;
     }
 
+      /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addSComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setIdExp($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getIdExp() === $this) {
+                $comment->setIdExp(null);
+            }
+        }
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return(string)$this->getId();
+    }
 
 }

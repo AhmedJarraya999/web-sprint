@@ -19,6 +19,21 @@
     </div>
     {{ include('Front-office/experience/_delete_form.html.twig') }}
     <br>
+    {# to show comment form #}
+    {{ include('Front-office/comment/_form.html.twig') }}
+    <br>
+    {% for comment in comments %}
+        <tr>
+        <br>
+            <td>{{ comment.author }}</td>
+            <br>
+            <td>{{ comment.content }}</td>
+            <br>
+            <td>{{ comment.date }}</td>
+            <td>{{ comment.likes }}</td>
+            <br>
+    {% endfor %}
+    <br>
     <a href="{{ path('app_experience_edit_front', {'id': experience.id}) }}">edit</a>
     <br>
     <br>
@@ -28,9 +43,5 @@
         </div>
           </div>
             </div>
-    
-    
-    
-
     
 {% endblock %}
