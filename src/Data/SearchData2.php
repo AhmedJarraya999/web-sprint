@@ -4,6 +4,8 @@
 //mazel nasnaa functionstaysearch fel stayrepository
 namespace App\Data;
 
+use DateTime;
+
 class SearchData2
 {
 
@@ -14,7 +16,7 @@ class SearchData2
     public $i;
 
     /**
-     * @var date
+     * @var DateTime
      */
     public $j;
 }

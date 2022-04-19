@@ -61,7 +61,7 @@ class SearchFormType2 extends AbstractType
             )
 
             ->add('j', DateType::class, [
-                'label' => 'Select a starting date for your stay',
+                'label' => false,
                 'required' => false,
                 'attr' => [
                     'placeholder' => 'Please choose a date for your stay'

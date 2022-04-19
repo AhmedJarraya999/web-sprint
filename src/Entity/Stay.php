@@ -46,7 +46,7 @@ class Stay
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="stays")
-     * @ORM\JoinColumn(nullable=false)
+
      */
     private $users;
 

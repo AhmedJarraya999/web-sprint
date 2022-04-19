@@ -2,14 +2,12 @@
 </br>
     {{ form_widget(form) }}
     </br>
-    <button type="submit" class="btn btn-primary" style="width: 195px";
-			background:!important;
-			color: white !important">{{ button_label|default('Add a stay') }}
-                   <img src="/front/images/plus.png" alt="Image"
+    
+             <a href="{{ path('app_stay_new') }}" style="width: 200x" class="btn btn-primary">ADD A STAY
+            <img src="/front/images/plus.png" alt="Image"
   class="maskImg"
   />
-
-            </button>
+            </a>
             <a href="{{ path('app_stay_index') }}" style="width: 200x" class="btn btn-primary">Back to list
             <img src="/front/images/return.png" alt="Image"
   class="maskImg"

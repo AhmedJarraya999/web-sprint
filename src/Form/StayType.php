@@ -18,7 +18,6 @@ class StayType extends AbstractType
             ->add('description')
             ->add('startdateav')
             ->add('enddateav')
-            ->add('users')
             #->add('photo')
             #test here
             ->add('photo', FileType::class, [
