@@ -2,14 +2,20 @@
 
 namespace App\Controller;
 
+use App\Data\SearchData2;
+use App\Data\SearchStay;
 use App\Service\UploaderService;
 use App\Entity\Stay;
+use App\Entity\User;
+use App\Form\Advancedresearch;
+use App\Form\SearchFormType2;
 use App\Form\StayType;
 use App\Repository\StayRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 /**
  * @Route("/stay")
@@ -19,10 +25,20 @@ class StayController extends AbstractController
     /**
      * @Route("/", name="app_stay_index", methods={"GET"})
      */
-    public function index(StayRepository $stayRepository): Response
+    public function index(StayRepository $stayRepository, Request $request): Response
     {
+
+        $data = new SearchData2();
+        $form = $this->createForm(SearchFormType2::class, $data);
+        $form->handleRequest($request);
+        $stays = $stayRepository->findSearch($data);
+
+
+
+
         return $this->render('stay/index.html.twig', [
-            'stays' => $stayRepository->findAll(),
+            'stays' => $stays,
+            'form' => $form->createView()
         ]);
     }
 
@@ -31,11 +47,18 @@ class StayController extends AbstractController
      */
     public function new(Request $request, StayRepository $stayRepository): Response
     {
+        #$connectedUser = $this->getUser()->getId();
         $stay = new Stay();
+
+
         $form = $this->createForm(StayType::class, $stay);
+
         $form->handleRequest($request);
 
+
+
         if ($form->isSubmitted() && $form->isValid()) {
+            $stay->setUsers($this->getUser()->getId());
             #test here
             $photo = $form->get('photo')->getData();
             // this condition is needed because the 'brochure' field is not required
@@ -64,7 +87,7 @@ class StayController extends AbstractController
     public function show(Stay $stay): Response
     {
         return $this->render('stay/show.html.twig', [
-            'stay' => $stay,
+            'stay' => $stay
         ]);
     }
 

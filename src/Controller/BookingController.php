@@ -92,6 +92,57 @@ class BookingController extends AbstractController
     }
 
     /**
+     * @Route("/", name="MyBookings", methods={"GET"})
+     */
+    public function MyBookings(BookingRepository $bookingRepository): Response
+    {
+        //todo implement a function in the booking repository that lists the booking where booking.user.id is equal to the id of the user conneceted
+
+        return $this->render('booking/index.html.twig', [
+            'bookings' => $bookingRepository->findAll(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/print", name="printBooking")
+     */
+    public function ImprimerCommande()
+    {
+        $repository = $this->getDoctrine()->getRepository(Booking::class);
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        $commande = $repository->findAll();
+
+
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView(
+            'booking/show.html.twig',
+            ['booking' => $commande]
+        );
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        $dompdf->stream("Commande_finale.pdf", [
+            "Attachment" => true
+        ]);
+    }
+
+
+
+
+    /**
      * @Route("/new", name="app_booking_new", methods={"GET", "POST"})
      */
     public function new(Request $request, BookingRepository $bookingRepository): Response
@@ -103,6 +154,7 @@ class BookingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $bookingRepository->add($booking);
             return $this->redirectToRoute('app_booking_index', [], Response::HTTP_SEE_OTHER);
+            # todo this should redirect to  mybookings page
         }
 
         return $this->render('booking/new.html.twig', [
@@ -145,7 +197,7 @@ class BookingController extends AbstractController
      */
     public function delete(Request $request, Booking $booking, BookingRepository $bookingRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$booking->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $booking->getId(), $request->request->get('_token'))) {
             $bookingRepository->remove($booking);
         }
 

@@ -1,7 +1,18 @@
 {{ form_start(form) }}
+</br>
     {{ form_widget(form) }}
-    <button type="button" class="btn btn-success" style="width: 100%";
-			background:!important;
-			color: white !important">{{ button_label|default('Save') }}</button>
-            <a href="{{ path('app_stay_index') }}" class="btn btn-primary"  >Back to list</a>
+    </br>
+    
+             <a href="{{ path('app_stay_new') }}" style="width: 200x" class="btn btn-primary">ADD A STAY
+            <img src="/front/images/plus.png" alt="Image"
+  class="maskImg"
+  />
+            </a>
+            <a href="{{ path('app_stay_index') }}" style="width: 200x" class="btn btn-primary">Back to list
+            <img src="/front/images/return.png" alt="Image"
+  class="maskImg"
+  />
+            </a>
+</br>
+</br>            
 {{ form_end(form) }}

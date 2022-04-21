@@ -1,4 +1,7 @@
 <form method="post" action="{{ path('app_stay_delete', {'id': stay.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ stay.id) }}">
-    <button class="btn btn-danger" style="margin:10px;">Delete</button>
+    <button class="btn btn-danger" style="margin:5px;">Delete
+     <img src="/front/images/bin.png" alt="Image"
+  class="maskImg"
+    </button>
 </form>

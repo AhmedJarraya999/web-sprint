@@ -5,6 +5,7 @@
         "php": ">=7.1.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "captcha-com/symfony-captcha-bundle": "4.*",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.5",
         "doctrine/doctrine-migrations-bundle": "^3.2",
@@ -36,7 +37,8 @@
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
         "symfony/swiftmailer-bundle": "^3.5",
-        "dompdf/dompdf": "0.8.5"
+        "dompdf/dompdf": "0.8.5",
+        "twilio/sdk": "^6.36"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",

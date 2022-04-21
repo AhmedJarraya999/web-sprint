@@ -3,27 +3,47 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-<div class="content" style="display: flex;align-items: center; border: 30px solid orange
-;justify-content: center;">
+<div class="signup-container">
+</br>
     {{ form_start(registrationForm) }}
+    </br>
         {{ form_row(registrationForm.username, { 'label':'Username', 'attr': {'placeholder' :'type a username...' } }) }}
+        </br>
         {{ form_row(registrationForm.plainPassword, {
-            label: 'Password', 'attr': {'placeholder' :'choose your password...' }
+            label: ' Password'   ,   'attr': {'placeholder' :'choose your password...' }
+        }) }} 
+        </br>
+         {{ form_row(registrationForm.firstname, {
+            label: 'Firstname  ' , 'attr': {'placeholder' :'Enter your firstname please' }
+        }) }} 
+        </br>
+         {{ form_row(registrationForm.lastname, {
+            label: 'Lastname', 'attr': {'placeholder' :'Enter your lastname please' }
+        }) }} 
+        </br>
+         {{ form_row(registrationForm.email, {
+            label: 'email    '  , 'attr': {'placeholder' :'Enter your email please' }
+        }) }} 
+        </br>
+         {{ form_row(registrationForm.phone , {
+            label: 'phone number', 'attr': {'placeholder' :'Enter your phone number please' }
         }) }}
-        <label class="form-check-label" for="form2Example3">
-                      I agree all statements in <a href="#!">Terms of service</a>
-                    </label>
-                    </br>
-
-        <button type="submit" class="btn btn-primary">Register</button>
-        
-       
+        </br>
+        {{ form_row(registrationForm.captchaCode , {
+            label: 'captcha code', 'attr': {'placeholder' :'Enter the captcha code' }
+        }) }}
+        </br>
+        <button class ="btn btn-primary"  href="{{path('app_register')}}">
+           <img src="/front/images/add-user.png" alt="Image"
+  class="maskImg"
+  />
+         Register </button>
+         <a href="{{ path('app_login') }}" class="contact-us-link"><i class="flaticon-airplane49"></i>    &nbsp;  Already have an account ?</a>
     {{ form_end(registrationForm) }}
-      <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp" class="img-fluid" alt="Sample image">
-
-              </div>
-    </div>
+    </br>
+   
+</div>
+ 
+   
     
 {% endblock %}
