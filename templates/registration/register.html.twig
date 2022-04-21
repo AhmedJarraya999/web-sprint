@@ -7,36 +7,38 @@
 </br>
     {{ form_start(registrationForm) }}
     </br>
-        {{ form_row(registrationForm.username, { 'label':'Username', 'attr': {'placeholder' :'type a username...' } }) }}
+        {{ form_row(registrationForm.username, { 'label':'Username', 'attr': {'placeholder' :'type a username...', 'class' : 'form-controll' } }) }}
         </br>
         {{ form_row(registrationForm.plainPassword, {
-            label: ' Password'   ,   'attr': {'placeholder' :'choose your password...' }
+            label: ' Password'   ,   'attr': {'placeholder' :'choose your password...', 'class' : 'form-controll' }
         }) }} 
         </br>
          {{ form_row(registrationForm.firstname, {
-            label: 'Firstname  ' , 'attr': {'placeholder' :'Enter your firstname please' }
+            label: 'Firstname  ' , 'attr': {'placeholder' :'Enter your firstname please','class' : 'form-controll' }
         }) }} 
         </br>
          {{ form_row(registrationForm.lastname, {
-            label: 'Lastname', 'attr': {'placeholder' :'Enter your lastname please' }
+            label: 'Lastname', 'attr': {'placeholder' :'Enter your lastname please','class' : 'form-controll' }
         }) }} 
         </br>
          {{ form_row(registrationForm.email, {
-            label: 'email    '  , 'attr': {'placeholder' :'Enter your email please' }
+            label: 'email    '  , 'attr': {'placeholder' :'Enter your email please', 'class' : 'form-controll' }
         }) }} 
         </br>
          {{ form_row(registrationForm.phone , {
-            label: 'phone number', 'attr': {'placeholder' :'Enter your phone number please' }
+            label: 'phone number', 'attr': {'placeholder' :'Enter your phone number please', 'class' : 'form-controll' }
+        }) }}
+        </br>
+         {{ form_row(registrationForm.roles , {
+            label: 'Register as', 'attr': {'class' :'form-control',  }
         }) }}
         </br>
         {{ form_row(registrationForm.captchaCode , {
-            label: 'captcha code', 'attr': {'placeholder' :'Enter the captcha code' }
+            label: 'captcha code', 'attr': {'placeholder' :'Enter the captcha code', 'class' : 'form-controll' }
         }) }}
         </br>
-        <button class ="btn btn-primary"  href="{{path('app_register')}}">
-           <img src="/front/images/add-user.png" alt="Image"
-  class="maskImg"
-  />
+        <button class ="btn btn-primary"  href="{{ path('app_register') }}">
+           <img src="/front/images/add-user.png" alt="Image" class="maskImg" />
          Register </button>
          <a href="{{ path('app_login') }}" class="contact-us-link"><i class="flaticon-airplane49"></i>    &nbsp;  Already have an account ?</a>
     {{ form_end(registrationForm) }}

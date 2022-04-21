@@ -25,109 +25,6 @@
 
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
-
-   
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
     <div class="site-wrap" id="home-section">
 
       <div class="site-mobile-menu site-navbar-target">
@@ -138,8 +35,6 @@
         </div>
         <div class="site-mobile-menu-body"></div>
       </div>
-
-
 
       <header class="site-navbar site-navbar-target" role="banner">
 
@@ -155,17 +50,16 @@
             </div>
 
             <div class="col-9  text-right">
-             
-
               <span class="d-inline-block d-lg-none"><a href="#" class="text-white site-menu-toggle js-menu-toggle py-5 text-white"><span class="icon-menu h3 text-white"></span></a></span>
-
-             
-
               <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
                 <ul class="site-menu main-menu js-clone-nav ml-auto ">
                   <li class="active"><a href="{{ path('app_stay_index') }}" class="nav-link">Home</a></li> 
+                  {% if is_granted('ROLE_HOST') %}
                   <li><a href="{{ path('app_stay_new') }}" class="nav-link">My Stay</a></li>
+                  {% endif %}
+                   {% if is_granted('ROLE_GUEST') %}
                   <li><a href="{{ path('MyBookings') }}" class="nav-link">My Bookings</a></li>
+                   {% endif %}
                   <li ><a href="index.html" class="nav-link">Rankings</a></li>
                   <li ><a href="index.html" class="nav-link">Feedbacks</a></li>
 
@@ -182,52 +76,6 @@
         </div>
 
       </header>
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <div class="ftco-blocks-cover-1">
       <div class="site-section-cover overlay" style="background-image: url('/front/images/hero_1.jpg')">
@@ -248,17 +96,6 @@
       </div>
     </div>
 
-
-
-
-
-
-
-
-   
-   
-   
-   
     <div class="site-section" style="max-height:10px;">
 
       <div class="container">

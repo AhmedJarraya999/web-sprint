@@ -59,6 +59,11 @@ class Booking
         return $this;
     }
 
+    public function __toString()
+    {
+        return strval($this->getId());
+    }
+
     public function getFirstDate(): ?\DateTimeInterface
     {
         return $this->firstDate;

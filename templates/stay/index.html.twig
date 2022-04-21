@@ -1,148 +1,78 @@
 {% extends 'base.html.twig' %}
 
 
+{% block title %}Stay index
+{% endblock %}
 
-{% block title %}Stay index{% endblock %}
 
-
-   
-
- {% block stylesheets %}
- 
- {% endblock %}
+{% block stylesheets %}{% endblock %}
 
 {% block body %}
-    
 
-{% include 'stay/_filtre.html.twig' with {form : form} only %}
-    
-<div class="row" style="display: flex;align-items: center;background-color:white;padding:100px; border: 60px solid orange">
-{% for stay in stays %}
-        
-          <div class="col-lg-4 col-md-6 mb-4 aos-init aos-animate"  data-aos="fade-up">
-            <div class="listing-item" >
-              <div class="listing-image" >
-                <img  src="{{ asset('uploads/'~stay.photo) }}" alt="Image" class="img-fluid">
-              </div>
-              <div class="listing-item-content">
-                <a class="px-3 mb-3 category bg-primary" href="{{ path('app_stay_show', {'id':stay.id}) }}">Consult</a>
-                <h2 class="mb-1"><a href="{{ path('app_stay_show', {'id':stay.id}) }}">{{stay.description}}</a></h2>
-              </div>
+
+    {% include 'stay/_filtre.html.twig' with {form : form} only %}
+
+    <div class="row" style="display: flex;align-items: center;background-color:white;padding:100px; border: 60px solid orange">
+        {% if stays|length > 0 %}
+            {% for stay in stays %}
+
+                <div class="col-lg-4 col-md-6 mb-4 aos-init aos-animate" data-aos="fade-up">
+                    <div class="listing-item">
+                        <div class="listing-image">
+                            <img src="{{ asset('uploads/'~stay.photo) }}" alt="Image" class="img-fluid"></div>
+                            <div class="listing-item-content">
+                                <a class="px-3 mb-3 category bg-primary" href="{{ path('app_stay_show', {'id':stay.id}) }}">Consult</a>
+                                <h2 class="mb-1">
+                                    <a href="{{ path('app_stay_show', {'id':stay.id}) }}">{{ stay.description }}</a>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-          </div>
-{% endfor %}       
-        </div>
 
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Capacity</th>
+                        <th>Description</th>
+                        <th>Photo</th>
+                        <th>Startdateav</th>
+                        <th>Enddateav</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stay in stays %}
+                        <tr>
+                            <td>{{ stay.id }}</td>
+                            <td>{{ stay.capacity }}</td>
+                            <td>{{ stay.description }}</td>
+                            <td>{{ stay.photo }}</td>
+                            <td>{{ stay.startdateav ? stay.startdateav|date('Y-m-d') : '' }}</td>
+                            <td>{{ stay.enddateav ? stay.enddateav|date('Y-m-d') : '' }}</td>
+                            <td>
+                                <a href="{{ path('app_stay_show', {'id': stay.id}) }}">show</a>
+                                <a href="{{ path('app_stay_edit', {'id': stay.id}) }}">edit</a>
+                                <a href="{{ path('app_booking_stay', {'stay': stay.id}) }}">booking</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7">no records found</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Capacity</th>
-                <th>Description</th>
-                <th>Photo</th>
-                <th>Startdateav</th>
-                <th>Enddateav</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for stay in stays %}
-            <tr>
-                <td>{{ stay.id }}</td>
-                <td>{{ stay.capacity }}</td>
-                <td>{{ stay.description }}</td>
-                <td>{{ stay.photo }}</td>
-                <td>{{ stay.startdateav ? stay.startdateav|date('Y-m-d') : '' }}</td>
-                <td>{{ stay.enddateav ? stay.enddateav|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_stay_show', {'id': stay.id}) }}">show</a>
-                    <a href="{{ path('app_stay_edit', {'id': stay.id}) }}">edit</a>
-                </td>
-            </tr>
         {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_stay_new') }}">Create new</a>
-{% endblock %}
+            <div class="row" style="width: 100%">
+                <p> No stays found to display with this search criteria</p>
+            </div>    
+            <br/>
+        {% endif %}
+            <a class="btn" href="{{ path('app_stay_new') }}">Create new</a>
+    </div>        
+        {% endblock %}

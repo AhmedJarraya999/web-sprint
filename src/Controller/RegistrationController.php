@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use Twilio\Rest\Client;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
@@ -70,9 +69,9 @@ class RegistrationController extends AbstractController
 
             return $this->redirectToRoute('app_login');
         }
-
+        
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
+            'registrationForm' => $form->createView()
         ]);
     }
 }

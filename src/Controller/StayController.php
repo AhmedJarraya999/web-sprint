@@ -27,14 +27,10 @@ class StayController extends AbstractController
      */
     public function index(StayRepository $stayRepository, Request $request): Response
     {
-
         $data = new SearchData2();
         $form = $this->createForm(SearchFormType2::class, $data);
         $form->handleRequest($request);
         $stays = $stayRepository->findSearch($data);
-
-
-
 
         return $this->render('stay/index.html.twig', [
             'stays' => $stays,
@@ -50,12 +46,9 @@ class StayController extends AbstractController
         #$connectedUser = $this->getUser()->getId();
         $stay = new Stay();
 
-
         $form = $this->createForm(StayType::class, $stay);
 
         $form->handleRequest($request);
-
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $stay->setUsers($this->getUser()->getId());
