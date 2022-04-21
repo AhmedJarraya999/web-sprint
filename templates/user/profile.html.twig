@@ -1,5 +1,4 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Modification du profil utilisateur{% endblock %}
 
 {% block body %}
@@ -17,17 +16,12 @@
                     {{ form_row(form.firstname) }}
                     {{ form_row(form.lastname) }}
                     {{ form_row(form.email) }}
-                   {#} {{ form_row(form.photo) }} #}
+                
                 </div>
             </div>
-           {#} <div class="col">
+           <div class="col">
                 <div class="alert alert-light">
-                    <h2 class="alert-heading">Détails</h2>
-                    <hr>
-                    {{ form_row(form.introduction) }}
-                    {{ form_row(form.description) }}
-#}
-                    <hr>
+                    
                     <p>Si vous avez terminé vos modifications, vous pouvez les sauvegarder</p>
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-check"></i>
