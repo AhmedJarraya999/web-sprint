@@ -1,17 +1,23 @@
 {% extends 'base.html.twig' %}
+
 {% block title %}Modification du profil utilisateur{% endblock %}
 
 {% block body %}
+{% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
 
     <div class="container">
-        <h1 class="my-5">Modification du profil</h1>
+        <h1 class="my-5">Profil Modification</h1>
 
         {{ form_start(form) }}
 
         <div class="row">
             <div class="col">
                 <div class="alert alert-light">
-                    <h2 class="alert-heading">Informations générales</h2>
+                    <h2 class="alert-heading">Genral informations</h2>
                     <hr>
                     {{ form_row(form.firstname) }}
                     {{ form_row(form.lastname) }}
@@ -21,11 +27,16 @@
             </div>
            <div class="col">
                 <div class="alert alert-light">
+                     <h2 class="alert-heading">Détails</h2>
+                    <hr>
+                    {{ form_row(form.introduction) }}
                     
+
+                    <hr>
                     <p>Si vous avez terminé vos modifications, vous pouvez les sauvegarder</p>
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-check"></i>
-                        Enregistrer les modifications
+                        Save modifications
                     </button>
                 </div>
             </div>

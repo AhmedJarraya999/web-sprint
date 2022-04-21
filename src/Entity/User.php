@@ -87,6 +87,11 @@ class User implements UserInterface
      */
     private $bookings;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $introduction;
+
     public function __construct()
     {
         $this->stays = new ArrayCollection();
@@ -277,6 +282,18 @@ class User implements UserInterface
                 $booking->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIntroduction(): ?string
+    {
+        return $this->introduction;
+    }
+
+    public function setIntroduction(?string $introduction): self
+    {
+        $this->introduction = $introduction;
 
         return $this;
     }
