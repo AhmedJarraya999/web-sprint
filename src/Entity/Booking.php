@@ -32,8 +32,6 @@ class Booking
      */
     private $endDate;
 
-
-
     /**
      * @ORM\ManyToOne(targetEntity=Stay::class, inversedBy="bookings")
      */
@@ -85,12 +83,12 @@ class Booking
         return $this;
     }
 
-    public function getUser(): ?string
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(string $User): self
+    public function setUser(?User $User): self
     {
         $this->User = $User;
 
