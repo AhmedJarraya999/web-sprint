@@ -47,18 +47,11 @@ class StayController extends AbstractController
      */
     public function new(Request $request, StayRepository $stayRepository): Response
     {
-        #$connectedUser = $this->getUser()->getId();
         $stay = new Stay();
-
-
         $form = $this->createForm(StayType::class, $stay);
-
         $form->handleRequest($request);
 
-
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $stay->setUsers($this->getUser()->getId());
             #test here
             $photo = $form->get('photo')->getData();
             // this condition is needed because the 'brochure' field is not required
