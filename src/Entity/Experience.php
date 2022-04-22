@@ -64,6 +64,11 @@ class Experience
      */
     private $comments;
 
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -161,6 +166,16 @@ class Experience
     public function __toString()
     {
         return(string)$this->getId();
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setExperience($this);
+        }
+
+        return $this;
     }
 
 }

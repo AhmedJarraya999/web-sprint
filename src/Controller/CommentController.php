@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Experience;
 use App\Form\CommentType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,14 +34,21 @@ class CommentController extends AbstractController
     /**
      * @Route("/Front/new", name="app_comment_new_front", methods={"GET", "POST"})
      */
-    public function newFront(Request $request, EntityManagerInterface $entityManager): Response
+    public function newFront(Request $request, EntityManagerInterface $entityManager ): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->add('Add',SubmitType::class);
         $form->handleRequest($request);
+        //$user=$this->getDoctrine()->getRepository(User::Class)->find($id_user);
+        //$experience->getDoctrine()->getRepository(Experience::class)->find($id_experience);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setAuthor(1);
+            $comment->setIdExp(19);
+            $date = date('d-m-y h:i');
+            $comment->setDate($date);
+            $comment->setLikes(0);
             $entityManager->persist($comment);
             $entityManager->flush();
 

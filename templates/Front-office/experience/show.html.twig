@@ -6,8 +6,8 @@
 <div class="site-section">
 <div class="container">
 <div class="row">
-<div class="col-md-20 blog-content">
-    <div class="col-md-8 blog-content"> 
+<div class="col-md-50 blog-content">
+    <div class="col-md-50 blog-content">
         <h3 > {{ experience.title }} </h3>
         <p > {{ experience.content }}</p>
 
@@ -17,25 +17,50 @@
         <a style="color:#f2c05f">Likes:</a> {{ experience.likes }}
         <a style="color:#f2c05f">Date:</a> {{ experience.date }}</p>
     </div>
+    
     {{ include('Front-office/experience/_delete_form.html.twig') }}
-    <br>
+        <a class="btn" href="{{ path('app_experience_edit_front', {'id': experience.id}) }}">edit</a>
+
+         <br>
+        <br>
     {# to show comment form #}
-    {{ include('Front-office/comment/_form.html.twig') }}
+
+
+
+            {{form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+
+            <div class="pt-20">
+
+                    <div class="comment-form-wrap pt-20">
+                        {{ form_widget(form.content,{'attr' : {'class' : 'form-control' , "placeholder":"Comment" }} ) }}
+                        {{ form_errors(form.content) }}
+                        <button class="btn">{{ button_label|default('Comment') }}</button>
+                    </div>
+
+
+
+                {{ form_end(form) }}
+            </div>
+
+
     <br>
     {% for comment in comments %}
         <tr>
         <br>
-            <td>{{ comment.author }}</td>
+            <h3>{{ comment.author }}</h3>
+            <p>{{ comment.content }}</p>
             <br>
-            <td>{{ comment.content }}</td>
-            <br>
-            <td>{{ comment.date }}</td>
-            <td>{{ comment.likes }}</td>
+
+                <font color="gray">
+                    <font color="#ff7f50"> Date :  </font>
+                    {{ comment.date }}
+                    <font color="#ff7f50"> Likes :  </font>
+                    {{ comment.likes }}
+                </font>
+
             <br>
     {% endfor %}
-    <br>
-    <a href="{{ path('app_experience_edit_front', {'id': experience.id}) }}">edit</a>
-    <br>
+
     <br>
     <a href="{{ path('app_experience_index_front') }}">back to list </a>
     </div>

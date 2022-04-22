@@ -36,9 +36,9 @@ class ExperienceController extends AbstractController
         $searchForm->handleRequest($request);
         if ($searchForm->isSubmitted()) {
             $title = $searchForm['title']->getData();
-            $resultOfSearch = $repository->searchExperience($title);
+           // $resultOfSearch = $repository->searchExperience($title);
             return $this->render('Front-office/experience/index.html.twig', array(
-                'resultOfSearch' => $resultOfSearch,
+              //  'resultOfSearch' => $resultOfSearch,
                 'searchForm' => $searchForm->createView()));
         }
 
@@ -49,14 +49,22 @@ class ExperienceController extends AbstractController
 
     /**
      * @Route("/Front/new", name="app_experience_new_front", methods={"GET", "POST"})
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
      */
     public function newFront(Request $request, EntityManagerInterface $entityManager): Response
     {
         $experience = new Experience();
         $form = $this->createForm(ExperienceType::class, $experience);
         $form->handleRequest($request);
+        //$user=$this->getDoctrine()->getRepository(User::Class)->find($id_user);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $experience->setIdAuthor(1);
+            $experience->setLikes(0);
+            $date = date('d-m-y h:i');
+            $experience->setDate($date);
             $entityManager->persist($experience);
             $entityManager->flush();
 
@@ -72,21 +80,25 @@ class ExperienceController extends AbstractController
     /**
      * @Route("/Front/{id}", name="app_experience_show_front", methods={"GET"})
      */
-    public function showFront(Request $request ,Experience $id): Response
+    public function showFront(Request $request ,Experience $id ,EntityManagerInterface $entityManager): Response
     {   $experience = $this->getDoctrine()->getRepository(Experience::class)->find($id);
         $comments= $this->getDoctrine()->getRepository(Comment::class)->listCommentByExperience($experience->getId());
 
-        $commentnew = new Comment();
-        $form = $this->createForm(CommentType::class, $commentnew);
+        $comment= new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setAuthor(1);
+            $comment->setIdExp(19);
+            $date = date('d-m-y h:i');
+            $comment->setDate($date);
+            $comment->setLikes(0);
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->render('app_experience_show_front', [], Response::HTTP_SEE_OTHER);
+            return $this->render('Front-office/experience/show.html.twig', [], Response::HTTP_SEE_OTHER);
         }
-
 
         return $this->render('Front-office/experience/show.html.twig', [
             'form' => $form->createView(),

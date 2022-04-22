@@ -9,27 +9,33 @@
 <div class="col-md-20 blog-content">
     <h1>Create new Experience</h1>
 
-   {{ include('Front-office/experience/_form.html.twig') }}
+{#{{ include('Front-office/experience/_form.html.twig') }}#}
 
+        <div class=>
+            {{form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
 
-    {# <div class="comment-form-wrap pt-5">
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-10 mb-3">
+                            {{form_label(form.title)}}
+                            {{ form_widget(form.title,{'attr' : {'class' : 'form-control' , "placeholder":"Title" }} ) }}
+                            {{ form_errors(form.title) }}
+                        </div>
+                    </div>
 
+                    <div class="form-row">
+                        <div class="col-md-10 mb-30">
+                            {{form_label(form.content)}}
+                            {{ form_widget(form.content,{'attr' : {'class' : 'form-control' , "placeholder":"Content" }} ) }}
+                            {{ form_errors(form.content) }}
+                        </div>
+                    </div>
 
-                  <div class="form-group ">
-                    <label for="name">Title *</label>
-                    <input type="text" name="form[title]" class="form-control" required="required"/>
-                  </div>
+                    <br>
+                    <button class="btn">{{ button_label|default('Save') }}</button>
+                    {{ form_end(form) }}
+                </div>
 
-
-                  <div class="form-group">
-                    <label for="message">Content</label>
-                    <textarea name="experience[content]" cols="30" rows="10" class="form-control"></textarea>
-                  </div>
-                 <button class="btn btn-primary btn-md text-white">{{ button_label|default('Save') }}</button>
-                
-            
-              </div>
-</div>#}
 
     <a href="{{ path('app_experience_index_front') }}">back to list</a>
     </div>
