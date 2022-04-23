@@ -6,11 +6,12 @@ use App\Repository\StayRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * @ORM\Entity(repositoryClass=StayRepository::class)
  */
-class Stay
+class Stay implements JsonSerializable
 {
     /**
      * @ORM\Id
@@ -171,4 +172,8 @@ class Stay
 
         return $this;
     }
+
+    public function jsonSerialize() {
+        return get_object_vars($this);     
+     }
 }

@@ -29,15 +29,18 @@
             label: 'phone number', 'attr': {'placeholder' :'Enter your phone number please' }
         }) }}
         </br>
+         {{ form_row(registrationForm.roles , {
+            label: 'Register as', 'attr': {'class' :'form-control',  }
+        }) }}
+        </br>
         {{ form_row(registrationForm.captchaCode , {
             label: 'captcha code', 'attr': {'placeholder' :'Enter the captcha code' }
         }) }}
         </br>
         <button class ="btn btn-primary"  href="{{path('app_register')}}">
-           <img src="/front/images/add-user.png" alt="Image"
-  class="maskImg"
-  />
-         Register </button>
+           <img src="/front/images/add-user.png" alt="Image" class="maskImg" />
+                Register 
+        </button>
          <a href="{{ path('app_login') }}" class="contact-us-link"><i class="flaticon-airplane49"></i>    &nbsp;  Already have an account ?</a>
     {{ form_end(registrationForm) }}
     </br>

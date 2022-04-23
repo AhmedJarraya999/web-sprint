@@ -1,0 +1,40 @@
+<h2>
+    You’re booked! Pack your bags – see you on [{{ booking.firstDate | date("m/d/Y") }}]
+</h2>
+
+<h4>
+    Hi [{{ user.firstname }}],</h4>
+<p>It’s confirmed, we’ll see you on [{{ booking.firstDate | date("m/d/Y") }}]! 
+    Thank you for booking with us. You’ll find details of your reservation enclosed below.
+    <br/>
+    If you need to get in touch, you can email or phone us directly. 
+        We look forward to welcoming you soon!
+    <br/>
+    Thanks again,
+    <br/>
+    The team at [Company Name]
+    <br/>
+    <table style="border: 1px solid black; width: 100%">
+        <tr>
+            <td style="width: 25%; border: 1px solid black;">
+                From
+            </td>
+            <td style="width: 25% border: 1px solid black;">
+                To
+            </td>
+            <td style="width: 50% border: 1px solid black;">
+                Stay description
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 25%; border: 1px solid black;">
+                {{ booking.firstDate | date("m/d/Y") }}
+            </td>
+            <td style="width: 25% border: 1px solid black;">
+                {{ booking.endDate | date("m/d/Y") }}
+            </td>
+            <td style="width: 50% border: 1px solid black;">
+                {{ stay.description }}</td>
+        </tr>
+    </table>
+</p>

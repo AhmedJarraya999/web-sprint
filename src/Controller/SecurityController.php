@@ -9,14 +9,23 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
+
     /**
      * @Route("/login", name="app_login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
+        if ($this->getUser()) {
+            // check if the user was host then redirect him to stays page
+            if (in_array('ROLE_HOST', $this->getUser()->getRoles())) { 
+                return $this->redirectToRoute('app_stay_index');
+            }
+
+            // check if the user was guest then redirect him to booking page
+            if (in_array('ROLE_GUEST', $this->getUser()->getRoles())) { 
+                return $this->redirectToRoute('app_booking_index');
+            }
+        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -33,4 +42,6 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
+
+   
 }

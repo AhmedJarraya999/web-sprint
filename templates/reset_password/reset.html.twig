@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+
+{% block body %}
+<div class="row fullWidthForm">
+    <h1 style="width: 100%; text-align: center">Reset your password</h1>
+    <br>
+
+    {{ form_start(resetForm) }}
+        <div class="container" style="width: 100vw">
+            <div class="row" style="display: flex; width: 100%">
+                <div style="margin: auto">
+                    {{ form_row(resetForm.plainPassword) }}
+                </div>
+            </div>
+            <div class="row" style="display: flex; width: 100%">
+                <div style="margin: auto">        
+                    <button type="submit" class="btn btn-primary">Reset password</button>
+                </div>
+            </div>
+        </div>            
+    {{ form_end(resetForm) }}
+{% endblock %}
