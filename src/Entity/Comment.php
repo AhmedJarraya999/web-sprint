@@ -53,7 +53,7 @@ class Comment
     /**
      * @var \Experience
      *
-     * @ORM\ManyToOne(targetEntity="Experience")
+     * @ORM\ManyToOne(targetEntity="Experience" , inversedBy="comments")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_exp", referencedColumnName="id")
      * })

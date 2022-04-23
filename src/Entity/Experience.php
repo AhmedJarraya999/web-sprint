@@ -4,6 +4,8 @@ namespace App\Entity;
 use App\Repository\ExperienceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Vangrg\ProfanityBundle\Validator\Constraints as ProfanityAssert;
+
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -12,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="experience", indexes={@ORM\Index(name="id_author", columns={"id_author"})})
  * @ORM\Entity(repositoryClass=ExperienceRepository::class)
+ *
  */
 class Experience
 {
@@ -42,6 +45,7 @@ class Experience
      * @var string
      *
      * @ORM\Column(name="content", type="text", length=65535, nullable=false)
+     * @ProfanityAssert\ProfanityCheck
      */
     private $content;
 
@@ -49,6 +53,7 @@ class Experience
      * @var int
      *
      * @ORM\Column(name="likes", type="integer", nullable=false)
+     *
      */
     private $likes;
 
