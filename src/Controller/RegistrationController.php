@@ -11,7 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
 
 class RegistrationController extends AbstractController
 {
@@ -19,7 +21,7 @@ class RegistrationController extends AbstractController
      * @Route("/register", name="app_register")
      */
     public function register(Request $request, UserPasswordEncoderInterface $userPasswordEncoder,
-         \Swift_Mailer $mailer, EntityManagerInterface $entityManager): Response
+        MailerInterface $mailer, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -37,18 +39,15 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             
-            // sending email 
-            $email = (new \Swift_Message('subscription Email'))
-                ->setFrom('mailersendj1@gmail.com')
-                ->setTo($user->getEmail())
-                ->setBody(
-                    $this->renderView(
-                        // templates/emails/registration.html.twig
-                        'emails/registration.html.twig',
-                        ['username' => $user->getUsername()]
-                    ),
-                    'text/html'
-                );
+            $email = (new TemplatedEmail())
+                ->from(new Address('mailersendj1@gmail.com', 'Trips.com'))
+                ->to($user->getEmail())
+                ->subject('Trips.com account is active')
+                ->htmlTemplate('emails/registration.html.twig')
+                ->context([
+                    'username' => $user->getUsername()
+                ])
+            ;
 
             $mailer->send($email);
 

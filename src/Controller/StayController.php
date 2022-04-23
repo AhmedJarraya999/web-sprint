@@ -3,15 +3,13 @@
 namespace App\Controller;
 
 use App\Data\SearchData2;
-use App\Data\SearchStay;
-use App\Service\UploaderService;
 use App\Entity\Stay;
-use App\Entity\User;
-use App\Form\Advancedresearch;
 use App\Form\SearchFormType2;
 use App\Form\StayType;
 use App\Repository\StayRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,15 +25,30 @@ class StayController extends AbstractController
      */
     public function index(StayRepository $stayRepository, Request $request): Response
     {
+        return $this->render('stay/index.html.twig', [
+            'stays' => [],
+        ]);
+    }
+
+    /**
+     * @Route("/search", name="app_stay_search", methods={"POST"})
+     */
+    public function search(StayRepository $stayRepository, Request $request): Response
+    {
         $data = new SearchData2();
-        $form = $this->createForm(SearchFormType2::class, $data);
-        $form->handleRequest($request);
+        $dateString = $request->request->get('date', '');
+        $date = null;
+       
+        if($dateString !== ''){
+            $date = DateTime::createFromFormat('Y-m-d', $dateString);
+        }
+        
+        $data->setI($request->request->get('text', ''));
+        $data->setJ($date);
+        
         $stays = $stayRepository->findSearch($data);
 
-        return $this->render('stay/index.html.twig', [
-            'stays' => $stays,
-            'form' => $form->createView()
-        ]);
+        return new JsonResponse($stays);
     }
 
     /**
@@ -51,7 +64,7 @@ class StayController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $stay->setUsers($this->getUser()->getId());
+            $stay->setUsers($this->getUser());
             #test here
             $photo = $form->get('photo')->getData();
             // this condition is needed because the 'brochure' field is not required

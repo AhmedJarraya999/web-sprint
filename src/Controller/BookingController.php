@@ -13,6 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use DateTime;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
 
 /**
  * @Route("/booking")
@@ -29,16 +32,18 @@ class BookingController extends AbstractController
         ]);
     }
 
-/**
-     * @Route("/{stay}/booking", name="app_booking_stay", methods={"GET", "POST"})
+    /**
+     * @Route("/{stay}/book", name="app_booking_stay", methods={"GET", "POST"})
      */
-    public function create(Request $request, Stay $stay,  BookingRepository $bookingRepository, \Swift_Mailer $mailer): Response
+    public function create(Request $request, Stay $stay,  BookingRepository $bookingRepository, MailerInterface $mailer): Response
     {
         $booking = new Booking();
         $booking->setStay($stay);
         $booking->setBookingDate(new DateTime());
+
         $user = $this->getUser();
         $booking->setUser($user);
+        
         $form = $this->createForm(BookingType::class, $booking);
         $form->handleRequest($request);
 
@@ -63,26 +68,24 @@ class BookingController extends AbstractController
             // Render the HTML as PDF
             $dompdf->render();
 
-            $message = (new \Swift_Message('Reservation created'))
-            ->setFrom('mailersendj1@gmail.com')
-            ->setTo($user->getEmail())
-            ->setBody(
-                $this->renderView(
-                    // templates/emails/registration.html.twig
-                    'emails/booking.html.twig',
-                    ['stay' => $booking->getStay(), 'booking' => $booking, 'user' => $user]
-                ),
-                'text/html'
-            );
-
-            if($mailer->send($message)) {
-                // Output the generated PDF to Browser (force download)
-                $dompdf->stream("booking.pdf", [
-                    "Attachment" => true
+            $email = (new TemplatedEmail())
+                ->from(new Address('mailersendj1@gmail.com', 'Trips.com'))
+                ->to($user->getEmail())
+                ->subject('Your booking at Trips.com saved successfully')
+                ->htmlTemplate('emails/booking.html.twig')
+                ->context([
+                    'stay' => $booking->getStay(),
+                    'booking' => $booking,
+                    'user' => $user
                 ]);
-            }else{
-                return new Response('error while sending email');
-            }
+
+            $mailer->send($email);
+            
+            // Output the generated PDF to Browser (force download)
+            $dompdf->stream("booking.pdf", [
+                "Attachment" => true
+            ]);
+            
         }
 
         return $this->render('booking/new.html.twig', [

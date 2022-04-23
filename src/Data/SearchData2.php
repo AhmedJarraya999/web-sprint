@@ -8,15 +8,44 @@ use DateTime;
 
 class SearchData2
 {
-
-
     /**
      * @var string
      */
-    public $i;
+    private $i;
 
     /**
      * @var DateTime
      */
-    public $j;
+    private $j;
+
+    public function __construct()
+    {
+        $this->i = "";
+        $this->j = null;
+    }
+
+    public function getJ(): ?\DateTimeInterface
+    {
+        return $this->j;
+    }
+
+    public function setJ(?\DateTimeInterface $startdate): self
+    {
+        $this->j = $startdate;
+
+        return $this;
+    }
+
+    public function getI(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setI(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
 }

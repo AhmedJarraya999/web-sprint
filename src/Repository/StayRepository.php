@@ -48,13 +48,13 @@ class StayRepository extends ServiceEntityRepository
     public function findSearch(SearchData2 $search): array
     {
         $query = $this->createQueryBuilder('s')->select('s');
-        $dateSearch = ($search->j) ? date_format($search->j, "Y-m-d") : null;
+        $dateSearch = ($search->getJ()) ? date_format($search->getJ(), "Y-m-d") : null;
 
-        if ($search->i || $search->j) {
+        if ($search->getI() || $search->getJ()) {
             $query =
                 $query
                 ->where('s.description LIKE :i')
-                ->setParameter('i', '%' . $search->i . '%');
+                ->setParameter('i', '%' . $search->getI() . '%');
             if ($dateSearch !== null) {
                 $query->andWhere('s.startdateav = :j ')
                     ->setParameter('j', $dateSearch);

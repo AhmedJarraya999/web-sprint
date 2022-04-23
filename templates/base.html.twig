@@ -20,6 +20,17 @@
 
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="/front/css/style.css">
+    <style>
+      .fullWidthForm form {
+        width: 100%;
+      }
+      .fullWidthForm {
+        padding: 5%;
+      }
+    </style>
+    {% block stylesheets %}
+
+    {% endblock %}
 
   </head>
 
@@ -53,13 +64,31 @@
               <span class="d-inline-block d-lg-none"><a href="#" class="text-white site-menu-toggle js-menu-toggle py-5 text-white"><span class="icon-menu h3 text-white"></span></a></span>
               <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
                 <ul class="site-menu main-menu js-clone-nav ml-auto ">
-                  <li class="active"><a href="{{ path('app_stay_index') }}" class="nav-link">Home</a></li> 
+                  <!-- home page path  -->
+                  {% if "home" in app.request.get('_route') %}
+                    <li class="active"><a href="{{ path('app_stay_index') }}" class="nav-link">Home</a></li> 
+                  {% else %}
+                    <li><a href="{{ path('app_stay_index') }}" class="nav-link">Home</a></li> 
+                  {% endif %}  
+
                   {% if is_granted('ROLE_HOST') %}
-                  <li><a href="{{ path('app_stay_new') }}" class="nav-link">My Stay</a></li>
+                    <!-- new stay path  -->
+                    {% if "app_stay" in app.request.get('_route') %}
+                      <li class="active"><a href="{{ path('app_stay_index') }}" class="nav-link">My Stay</a></li>
+                    {% else %}
+                      <li><a href="{{ path('app_stay_new') }}" class="nav-link">My Stay</a></li>
+                    {% endif %}
                   {% endif %}
-                   {% if is_granted('ROLE_GUEST') %}
-                  <li><a href="{{ path('MyBookings') }}" class="nav-link">My Bookings</a></li>
-                   {% endif %}
+
+                  {% if is_granted('ROLE_GUEST') %}
+                    <!-- booking path -->
+                    {% if "Booking" in app.request.get('_route') %}
+                      <li class="active"><a href="{{ path('MyBookings') }}" class="nav-link">My Bookings</a></li>
+                    {% else %}
+                      <li><a href="{{ path('MyBookings') }}" class="nav-link">My Bookings</a></li>
+                    {% endif %}
+                  {% endif %}
+                  
                   <li ><a href="index.html" class="nav-link">Rankings</a></li>
                   <li ><a href="index.html" class="nav-link">Feedbacks</a></li>
 
@@ -67,6 +96,11 @@
                   <li><a href="trips.html" class="nav-link">Trips</a></li>
                   <li><a href="blog.html" class="nav-link">Blog</a></li>
                   <li><a href="contact.html" class="nav-link">Contact</a></li>
+                  {% if app.user %}
+                    <li title="logout"><a href="{{ path('app_logout') }}">
+                     <img src="/icons/logout.svg"> </a> 
+                    </li>
+                  {% endif %}
                 </ul>
               </nav>
             </div>
@@ -133,6 +167,9 @@
 
     <script src="/front/js/main.js"></script>
 
+    {% block javascripts %}
+
+    {% endblock %}
   </body>
 
 </html>

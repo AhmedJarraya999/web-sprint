@@ -40,16 +40,19 @@
         </tbody>
     </table>
 
+    {% if is_granted('ROLE_HOST') %}
     <a href="{{ path('app_stay_index') }}" class="btn btn-primary"style="margin:30px;width:400px"  >back 
      <img src="/front/images/return.png" alt="Image"
   class="maskImg"</a>
+  {% endif %}
 
   </br>
-
+    {% if is_granted('ROLE_GUEST') %}
     <a href="{{ path('app_booking_new', {'id': stay.id}) }}" class="btn btn-info" style="margin:5px;width:400px">Book now
      <img src="/front/images/book.png" alt="Image"
   class="maskImg"
     </a>
+    {% endif %}
  
    {# {{ include('stay/_delete_form.html.twig') }} #}
     </div>
