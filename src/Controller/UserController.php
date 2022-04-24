@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Data\SearchData;
 use App\Entity\User;
-use App\Form\SearchForm;
+use App\Form\SearchFormType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ObjectManager;
@@ -25,13 +25,10 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $userRepository, Request $request): Response
     {
-
         $data = new SearchData();
-        $form = $this->createForm(SearchForm::class, $data);
+        $form = $this->createForm(SearchFormType::class, $data);
         $form->handleRequest($request);
         $users = $userRepository->findSearch($data);
-
-
 
         return  $this->render('user/index.html.twig', [
             'users' => $users,
