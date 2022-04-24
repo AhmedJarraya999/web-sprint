@@ -32,7 +32,7 @@ class Comment
 
     /**
      * @var string
-     *@Assert\NotBlank()
+     * @Assert\NotBlank()
      * @ORM\Column(name="content", type="string", length=255, nullable=false)
      */
     private $content;
@@ -55,9 +55,9 @@ class Comment
      * @var \Experience
      *
      * @ORM\ManyToOne(targetEntity="Experience" , inversedBy="comments")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_exp", referencedColumnName="id")
-     * })
+     *
+     * @ORM\JoinColumn(name="id_exp", referencedColumnName="id")
+     *
      */
     private $idExp;
 

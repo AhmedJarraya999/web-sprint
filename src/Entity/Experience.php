@@ -4,6 +4,8 @@ namespace App\Entity;
 use App\Repository\ExperienceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+
+
 use Vangrg\ProfanityBundle\Validator\Constraints as ProfanityAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -67,7 +69,7 @@ class Experience
     private $date;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="experience", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="experience")
      */
     private $comments;
 

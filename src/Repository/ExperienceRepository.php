@@ -74,12 +74,34 @@ class ExperienceRepository extends ServiceEntityRepository
     }
     */
 
+
+    /**
+     * @return Experience[] Returns an array of Experiences objects
+     */
     public function searchExperience($title)
     {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.title LIKE :title')
+//        return $this->createQueryBuilder('experience')
+//            ->andWhere('experience.title LIKE :title')
+//            ->setParameter('title', '%'.$title.'%')
+//            ->getQuery()
+//            ->getResult();
+
+        $query=$this->createQueryBuilder('experience')
+            ->andWhere('experience.title LIKE :title')
             ->setParameter('title', '%'.$title.'%')
-            ->getQuery()
-            ->execute();
+            ->getQuery();
+        $experinces=$query->getArrayResult();
+        return $experinces;
+    }
+
+    /**
+     * @return Experience[] Returns an array of Experiences objects
+     */
+    public function searchAllExperiences(){
+         $query=$this->createQueryBuilder('experience')
+            ->getQuery();
+         $experiences=$query->getArrayResult();
+         return $experiences;
+
     }
 }

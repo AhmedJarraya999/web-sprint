@@ -7,14 +7,19 @@ use App\Entity\Comment;
 
 use App\Repository\ExperienceRepository;
 use App\Form\ExperienceType;
-use App\Form\SearchExperienceType;
 use App\Form\CommentType;
+
+use App\Form\SearchExperienceType;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/experience")
@@ -29,18 +34,6 @@ class ExperienceController extends AbstractController
         $experiences = $entityManager
             ->getRepository(Experience::class)
             ->findAll();
-
-            //search
-        $searchForm = $this->createForm(SearchExperienceType::class);
-        $searchForm->add("Search", SubmitType::class);
-        $searchForm->handleRequest($request);
-        if ($searchForm->isSubmitted()) {
-            $title = $searchForm['title']->getData();
-           // $resultOfSearch = $repository->searchExperience($title);
-            return $this->render('Front-office/experience/index.html.twig', array(
-              //  'resultOfSearch' => $resultOfSearch,
-                'searchForm' => $searchForm->createView()));
-        }
 
         return $this->render('Front-office/experience/index.html.twig', [
             'experiences' => $experiences,
@@ -80,28 +73,37 @@ class ExperienceController extends AbstractController
     /**
      * @Route("/Front/{id}", name="app_experience_show_front", methods={"GET"})
      */
-    public function showFront(Request $request ,Experience $id ,EntityManagerInterface $entityManager): Response
+    public function showFront(Request $request ,Experience $id, EntityManagerInterface $entityManager ): Response
     {   $experience = $this->getDoctrine()->getRepository(Experience::class)->find($id);
         $comments= $this->getDoctrine()->getRepository(Comment::class)->listCommentByExperience($experience->getId());
 
-        $comment= new Comment();
+
+
+
+        $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
+        //$user=$this->getDoctrine()->getRepository(User::Class)->find($id_user);
+        //$experience->getDoctrine()->getRepository(Experience::class)->find($id_experience);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setAuthor(1);
-            $comment->setIdExp(19);
+            $comment->setIdExp(3);
             $date = date('d-m-y h:i');
             $comment->setDate($date);
             $comment->setLikes(0);
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->render('Front-office/experience/show.html.twig', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('experience/Front/3', [], Response::HTTP_SEE_OTHER);
         }
 
+
+
         return $this->render('Front-office/experience/show.html.twig', [
+            'comment' => $comment,
             'form' => $form->createView(),
+
             'experience' => $experience,
             'comments'=>$comments
         ]);
@@ -142,28 +144,7 @@ class ExperienceController extends AbstractController
 
 
     
-    /**
-     * @Route("/Front/Search", name="app_experience_search_front", methods={"GET"})
-     */
-    public function listExperienceSearch(Request $request, ExperienceRepository $repository)
-    {
-        //All of experiences
-        $experiences = $repository->findAll();
-        
-        //search
-        $searchForm = $this->createForm(SearchExperienceType::class);
-        $searchForm->add("Search", SubmitType::class);
-        $searchForm->handleRequest($request);
-        if ($searchForm->isSubmitted()) {
-            $title = $searchForm['title']->getData();
-            $resultOfSearch = $repository->searchExperience($title);
-            return $this->render('Front-office/experience/searchExperience.html.twig', array(
-                'resultOfSearch' => $resultOfSearch,
-                'searchExperience' => $searchForm->createView()));
-        }
-        return $this->render('Front-office/experience/index.html.twig', array(
-            "experiences" => $experiences));
-    } 
+
 
 
 
@@ -250,4 +231,36 @@ class ExperienceController extends AbstractController
 
         return $this->redirectToRoute('app_experience_index_back', [], Response::HTTP_SEE_OTHER);
     }
+
+    /**
+     * @Route("/sayebni/{title}", name="app_experience_searchByTitle", methods={"GET"})
+     */
+    public function findByTitle($title) :Response
+    {
+        $rep=$this->getDoctrine()->getRepository(Experience::class);
+        $response = new JsonResponse();
+        if ($title != "") {
+            $experiences = $rep->searchExperience($title);
+            $response->setData(($experiences));
+        } else {
+            $response->setData([]);
+        }
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    /**
+     * @Route("/searchAll", name="app_experience_searchAll", methods={"GET"})
+     */
+    public function finAllExperiences(Request $request):Response
+    {
+        $rep = $this->getDoctrine()->getRepository(Experience::class);
+        $experiences = $rep->searchAllExperiences();
+        $response = new JsonResponse();
+        $response->setData($experiences);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+
 }

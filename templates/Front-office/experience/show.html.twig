@@ -23,24 +23,11 @@
 
          <br>
         <br>
-    {# to show comment form #}
 
 
+        {#TO SHOW COMMENT FORM#}
+        {{ include('Front-office/comment/new.html.twig') }}
 
-            {{form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
-
-            <div class="pt-20">
-
-                    <div class="comment-form-wrap pt-20">
-                        {{ form_widget(form.content,{'attr' : {'class' : 'form-control' , "placeholder":"Comment" }} ) }}
-                        {{ form_errors(form.content) }}
-                        <button class="btn">{{ button_label|default('Comment') }}</button>
-                    </div>
-
-
-
-                {{ form_end(form) }}
-            </div>
 
 
     <br>

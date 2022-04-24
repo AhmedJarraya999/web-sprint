@@ -38,21 +38,20 @@ class CommentController extends AbstractController
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
-        $form->add('Add',SubmitType::class);
         $form->handleRequest($request);
         //$user=$this->getDoctrine()->getRepository(User::Class)->find($id_user);
         //$experience->getDoctrine()->getRepository(Experience::class)->find($id_experience);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setAuthor(1);
-            $comment->setIdExp(19);
+            $comment->setIdExp(3);
             $date = date('d-m-y h:i');
             $comment->setDate($date);
             $comment->setLikes(0);
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_comment_index_front', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('experience/Front/19', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('Front-office/comment/new.html.twig', [
