@@ -5,6 +5,7 @@ use App\Repository\ExperienceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Vangrg\ProfanityBundle\Validator\Constraints as ProfanityAssert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 use Doctrine\ORM\Mapping as ORM;
@@ -29,15 +30,15 @@ class Experience
 
     /**
      * @var int
-     *
      * @ORM\Column(name="id_author", type="integer", nullable=false)
      */
     private $idAuthor;
 
     /**
      * @var string
-     *
+     *@Assert\NotBlank()
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
+     * @ProfanityAssert\ProfanityCheck
      */
     private $title;
 
@@ -45,6 +46,7 @@ class Experience
      * @var string
      *
      * @ORM\Column(name="content", type="text", length=65535, nullable=false)
+     * @Assert\NotBlank()
      * @ProfanityAssert\ProfanityCheck
      */
     private $content;

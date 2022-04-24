@@ -11,7 +11,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+
                 <th>Author</th>
                 <th>Content</th>
                 <th>Date</th>
@@ -22,14 +22,14 @@
         <tbody>
         {% for comment in comments %}
             <tr>
-                <td>{{ comment.id }}</td>
+
                 <td>{{ comment.author }}</td>
                 <td>{{ comment.content }}</td>
                 <td>{{ comment.date }}</td>
                 <td>{{ comment.likes }}</td>
                 <td>
                     <a href="{{ path('app_comment_show_back', {'id': comment.id}) }}" class="btn btn-outline-success btn-fw">show</a>
-                    <a href="{{ path('app_comment_edit_back', {'id': comment.id}) }}" class="btn btn-outline-warning btn-fw">edit</a>
+                    {#<a href="{{ path('app_comment_edit_back', {'id': comment.id}) }}" class="btn btn-outline-warning btn-fw">edit</a>#}
                 </td>
             </tr>
         {% else %}
@@ -40,6 +40,6 @@
         </tbody>
     </table>
         </div>
-    <a href="{{ path('app_comment_new_back') }}" class="btn btn-info">Create new</a>
+    {#<a href="{{ path('app_comment_new_back') }}" class="btn btn-info">Create new</a>#}
     </div>
 {% endblock %}

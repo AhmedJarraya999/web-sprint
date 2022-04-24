@@ -4,6 +4,7 @@ namespace App\Entity;
 use App\Repository\CommentRepository;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Comment
@@ -31,7 +32,7 @@ class Comment
 
     /**
      * @var string
-     *
+     *@Assert\NotBlank()
      * @ORM\Column(name="content", type="string", length=255, nullable=false)
      */
     private $content;
