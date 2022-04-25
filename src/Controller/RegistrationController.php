@@ -22,9 +22,12 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $userPasswordEncoder,
-        MailerInterface $mailer, EntityManagerInterface $entityManager): Response
-    {
+    public function register(
+        Request $request,
+        UserPasswordEncoderInterface $userPasswordEncoder,
+        MailerInterface $mailer,
+        EntityManagerInterface $entityManager
+    ): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -49,27 +52,24 @@ class RegistrationController extends AbstractController
             $email = (new TemplatedEmail())
                 ->from(new Address('mailersendj1@gmail.com', 'Trips.com'))
                 ->to($user->getEmail())
-                ->subject('Trips.com account is active')
+                ->subject('StarTour.com account is active')
                 ->htmlTemplate('emails/registration.html.twig')
                 ->context([
                     'username' => $user->getUsername()
-                ])
-            ;
+                ]);
 
             $mailer->send($email);
 
             try {
                 $message = $twilio->messages
-                ->create(
-                    $test, // to 
-                    array(
-                        "messagingServiceSid" => "MG6bab091d610907bb2021edc85f426141",
-                        "body" => " You have succeffully registered to our platform"
-                    )
-                );
-                
-            }catch(Exception $ex){
-                
+                    ->create(
+                        $test, // to 
+                        array(
+                            "messagingServiceSid" => "MG6bab091d610907bb2021edc85f426141",
+                            "body" => " You have succeffully registered to our platform"
+                        )
+                    );
+            } catch (Exception $ex) {
             }
 
             return $this->redirectToRoute('app_login');
