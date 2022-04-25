@@ -83,9 +83,12 @@ class BookingController extends AbstractController
     /**
      * @Route("/{stay}/book", name="app_booking_stay", methods={"GET", "POST"})
      */
-    public function create(Request $request, Stay $stay,  BookingRepository $bookingRepository,
-     MailerInterface $mailer): Response
-    {
+    public function create(
+        Request $request,
+        Stay $stay,
+        BookingRepository $bookingRepository,
+        MailerInterface $mailer
+    ): Response {
         $booking = new Booking();
         $booking->setStay($stay);
         $booking->setBookingDate(new DateTime());
@@ -97,20 +100,20 @@ class BookingController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             $booking->setUser($user);
             $bookingRepository->add($booking);
             // Instantiate Dompdf with our options
             $dompdf = new Dompdf();
             $dompdf->setPaper('A4', 'portrait');
-            
+
             // Retrieve the HTML generated in our twig file
             $html = $this->renderView(
                 // templates/emails/registration.html.twig
                 'emails/booking.html.twig',
                 ['stay' => $booking->getStay(), 'booking' => $booking, 'user' => $user]
             );
-            
+
             // Load HTML to Dompdf
             $dompdf->loadHtml($html);
             // Render the HTML as PDF
@@ -118,7 +121,8 @@ class BookingController extends AbstractController
 
             $email = (new TemplatedEmail())
                 ->from(new Address('mailersendj1@gmail.com', 'Trips.com'))
-                ->to($user->getEmail())
+                ->to($booking->getStay()->getUsers()->getEmail())
+                #$user->getEmail()
                 ->subject('Your booking at Trips.com saved successfully')
                 ->htmlTemplate('emails/booking.html.twig')
                 ->context([
@@ -133,7 +137,6 @@ class BookingController extends AbstractController
             $dompdf->stream("booking.pdf", [
                 "Attachment" => true
             ]);
-    
         }
 
         return $this->render('booking/new.html.twig', [
@@ -141,7 +144,7 @@ class BookingController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-   
+
 
     /**
      * @Route("/new", name="app_booking_new", methods={"GET", "POST"})

@@ -14,9 +14,9 @@ class BookingType extends AbstractType
         $builder
             ->add('bookingDate')
             ->add('firstDate')
-            ->add('endDate')
-            ->add('stay')
-            ->add('user');
+            ->add('endDate');
+
+        # ->add('user');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
