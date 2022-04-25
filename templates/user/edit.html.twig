@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseAdmin.html.twig' %}
 
 {% block title %}Edit User{% endblock %}
 
@@ -7,7 +7,15 @@
 
     {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+    
+{% endblock %}
 
-    {{ include('user/_delete_form.html.twig') }}
+{% block js %}
+    <script>
+    function beforeRemove() {
+        if(confirm('Are you sure you want to delete this item?')) {
+            window.href = "{{ path('app_user_remove', {'user': user.id}) }}";
+        }
+    }
+    </script>
 {% endblock %}

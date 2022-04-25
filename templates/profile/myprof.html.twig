@@ -4,49 +4,84 @@
 
 {% block body %}
 
-    <div class="container">
-        <div class="row align-items-center mb-5">
-            <div class="col-3 text-center">
-                 <img src="/front/images/profile.jpg" alt="Image"
-  class="avatar mb-3" alt="Avatar de {{user.firstname}}"
-  />
-                
-                <br>
-                <span class="badge badge-primary">{{user.stays | length}} annonces</span>
-                 <span class="badge badge-primary">{{user.bookings | length}} réservations</span>
+     <div class="container rounded bg-white mt-5 mb-5" >
+     
+        <div class="row" >
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" />
+                    <span class="font-weight-bold">{{ user.firstname ~ ' ' ~ user.lastname }}</span>
+                    <span class="text-black-50"> Email : {{ user.email }}</span>
+                    <span> Username : {{ user.username }} </span>
+                    <span> Mobile phone : {{ user.phone }}</span>
+                    <span class="labels"> <p> {{ user.introduction }} </p> </span>
+                    <span><a href="{{ path('update_profile') }}" class="btn btn-primary mr-2 mb-2">Edit</a></span>
+                </div>
             </div>
-            <div class="col-9">
-                <h1>{{user.firstname}}</h1>
-                {% if user is same as(app.user) %}
-                    <div class="mt-3">
-                        <a href="{{ path('update_profile') }}" class="btn btn-primary mr-2 mb-2">Modifier mes informations</a>
-                       {# <a href="{{ path('account_password') }}" class="btn btn-primary mb-2">Modifier mon mot de passe</a> #}
+            <div class="col-md-9 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        {% if is_granted('ROLE_HOST') %}
+                        <span class="badge badge-primary">{{user.stays | length}} annonces</span>
+                        {% endif %}
+                        {% if is_granted('ROLE_GUEST') %}
+                        <span class="badge badge-primary">{{user.bookings | length}} réservations</span>
+                        {% endif %}
                     </div>
-                {% endif %}
+                    <hr />
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            {% if user.stays | length > 0 %}
+                                <div class="row" style="display: flex;align-items: center;">
+                                    {% for stay in user.stays %}
+                                     <div class="col-lg-4 col-md-6 mb-4 aos-init aos-animate" data-aos="fade-up">
+                                        <div class="listing-item">
+                                            <div class="listing-image">
+                                                <img src="{{ asset('uploads/' ~ stay.photo) }}" alt="Image" class="img-fluid"></div>
+                                                <div class="listing-item-content">
+                                                    <a class="px-3 mb-3 category bg-primary" href="{{ path('app_stay_show', {'id': stay.id}) }}">Consult</a>
+                                                    <h2 class="mb-1">
+                                                        <a href="{{ path('app_stay_show', {'id': stay.id}) }}">{{ stay.description}}</a>
+                                                    </h2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            {% elseif user.bookings | length > 0 %}    
+                                <div class="row" style="display: flex;align-items: center;background-color:white;padding:100px; border: 60px solid orange">
+                                    {% for booking in user.bookings %}
+                                     <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                                        <span> Start At : {{ booking.firstDate |date('Y-m-d') }} </span>
+                                        <span> End At : {{ booking.endDate |date('Y-m-d') }} </span>
+                                        <span> Stay : {{ booking.stay.description }} </span>
+                                     </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div class="alert alert-warning">
+                                    <p>
+                                        {% if is_granted('ROLE_HOST') %}
+                                        <strong>{{user.firstname}}</strong> n'a pas encore d'annonce sur le site !
+                                        {% endif %}
+                                        {% if is_granted('ROLE_GUEST') %}
+                                        <strong>{{user.firstname}}</strong> n'a pas encore de réservations sur le site !
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            {% endif %}
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 py-5">
+                    
+                    
+                </div>
             </div>
         </div>
-       
-       <h2>  you can find here a description about this member: </h2>
-       </br>
-       <h5> {{user.introduction}}</h5>
-
-        <hr>
-
-        <h2>Les annonces de {{user.firstname}}</h2>
-
-        {% if user.stays | length > 0 %}
-            <div class="row">
-                {% for stay in user.stays %}
-                    {% include 'stay/show.html.twig' %}
-                {% endfor %}
-            </div>
-        {% else %}
-            <div class="alert alert-warning">
-                <p>
-                    <strong>{{user.firstname}}</strong> n'a pas encore d'annonce sur le site !
-                </p>
-            </div>
-        {% endif %}
     </div>
 
 {% endblock %}

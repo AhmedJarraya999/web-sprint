@@ -1,4 +1,15 @@
-{{ form_start(form) }}
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block styles %}
+   
+{% endblock %}
+
+{% block body %} 
+    
+    <div class="container rounded bg-white mt-5 mb-5">
+     {{ form_start(form) }}
         <div class="row">
             {%  if app.flashes('success') %}
             <div class="col-md-12 p-3 py-5">
@@ -33,29 +44,17 @@
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <label class="labels">Mobile Phone</label>
                             {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
                         </div>
-                        <div class="col-md-6">
-                            <label class="labels">Role</label>
-                            {{ form_widget(form.roles, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-                    </div>
-                    <div class="row mt-3">    
                         <div class="col-md-12">
                             <label class="labels">Introduction</label>
                             {{ form_widget(form.introduction, {'attr': {'class': 'form-control'}}) }}
                         </div>  
                     </div>
                     <div class="mt-5 text-center">
-                        <button class="btn btn-primary" type="button" onclick="$('form[name=\'user\']').submit()">
-                            {{ button_label|default('Save') }}
-                        </button>
-                        <a class="btn btn-primary" href="{{ path('app_user_index') }}">back to list</a>
-                        {% if user.id %}
-                        <a class="btn btn-primary" href="#" onclick="beforeRemove()">delete</a>
-                        {% endif %}
+                        <button class="btn btn-primary profile-button" type="submit">Save Profile</button>
                     </div>
                 </div>
             </div>
@@ -69,19 +68,11 @@
                         <label class="labels">Username</label>
                         {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
                     </div>
-                    {% if user.id %}
                     <div class="col-md-12">
                         <label class="labels">Password</label><br>
                         <small> NB : leave it empty if you don't want to change the password </small>
-                        <input type="password" name="plainPassword" class="form-control" placeholder="new password" value="" />
+                        <input type="password" name="plainPassword" class="form-control" placeholder="new password" value=""></div>
                     </div>
-                    {% else %}
-                    <div class="col-md-12">
-                        <label class="labels">Password</label><br>
-                        <input type="password" name="plainPassword" class="form-control" placeholder="new password" value="" />
-                    </div>
-                    {% endif %}
-                    <br>
                     <div class="col-md-12">
                         {{ form_widget(form.captchaCode, {'attr': {'class': 'form-control'}}) }}
                     </div>  
@@ -91,6 +82,11 @@
                 </div>
             </div>
         </div>
-        
-        {{ form_end(form) }}   
+        {{ form_end(form) }}
+    </div>
 
+{% endblock %}
+
+{% block js %}
+    
+{% endblock %}

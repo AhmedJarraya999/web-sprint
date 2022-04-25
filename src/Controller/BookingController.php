@@ -98,7 +98,7 @@ class BookingController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             
-            //$booking->setUser($user);
+            $booking->setUser($user);
             $bookingRepository->add($booking);
             // Instantiate Dompdf with our options
             $dompdf = new Dompdf();

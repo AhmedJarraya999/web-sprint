@@ -1,14 +1,20 @@
+
 {% block body %}
-{{ form_start(form) }}
 
-{{ form_row(form.q)}}
+    
+    <div class="my-custom-class-for-errors">
+        
+    </div>
 
-{{ form_row(form.p) }}
+    <div class="row" style="padding-bottom: 3%">
+        <div class="col">
+            <input type="text" id="user-description" class="form-control" placeholder="user full name" />
+        </div>
 
-</div>
-
-<button type="submit" class="btn btn-primary w=100">Chercher </button>
-
-{{ form_end(form) }}
-
+        <div class="col">
+            <button type="button" onclick="fetchUsersFromApi()" class="btn btn-primary w=100">Chercher </button>
+        </div>
+    </div>
 {% endblock %}
+
+

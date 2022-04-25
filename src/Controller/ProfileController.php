@@ -10,8 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Form\UserType;
-
-
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/profile")
@@ -31,7 +30,7 @@ class ProfileController extends AbstractController
      * @Route("/update", name="update_profile")
      */
 
-    public function profile(Request $request, EntityManagerInterface $manager)
+    public function profile(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
     {
         $user = $this->getUser();
 
@@ -40,6 +39,11 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if($plainPassword = $request->request->get('plainPassword')) {
+                $hash = $encoder->encodePassword($user, $plainPassword);
+                $user->setPassword($hash);
+            }
+
             $manager->persist($user);
             $manager->flush();
 
@@ -50,7 +54,8 @@ class ProfileController extends AbstractController
         }
 
         return $this->render('user/profile.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'user' => $user
         ]);
     }
     /**

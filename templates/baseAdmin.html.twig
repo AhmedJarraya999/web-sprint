@@ -20,6 +20,11 @@
   <link rel="stylesheet" href="/back/css/vertical-layout-light/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="/back/images/favicon.png" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
+
+  {% block styles %}
+
+  {% endblock %}
 </head>
 <body>
   <div class="container-scroller">
@@ -99,11 +104,11 @@
               <img src="images/faces/face28.jpg" alt="profile"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item">
+              <a class="dropdown-item" href="{{ path('admin_profile') }}">
                 <i class="ti-settings text-primary"></i>
                 Settings
               </a>
-              <a class="dropdown-item">
+              <a class="dropdown-item" href="{{ path('app_logout') }}">
                 <i class="ti-power-off text-primary"></i>
                 Logout
               </a>
@@ -144,3 +149,12 @@
   <script src="/back/js/dashboard.js"></script>
   <script src="/back/js/Chart.roundedBarCharts.js"></script>
   <!-- End custom js for this page-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  {% block js %}
+
+  {% endblock %}  
+</body>
+
+</html>

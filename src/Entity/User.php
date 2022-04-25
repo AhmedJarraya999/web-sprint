@@ -9,12 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Captcha\Bundle\CaptchaBundle\Validator\Constraints as CaptchaAssert;
+use JsonSerializable;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
  */
-class User implements UserInterface
+class User implements UserInterface, JsonSerializable
 {
     /**
      * @ORM\Id
@@ -297,4 +298,8 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function jsonSerialize() {
+        return get_object_vars($this);     
+     }
 }

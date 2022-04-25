@@ -40,7 +40,7 @@ class StayController extends AbstractController
        
         $dateString = $request->request->get('date', '');
         $date = null;
-
+        
         if($dateString !== ''){
             $date = DateTime::createFromFormat('Y-m-d', $dateString);
         }
