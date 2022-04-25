@@ -39,7 +39,7 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if($plainPassword = $request->request->get('plainPassword')) {
+            if ($plainPassword = $request->request->get('plainPassword')) {
                 $hash = $encoder->encodePassword($user, $plainPassword);
                 $user->setPassword($hash);
             }
@@ -51,6 +51,7 @@ class ProfileController extends AbstractController
                 'success',
                 "Les données du profil ont été enregistrée avec succès !"
             );
+            return $this->redirectToRoute('account_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('user/profile.html.twig', [
