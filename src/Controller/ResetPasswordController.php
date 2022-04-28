@@ -165,7 +165,11 @@ class ResetPasswordController extends AbstractController
         }
 
         $email = (new TemplatedEmail())
+<<<<<<< HEAD
             ->from(new Address('testapimail63@gmail.com', 'StarTours App Mail Bot'))
+=======
+            ->from(new Address('mailersendj1@gmail.com', 'Trips.com'))
+>>>>>>> new
             ->to($user->getEmail())
             ->subject('Your password reset request')
             ->htmlTemplate('reset_password/email.html.twig')
@@ -181,4 +185,8 @@ class ResetPasswordController extends AbstractController
 
         return $this->redirectToRoute('app_check_email');
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> new

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Data\SearchData2;
+use App\Data\StaySearchData;
 use App\Entity\Stay;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
@@ -45,24 +46,22 @@ class StayRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
-    public function findSearch(SearchData2 $search): array
+
+    public function findSearch(StaySearchData $search): array
     {
         $query = $this->createQueryBuilder('s')->select('s');
-        $dateSearch = ($search->j) ? date_format($search->j, "Y-m-d") : null;
+        $dateSearch = ($search->getDate()) ? date_format($search->getDate(), "Y-m-d") : null;
 
-        if ($search->i || $search->j) {
+        if ($search->getText() || $search->getDate()) { 
             $query =
                 $query
                 ->where('s.description LIKE :i')
-                ->setParameter('i', '%' . $search->i . '%');
+                ->setParameter('i', '%' . $search->getText() . '%');
             if ($dateSearch !== null) {
                 $query->andWhere('s.startdateav = :j ')
                     ->setParameter('j', $dateSearch);
             }
         }
-
-
-
         return $query->getQuery()->getResult();
     }
 

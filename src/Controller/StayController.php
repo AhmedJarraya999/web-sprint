@@ -2,19 +2,18 @@
 
 namespace App\Controller;
 
-use App\Data\SearchData2;
-use App\Data\SearchStay;
-use App\Service\UploaderService;
+use App\Data\StaySearchData;
 use App\Entity\Stay;
 use App\Entity\User;
-use App\Form\Advancedresearch;
-use App\Form\SearchFormType2;
 use App\Form\StayType;
 use App\Repository\StayRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 /**
@@ -27,22 +26,35 @@ class StayController extends AbstractController
      */
     public function index(StayRepository $stayRepository, Request $request): Response
     {
-
-        $data = new SearchData2();
-        $form = $this->createForm(SearchFormType2::class, $data);
-        $form->handleRequest($request);
-        $stays = $stayRepository->findSearch($data);
-
-
-
-
         return $this->render('stay/index.html.twig', [
-            'stays' => $stays,
-            'form' => $form->createView()
+            'stays' => [],
         ]);
     }
 
     /**
+     * @Route("/search", name="app_stay_search", methods={"POST"})
+     */
+    public function search(StayRepository $stayRepository, Request $request): Response
+    {
+        $data = new StaySearchData();
+       
+        $dateString = $request->request->get('date', '');
+        $date = null;
+        
+        if($dateString !== ''){
+            $date = DateTime::createFromFormat('Y-m-d', $dateString);
+        }
+
+        $data->setText($request->request->get('text', ''));
+        $data->setDate($date);
+
+        $stays = $stayRepository->findSearch($data);
+
+        return new JsonResponse($stays);
+    }
+
+    /**
+     * @Security("is_granted('ROLE_HOST')")
      * @Route("/new", name="app_stay_new", methods={"GET", "POST"})
      */
     public function new(Request $request, StayRepository $stayRepository): Response
@@ -50,7 +62,7 @@ class StayController extends AbstractController
         $stay = new Stay();
         $form = $this->createForm(StayType::class, $stay);
         $form->handleRequest($request);
-
+        $stay->setUsers($this->getUser());
         if ($form->isSubmitted() && $form->isValid()) {
             #test here
             $photo = $form->get('photo')->getData();
@@ -85,6 +97,7 @@ class StayController extends AbstractController
     }
 
     /**
+     * @Security("is_granted('ROLE_HOST')")
      * @Route("/{id}/edit", name="app_stay_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Stay $stay, StayRepository $stayRepository): Response
@@ -93,6 +106,17 @@ class StayController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $photo = $form->get('photo')->getData();
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            $uploads_directory = $this->getParameter('kernel.project_dir') . '/public/uploads';
+            $filename = md5(uniqid()) . '.' . $photo->guessExtension();
+            $photo->move(
+                $uploads_directory,
+                $filename
+            );
+            $stay->setPhoto($filename);
+
             $stayRepository->add($stay);
             return $this->redirectToRoute('app_stay_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -104,6 +128,7 @@ class StayController extends AbstractController
     }
 
     /**
+     * @Security("is_granted('ROLE_HOST')")
      * @Route("/{id}", name="app_stay_delete", methods={"POST"})
      */
     public function delete(Request $request, Stay $stay, StayRepository $stayRepository): Response

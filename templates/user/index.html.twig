@@ -2,48 +2,102 @@
 
 {% block title %}User index{% endblock %}
 
-{% block body %}
-    <h1>User index</h1>
-     {% include 'user/_filtre.html.twig' with {form : form} only %}
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Username</th>
-                <th>Roles</th>
-                <th>Password</th>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.firstname }}</td>
-                <td>{{ user.lastname }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.phone }}</td>
-                
-                <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_user_new') }}">Create new</a>
+{% block styles %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
+   
 {% endblock %}
+
+{% block body %}
+    <div class="container py-5">
+        <div class="row py-5">
+            <h1>User index</h1>
+            <div class="col-md-10">
+            {% include 'user/_filtre.html.twig' %}
+            </div>
+            <div class="col-md-2">
+                <a href="{{ path('app_user_new') }}">Create new</a>
+            </div>
+            <div class="col-md-12">
+                <table class="table" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Username</th>
+                            <th>Role</th>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user-list">
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.roles ? user.roles[0] : '' }}</td>
+                            <td>{{ user.firstname }}</td>
+                            <td>{{ user.lastname }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.phone }}</td>
+                            
+                            <td>
+                                <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
+                                <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="9">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+   
+{% endblock %}
+
+{% block js %}
+    <script>
+        const table = $('#user-list');
+        const fetchUsersFromApi = () => {
+            const text = $('#user-description').val();
+            
+            $.post("{{ path('app_user_search') }}", {text}, function(response){ 
+                drawTable(response);
+            });
+        }
+        const drawTable = (data) => {
+            table.empty();
+            if(data.length > 0){
+                
+                data.forEach( row => {
+                    // table row creation
+                    const showPath = "{{ path('app_user_show', {'id': '__code'}) }}".replaceAll('__code', row.id);
+                    const editPath = "{{ path('app_user_edit', {'id': '__code'}) }}".replaceAll('__code', row.id);
+                    
+                    let tr = $(`<tr></tr>`);
+                    tr.append(`<td> ${row.id} </td>`);
+                    tr.append(`<td> ${row.username} </td>`);
+                    tr.append(`<td> ${row.roles[0] ? row.roles[0] : (row.roles ?? '')} </td>`);
+                    tr.append(`<td> ${row.firstname} </td>`);
+                    tr.append(`<td> ${row.lastname} </td>`);
+                    tr.append(`<td> ${row.email} </td>`);
+                    tr.append(`<td> ${row.phone} </td>`);
+                   
+                    tr.append(`<td>
+                        <a href="${showPath}">show</a>
+                        <a href="${editPath}">edit</a>
+                    </td>`);
+                    table.append(tr);
+                    
+                });
+            }
+        }
+        
+        fetchUsersFromApi();
+    </script>
+  {% endblock %}  

@@ -12,13 +12,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class AdminDashboardController extends AbstractController
 {
     /**
-     * @Route("/admin", name="admin_dashboard")
+     * @Route("/admins", name="admin_dashboard")
      */
     public function index()
     {
-
-
-
         return $this->render('admin/dashboard/index.html.twig');
     }
 }

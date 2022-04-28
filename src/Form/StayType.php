@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Stay;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,9 +17,15 @@ class StayType extends AbstractType
     {
         $builder
             ->add('capacity')
-            ->add('description')
-            ->add('startdateav')
-            ->add('enddateav')
+            ->add('description', TextareaType::class)
+            ->add('startdateav', DateTimeType::class, [
+                'data' => new \DateTime(),
+                'attr'  => ['min' => (new \DateTime())->format('Y-m-d')]
+            ])
+            ->add('enddateav', DateTimeType::class, [
+                'data' => new \DateTime(),
+                'attr'  => ['min' => (new \DateTime())->format('Y-m-d')]
+            ])
             #->add('photo')
             #test here
             ->add('photo', FileType::class, [

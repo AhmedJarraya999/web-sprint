@@ -1,18 +1,68 @@
+
 {{ form_start(form) }}
 </br>
-    {{ form_widget(form) }}
-    </br>
+    <div class="form-group row" style="margin: 2%; text-align: left">
+        <div class="col">
+            {{ form_label(form.capacity) }}
+        </div>
+        <div class="col">
+             {{ form_widget(form.capacity, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="form-group row" style="margin: 2%; text-align: left">
+        <div class="col">
+            {{ form_label(form.description) }}
+        </div>
+        <div class="col">
+             {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
     
-             <a href="{{ path('app_stay_new') }}" style="width: 200x" class="btn btn-primary">ADD A STAY
-            <img src="/front/images/plus.png" alt="Image"
-  class="maskImg"
-  />
-            </a>
-            <a href="{{ path('app_stay_index') }}" style="width: 200x" class="btn btn-primary">Back to list
-            <img src="/front/images/return.png" alt="Image"
-  class="maskImg"
-  />
-            </a>
-</br>
-</br>            
+    <div class="form-group row" style="margin: 2%; text-align: left">
+        <div class="col">
+            Start At
+        </div>
+        <div class="col">
+            {{ form_widget(form.startdateav.date.day, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col">
+            {{ form_widget(form.startdateav.date.month, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col">
+            {{ form_widget(form.startdateav.date.year, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+     <div class="form-group row" style="margin: 2%; text-align: left">
+        <div class="col">
+            End At
+        </div>
+        <div class="col">
+            {{ form_widget(form.enddateav.date.day, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col">
+            {{ form_widget(form.enddateav.date.month, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col">
+            {{ form_widget(form.enddateav.date.year, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    
+    <div class="form-group" style="margin: 2%; text-align: left">
+        <label >{{ form_label(form.photo) }}</label>
+        {{ form_widget(form.photo, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div style="display: none">
+        {{ form_rest(form) }}
+    </div>
+    </br>
+    <button type="submit" class="btn btn-primary" style="width: 195px;background:!important; color: white !important">
+        Add a stay
+        <img src="{{ asset('/front/images/plus.png') }}" alt="Image" class="maskImg" />
+    </button>
+
+    <a href="{{ path('app_stay_index') }}" style="width: 200x" class="btn btn-primary">
+        Back to list
+        <img src="/front/images/return.png" alt="Image" class="maskImg" />
+    </a>
+           
 {{ form_end(form) }}

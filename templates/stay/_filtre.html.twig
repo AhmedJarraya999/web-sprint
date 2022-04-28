@@ -1,24 +1,25 @@
 {% block body %}
 
-    {{ form_start(form) }}
     <div class="my-custom-class-for-errors">
-        {{ form_errors(form) }}
+        
     </div>
 
-    <div class="row">
+    <div class="row" style="padding-bottom: 3%">
         <div class="col">
-            {{ form_row(form.i) }}
+        </div>
+        <div class="col">
+            <input type="text" id="stay-description" class="form-control" placeholder="a key word please" />
         </div>
         <div class="col" id="some-custom-id">
-            {{ form_row(form.j) }}
+            <input type="date" id="stay-date" class="form-control" >
         </div>
 
         <div class="col">
-            <button type="submit" class="btn btn-primary w=100">Look for a stay
+            <button onclick="fetchStaysFromApi()" class="btn btn-primary w=100">Look for a stay
                 <img src="/front/images/magnifier.png" alt="Image" class="maskImg"/>
             </button>
         </div>
+        <div class="col">
+        </div>
     </div>
-
-
-</br></br>{{ form_end(form) }}{% endblock %}
+{% endblock %}

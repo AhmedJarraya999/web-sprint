@@ -11,6 +11,8 @@
 <br></br>
 
     <table class="table">
+     <img style="width:10px height:10px margin:10px ;" src="{{ asset('uploads/' ~ stay.photo) }}" alt="Image" class="img-fluid"></div>
+       </br>
         <tbody>
             <tr>
                 <th>Id</th>
@@ -25,8 +27,7 @@
                 <td>{{ stay.description }}</td>
             </tr>
             <tr>
-                <th>Photo</th>
-                <td>{{ stay.photo }}</td>
+              
             </tr>
             <tr>
                 <th>Startdateav</th>
@@ -37,19 +38,19 @@
                 <td>{{ stay.enddateav ? stay.enddateav|date('Y-m-d') : '' }}</td>
             
             </tr>
+            
         </tbody>
     </table>
 
     <a href="{{ path('app_stay_index') }}" class="btn btn-primary"style="margin:30px;width:400px"  >back 
-     <img src="/front/images/return.png" alt="Image"
-  class="maskImg"</a>
+     <img src="/front/images/return.png" alt="Image" class="maskImg" /></a>
 
   </br>
-
-    <a href="{{ path('app_booking_new', {'id': stay.id}) }}" class="btn btn-info" style="margin:5px;width:400px">Book now
-     <img src="/front/images/book.png" alt="Image"
-  class="maskImg"
-    </a>
+    {% if is_granted('ROLE_GUEST') %}
+        <a href="{{ path('app_booking_stay', {'stay': stay.id}) }}" class="btn btn-info" style="margin:5px;width:400px">Book now
+        <img src="/front/images/book.png" alt="Image" class="maskImg" >
+        </a>
+    {% endif %}
  
    {# {{ include('stay/_delete_form.html.twig') }} #}
     </div>

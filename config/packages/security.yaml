@@ -23,8 +23,13 @@ security:
             logout:
                 path: app_logout
                 # where to redirect after logout
-                # target: app_any_route
+                target: app_login
 
+    role_hierarchy:
+        ROLE_GUEST: ROLE_USER
+        ROLE_HOST: ROLE_USER
+        ROLE_ADMIN: [ROLE_ADMIN, ROLE_GUEST, ROLE_HOST]
+        
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
@@ -35,4 +40,4 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          #- { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/booking, roles: ROLE_GUEST }

@@ -23,114 +23,21 @@
 
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="/front/css/style.css">
+    <style>
+      .fullWidthForm form {
+        width: 100%;
+      }
+      .fullWidthForm {
+        padding: 5%;
+      }
+    </style>
+    {% block stylesheets %}
 
+    {% endblock %}
   </head>
 
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
-
-   
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
     <div class="site-wrap" id="home-section">
 
       <div class="site-mobile-menu site-navbar-target">
@@ -141,8 +48,6 @@
         </div>
         <div class="site-mobile-menu-body"></div>
       </div>
-
-
 
       <header class="site-navbar site-navbar-target" role="banner">
 
@@ -166,16 +71,46 @@
 
               <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
                 <ul class="site-menu main-menu js-clone-nav ml-auto ">
-                  <li class="active"><a href="{{ path('app_stay_index') }}" class="nav-link">Home</a></li> 
-                  <li><a href="{{ path('app_stay_new') }}" class="nav-link">My Stay</a></li>
-                  <li><a href="{{ path('MyBookings') }}" class="nav-link">My Bookings</a></li>
+                  <!-- home page path  -->
+                  {% if "home" in app.request.get('_route') %}
+                    <li class="active"><a href="{{ path('app_stay_index') }}" class="nav-link">Home</a></li> 
+                  {% else %}
+                    <li><a href="{{ path('app_stay_index') }}" class="nav-link">Home</a></li> 
+                  {% endif %}  
+                  
+                  {% if is_granted('ROLE_HOST') %}
+                    <!-- new stay path  -->
+                    {% if "app_stay" in app.request.get('_route') %}
+                      <li class="active"><a href="{{ path('app_stay_index') }}" class="nav-link">My Stay</a></li>
+                    {% else %}
+                      <li><a href="{{ path('app_stay_new') }}" class="nav-link">My Stay</a></li>
+                    {% endif %}
+                  {% endif %}
+
+                  {% if is_granted('ROLE_GUEST') %}
+                    <!-- booking path -->
+                    {% if "Booking" in app.request.get('_route') %}
+                      <li class="active"><a href="{{ path('MyBookings') }}" class="nav-link">My Bookings</a></li>
+                    {% else %}
+                      <li><a href="{{ path('MyBookings') }}" class="nav-link">My Bookings</a></li>
+                    {% endif %}
+                  {% endif %}
+                  
                   <li ><a href="index.html" class="nav-link">Rankings</a></li>
                   <li ><a href="index.html" class="nav-link">Feedbacks</a></li>
 
                   <li><a href="about.html" class="nav-link">About</a></li>
+                  {% if app.user %}
                   <li><a href="{{ path('account_index') }}" class="nav-link">My Profile</a></li>
+                  {% endif %}
                   <li><a href="blog.html" class="nav-link">Blog</a></li>
-                  <li><a href="contact.html" class="nav-link">Contact</a></li>
+                 
+
+                  {% if app.user %}
+                    <li title="logout"><a href="{{ path('app_logout') }}">
+                     <img src="/icons/logout.svg"> </a> 
+                    </li>
+                  {% endif %}
                 </ul>
               </nav>
             </div>
@@ -186,82 +121,21 @@
 
       </header>
 
-   
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="ftco-blocks-cover-1">
-      <div class="site-section-cover overlay" style="background-image: url('/front/images/hero_1.jpg')">
-       
-       
-        <div class="container">
+    <div class="ftco-blocks-cover-1">
+      <div class="site-section-cover overlay" style="background-image: url('/front/images/hero_3.jpg')">
+         <div class="container">
           <div class="row align-items-center">
-            <div class="col-md-5" data-aos="fade-right">
-              <h1 class="mb-3 text-white">Let's Enjoy The Wonders of Nature</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta veritatis in tenetur doloremque, maiores doloribus officia iste. Dolores.</p>
-              <p class="d-flex align-items-center">
-                <a href="https://vimeo.com/191947042" data-fancybox class="play-btn-39282 mr-3"><span class="icon-play"></span></a>
-                <span class="small">Watch the video</span>
-              </p>
+            <div >
+              <h1 class="mb-3 text-white">Exploring The World In Comfort</h1>
+              <p> Star Tours , your guide to find the perfect stay. </p>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-
-
-
-
-
-
-
-   
-   
-   
-   
     <div class="site-section" style="max-height:10px;">
 
       <div class="container">
@@ -280,6 +154,110 @@
     </div>
     </div>
     {% block body %}
+         <div class="site-section">
+      <div class="container">
+
+       
+        <div class="row">
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="post-entry-1 h-100">
+              <a href="single.html">
+                <img src="images/img_1.jpg" alt="Image"
+                 class="img-fluid">
+              </a>
+              <div class="post-entry-1-contents">
+                
+                <h2><a href="single.html">Lorem ipsum dolor sit amet</a></h2>
+                <span class="meta d-inline-block mb-3">July 17, 2019 <span class="mx-2">by</span> <a href="#">Admin</a></span>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores eos soluta, dolore harum molestias consectetur.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="post-entry-1 h-100">
+              <a href="single.html">
+                <img src="images/img_2.jpg" alt="Image"
+                 class="img-fluid">
+              </a>
+              <div class="post-entry-1-contents">
+                
+                <h2><a href="single.html">Lorem ipsum dolor sit amet</a></h2>
+                <span class="meta d-inline-block mb-3">July 17, 2019 <span class="mx-2">by</span> <a href="#">Admin</a></span>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores eos soluta, dolore harum molestias consectetur.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="post-entry-1 h-100">
+              <a href="single.html">
+                <img src="images/img_3.jpg" alt="Image"
+                 class="img-fluid">
+              </a>
+              <div class="post-entry-1-contents">
+                
+                <h2><a href="single.html">Lorem ipsum dolor sit amet</a></h2>
+                <span class="meta d-inline-block mb-3">July 17, 2019 <span class="mx-2">by</span> <a href="#">Admin</a></span>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores eos soluta, dolore harum molestias consectetur.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="post-entry-1 h-100">
+              <a href="single.html">
+                <img src="images/img_1.jpg" alt="Image"
+                 class="img-fluid">
+              </a>
+              <div class="post-entry-1-contents">
+                
+                <h2><a href="single.html">Lorem ipsum dolor sit amet</a></h2>
+                <span class="meta d-inline-block mb-3">July 17, 2019 <span class="mx-2">by</span> <a href="#">Admin</a></span>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores eos soluta, dolore harum molestias consectetur.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="post-entry-1 h-100">
+              <a href="single.html">
+                <img src="images/img_2.jpg" alt="Image"
+                 class="img-fluid">
+              </a>
+              <div class="post-entry-1-contents">
+                
+                <h2><a href="single.html">Lorem ipsum dolor sit amet</a></h2>
+                <span class="meta d-inline-block mb-3">July 17, 2019 <span class="mx-2">by</span> <a href="#">Admin</a></span>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores eos soluta, dolore harum molestias consectetur.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="post-entry-1 h-100">
+              <a href="single.html">
+                <img src="images/img_3.jpg" alt="Image"
+                 class="img-fluid">
+              </a>
+              <div class="post-entry-1-contents">
+                
+                <h2><a href="single.html">Lorem ipsum dolor sit amet</a></h2>
+                <span class="meta d-inline-block mb-3">July 17, 2019 <span class="mx-2">by</span> <a href="#">Admin</a></span>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores eos soluta, dolore harum molestias consectetur.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        
+        <div class="col-12 mt-5 text-center">
+          <span class="p-3">1</span>
+          <a href="#" class="p-3">2</a>
+          <a href="#" class="p-3">3</a>
+          <a href="#" class="p-3">4</a>
+        </div>
+        
+      </div>
     {% endblock %}
 
     <script src="/front/js/jquery-3.3.1.min.js"></script>
@@ -299,6 +277,9 @@
 
     <script src="/front/js/main.js"></script>
 
+    {% block javascripts %}
+
+    {% endblock %}
   </body>
 
 </html>

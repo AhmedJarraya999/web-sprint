@@ -7,19 +7,23 @@ use Twilio\Rest\Client;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
 
 class RegistrationController extends AbstractController
 {
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordEncoderInterface $userPasswordEncoder,
+        MailerInterface $mailer, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -42,8 +46,20 @@ class RegistrationController extends AbstractController
             $twilio = new Client($sid, $token);
             $test = $user->getPhone();
 
+            $email = (new TemplatedEmail())
+                ->from(new Address('mailersendj1@gmail.com', 'Trips.com'))
+                ->to($user->getEmail())
+                ->subject('Trips.com account is active')
+                ->htmlTemplate('emails/registration.html.twig')
+                ->context([
+                    'username' => $user->getUsername()
+                ])
+            ;
 
-            $message = $twilio->messages
+            $mailer->send($email);
+
+            try {
+                $message = $twilio->messages
                 ->create(
                     $test, // to 
                     array(
@@ -51,8 +67,10 @@ class RegistrationController extends AbstractController
                         "body" => " You have succeffully registered to our platform"
                     )
                 );
-
-            print($message->sid);
+                
+            }catch(Exception $ex){
+                
+            }
 
             return $this->redirectToRoute('app_login');
         }

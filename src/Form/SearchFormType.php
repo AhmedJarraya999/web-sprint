@@ -15,7 +15,7 @@ use App\Repository\ProductsRepository;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
-class SearchForm extends AbstractType
+class SearchFormType extends AbstractType
 {
 
 
