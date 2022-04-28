@@ -1,8 +1,44 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <a href="{{ path('app_stay_index') }}" class=" btn btn-primary" style="margin:5px;width:400px"><img src="/front/images/return.png" alt="Image"
+
+<div class="form-group row" style="margin: 2%; text-align: left">
+        <div class="col">
+            First Date
+        </div>
+        <div class="col">
+            {{ form_widget(form.firstDate.date.day, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col">
+            {{ form_widget(form.firstDate.date.month, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col">
+            {{ form_widget(form.firstDate.date.year, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+     <div class="form-group row" style="margin: 2%; text-align: left">
+        <div class="col">
+            End Date
+        </div>
+        <div class="col">
+            {{ form_widget(form.endDate.date.day, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col">
+            {{ form_widget(form.endDate.date.month, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col">
+            {{ form_widget(form.endDate.date.year, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div style="display: none">
+        {{ form_rest(form) }}
+    </div>
+    </br>
+
+
+    
+    <a href="{{ path('app_stay_index') }}" class=" btn btn-primary" style="margin:5px; width:95% " ><img src="/front/images/return.png" alt="Image"
   class="maskImg"</a>   Back To List</a>
     <br></br>
-    <button class=" btn btn-success" style="margin:5px;width:400px" href="{{ path('app_booking_new') }}"><img src="/front/images/save.png" alt="Image"
+    <button class=" btn btn-success" style="margin:5px; width:95%" href="{{ path('app_booking_new') }}"><img src="/front/images/save.png" alt="Image"
   class="maskImg"</a>  Save</button>
-{{ form_end(form) }}
+  
+  {{ form_end(form) }} 
