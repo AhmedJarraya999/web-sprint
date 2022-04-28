@@ -11,6 +11,8 @@
 <br></br>
 
     <table class="table">
+     <img style="width:10px height:10px margin:10px ;" src="{{ asset('uploads/' ~ stay.photo) }}" alt="Image" class="img-fluid"></div>
+       </br>
         <tbody>
             <tr>
                 <th>Id</th>
@@ -25,8 +27,7 @@
                 <td>{{ stay.description }}</td>
             </tr>
             <tr>
-                <th>Photo</th>
-                <td>{{ stay.photo }}</td>
+              
             </tr>
             <tr>
                 <th>Startdateav</th>
@@ -37,6 +38,7 @@
                 <td>{{ stay.enddateav ? stay.enddateav|date('Y-m-d') : '' }}</td>
             
             </tr>
+            
         </tbody>
     </table>
 
