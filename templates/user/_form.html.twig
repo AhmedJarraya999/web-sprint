@@ -94,3 +94,10 @@
         
         {{ form_end(form) }}   
 
+<script>
+    function beforeRemove() {
+        if(confirm('Are you sure you want to delete this item?')) {
+            window.href = "{{ path('app_user_remove', {'user': user.id}) }}";
+        }
+    }
+    </script>

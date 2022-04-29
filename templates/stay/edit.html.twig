@@ -1,3 +1,5 @@
+
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Edit Stay{% endblock %}
@@ -6,6 +8,7 @@
     <h1>Edit Stay</h1>
 
     {{ include('stay/_form.html.twig', {'button_label': 'Update'}) }}
+    
 
     <a href="{{ path('app_stay_index') }}">back to list</a>
 

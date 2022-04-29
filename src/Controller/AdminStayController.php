@@ -28,6 +28,7 @@ class AdminStayController extends AbstractController
      */
     public function edit(StayRepository $repo, Stay $stay, Request $request): Response
     {
+        $user = $this->getUser();
         $form = $this->createForm(StayType::class, $stay);
         $form->handleRequest($request);
 
@@ -44,7 +45,30 @@ class AdminStayController extends AbstractController
             $stay->setPhoto($filename);
 
             $repo->add($stay);
-            return $this->redirectToRoute('app_admin_stay', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash(
+                'success',
+                "Stay with id <strong>{$stay->getId()}</strong> was succeffully updated ! "
+            );
+            #return $this->redirectToRoute('app_admin_stay', [], Response::HTTP_SEE_OTHER);
         }
+        return $this->render('stay/Adminedit.html.twig', [
+            'stay' => $stay, 'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+    /**     
+     * @Route("/{id}/admin/stay/delete", name="app_admin_stay_delete", methods={"GET","POST"})
+     */
+    public function delete(Request $request, Stay $stay, StayRepository $stayRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $stay->getId(), $request->request->get('_token'))) {
+            $stayRepository->remove($stay);
+            $this->addFlash(
+                'Success',
+                "Stay with id <strong>{$stay->getId()}</strong> was succeffully deleted ! "
+            );
+        }
+
+        return $this->redirectToRoute('app_admin_stay', [], Response::HTTP_SEE_OTHER);
     }
 }

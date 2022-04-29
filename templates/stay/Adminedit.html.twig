@@ -1,0 +1,162 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}Modification de l'annonce numéro {{stay.id}}{% endblock %}
+
+{% form_theme form _self %}
+
+{% block body %}
+
+<div class="container">
+</br>
+
+
+    <h1 class="my-5">Modification de l'annonce {{stay.id}}</h1>
+      {%  if app.flashes('success') %}
+            <div class="col-md-12 p-3 py-5">
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+    {{ form_start(form) }}
+     
+
+    <div class="row">
+        <div class="col">
+            <div class="card bg-light">
+                <div class="card-header">
+                    <h4 class="card-title">Corriger l'annonce ?</h4>
+                </div>
+                <div class="card-body">
+                   {{ include('stay/_form.html.twig')}}
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-check"></i>
+                        Enregistrer les modifications
+                    </button>
+                    <div class="mt-5 text-center">
+                        
+                        <a class="btn btn-primary" href="{{ path('app_admin_stay') }}">back to list</a>
+                        {% if stay.id %}
+                        <a class="btn btn-danger" href="{{path('app_admin_stay_delete',{'id': stay.id})}}" onclick="beforeRemove()"><i class="fas fa-trash"></i> delete</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card bg-light">
+                <div class="card-header">
+                    <h4 class="card-title">Les réservations</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Voyageur</th>
+                                <th>Date de réservation</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for booking in stay.bookings %}
+                            <tr>
+                                <td>{{booking.id}}</td>
+                                <td>{{booking.user.getFirstname()}}</td>
+                                <td>{{booking.bookingDate | date('d/m/Y H:i')}}</td>
+                                <td>
+                                    <a href="#" class="btn btn-primary">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card bg-light mt-5">
+                <div class="card-header">
+                    <h4 class="card-title">Feedbacks</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Author</th>
+                                <th>Note</th>
+                                <th>Commentaire</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for stay in stay.bookings %}
+                            <tr>
+                                <td>id comment</td>
+                                <td>author</td>
+                                <td>note</td>
+                                <td>content</td>
+                                <td>
+                                    <a href="#" class="btn btn-primary">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+</div>
+
+{% endblock %}
+
+{% block _ad_images_widget %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _ad_images_entry_row %}
+    <div id="block_{{id}}">
+        {{ form_widget(form) }}
+    </div>
+{% endblock %}
+
+{% block _ad_images_entry_widget %}
+    <div class="row align-items-center mb-3">
+        <div class="col-4">
+            {% if value %}
+                <img src="{{value.url}}" class="img-fluid" alt="">
+            {% endif %}
+        </div>
+        <div class="col-6">
+            {{ form_row(form.caption) }}
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-danger" data-action="delete" data-target="#block_{{id}}">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        $(document).ready(function() {
+            $('[data-action="delete"]').on('click', function(){
+                const target = this.dataset.target;
+                $(target).remove();
+            });
+        });
+    </script>
+
+{% endblock %}

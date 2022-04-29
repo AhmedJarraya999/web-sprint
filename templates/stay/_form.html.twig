@@ -1,5 +1,7 @@
 
 {{ form_start(form) }}
+
+
 </br>
     <div class="form-group row" style="margin: 2%; text-align: left">
         <div class="col">
@@ -55,7 +57,7 @@
         {{ form_rest(form) }}
     </div>
     </br>
-    <button type="submit" class="btn btn-primary" style="width: 195px;background:!important; color: white !important">
+    {#<button type="submit" class="btn btn-primary" style="width: 195px;background:!important; color: white !important">
         Add a stay
         <img src="{{ asset('/front/images/plus.png') }}" alt="Image" class="maskImg" />
     </button>
@@ -63,6 +65,13 @@
     <a href="{{ path('app_stay_index') }}" style="width: 200x" class="btn btn-primary">
         Back to list
         <img src="/front/images/return.png" alt="Image" class="maskImg" />
-    </a>
+    </a>#}
            
 {{ form_end(form) }}
+<script>
+    function beforeRemove() {
+        if(confirm('Are you sure you want to delete this item?')) {
+            window.href = "{{ path('app_admin_stay_delete', {'id': stay.id}) }}";
+        }
+    }
+    </script>
