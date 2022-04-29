@@ -40,7 +40,7 @@
 
 <td class="text-center"><span class="badge badge-primary rounded">to do </td>
 
-<td class="text-center"><a style="margin:15px width:50px"  href="#"  class=" btn btn-primary" ><i class="fas fa-edit"</i></a>
+<td class="text-center"><a style="margin:15px width:50px"  href="{{ path('app_stay_edit', {'id': stay.id}) }}"  class=" btn btn-primary" ><i class="fas fa-edit"</i></a>
 
 <a href="#" class=" btn btn-danger"><i class="fas fa-trash"</i></a>
 </td>
@@ -51,4 +51,9 @@
 </tbody>
 </table>
 </div>
+{% endblock %}
+{% block javascripts %}
+<script>
+ const editPath = "{{ path('app_stay_edit', {'id': '__code'}) }}".replaceAll('__code', row.id);
+</script>
 {% endblock %}
