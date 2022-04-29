@@ -4,7 +4,8 @@
 
 {% block styles %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
-   
+    <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 {% endblock %}
 
 {% block body %}
@@ -23,6 +24,7 @@
                         <tr>
                             <th>Id</th>
                             <th>Username</th>
+                            <th>Avatar</th>
                             <th>Role</th>
                             <th>Firstname</th>
                             <th>Lastname</th>
@@ -82,6 +84,7 @@
                     let tr = $(`<tr></tr>`);
                     tr.append(`<td> ${row.id} </td>`);
                     tr.append(`<td> ${row.username} </td>`);
+                    tr.append(`<td> ${row.avatar} </td>`);
                     tr.append(`<td> ${row.roles[0] ? row.roles[0] : (row.roles ?? '')} </td>`);
                     tr.append(`<td> ${row.firstname} </td>`);
                     tr.append(`<td> ${row.lastname} </td>`);

@@ -16,6 +16,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
+
+
+
+
 /**
  * @Route("admin/user")
  */
@@ -57,11 +61,11 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if($plainPassword = $request->request->get('plainPassword')) {
+            if ($plainPassword = $request->request->get('plainPassword')) {
                 $hash = $encoder->encodePassword($user, $plainPassword);
                 $user->setPassword($hash);
             }
-            
+
             $userRepository->add($user);
             return $this->redirectToRoute('app_user_index');
         }
@@ -85,13 +89,13 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_user_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, User $user, UserRepository $userRepository,UserPasswordEncoderInterface $encoder): Response
+    public function edit(Request $request, User $user, UserRepository $userRepository, UserPasswordEncoderInterface $encoder): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if($plainPassword = $request->request->get('plainPassword')) {
+            if ($plainPassword = $request->request->get('plainPassword')) {
                 $hash = $encoder->encodePassword($user, $plainPassword);
                 $user->setPassword($hash);
             }
