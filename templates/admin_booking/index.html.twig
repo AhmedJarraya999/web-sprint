@@ -19,37 +19,37 @@
 <thead>
 <tr>
 <th>Id </th>
-<th>Host</th>
-<th> Booking Date</th>
-<th>Guest</th>
-<th>Starting Date</th>
-<th>Ending Date</th>
+<th class="text-center" >Host</th>
+<th class="text-center"> Booking Date</th>
+<th class="text-center">Guest</th>
+<th class="text-center">Starting Date</th>
+<th class="text-center">Ending Date</th>
 <th>Actions</th>
 </tr>
 </thead>
 <tbody>
 {% for booking in bookings %}
 <tr>
-<td>{{booking.id}}</td>
-<td>
+<td class="text-center">{{booking.id}}</td>
+<td class="text-center" >
  <img   class="rounded-circle mt-5"  src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" />
 {{  booking.stay.users.getFirstname()}}</td>
-<td>
+<td class="text-center" >
   <span class="badge badge-primary rounded">{{booking.bookingDate | date}}</span>
 </td> 
-<td>
+<td class="text-center">
  <img   class="rounded-circle mt-5"  src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" />
 {{booking.user}}
 </td>
-<td><span class="badge badge-primary rounded">{{booking.firstDate | date}}</span></td>
+<td class="text-center" ><span class="badge badge-primary rounded">{{booking.firstDate | date}}</span></td>
 
-<td><span class="badge badge-primary rounded">{{booking.endDate | date}} </td>
+<td class="text-center" ><span class="badge badge-primary rounded">{{booking.endDate | date}} </td>
 
-<div >
-<td><a   href="#"  class=" btn btn-primary" >
-<img  src="/back/images/editer.png"  alt="Image" class="maskImg" /></a></div>
 
-<a href="#" class=" btn btn-danger"><img src="/back/images/delete.png" alt="Image" class="maskImg" /></a>
+<td>
+<a href="#" class=" btn btn-primary"><i class="fas fa-edit"</i></a>
+<a  href="#" </a>
+<a href="#" class=" btn btn-danger"><i class="fas fa-trash"</i></a>
 </td>
 
 

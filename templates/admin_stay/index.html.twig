@@ -17,33 +17,32 @@
 <thead>
 <tr>
 <th>Id </th>
-<th>Author</th>
-<th> Number of Bookings</th>
-<th>start date av</th>
-<th>end date av</th>
-<th>Rate</th>
-<th>Actions</th>
+<th class="text-center" >Author</th>
+<th class="text-center" > Number of Bookings</th>
+<th class="text-center" >start date av</th>
+<th class="text-center" >end date av</th>
+<th class="text-center">Rate</th>
+<th class="text-center">Actions</th>
 </tr>
 </thead>
 <tbody>
 {% for stay in stays %}
 <tr>
 <td>{{stay.id}}</td>
-<td>
+<td class="text-center">
  <img  style="margin:15px" class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" />
 {{  stay.users.getFirstname()}}</td>
-<td>
+<td class="text-center">
   <span class="badge badge-primary rounded">{{stay.bookings | length}}</span>
 </td> 
-<td>{{stay.startdateav | date}}</td>
-<td>{{stay.enddateav | date}}</td>
+<td class="text-center">{{stay.startdateav | date}}</td>
+<td class="text-center">{{stay.enddateav | date}}</td>
 
-<td><span class="badge badge-primary rounded">to do </td>
-<div >
-<td><a style="margin:15px width:50px"  href="#"  class=" btn btn-primary" >
-<img  src="/back/images/editer.png"  alt="Image" class="maskImg" /></a></div>
+<td class="text-center"><span class="badge badge-primary rounded">to do </td>
 
-<a href="#" class=" btn btn-danger"><img src="/back/images/delete.png" alt="Image" class="maskImg" /></a>
+<td class="text-center"><a style="margin:15px width:50px"  href="#"  class=" btn btn-primary" ><i class="fas fa-edit"</i></a>
+
+<a href="#" class=" btn btn-danger"><i class="fas fa-trash"</i></a>
 </td>
 
 

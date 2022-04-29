@@ -93,6 +93,7 @@ class BookingController extends AbstractController
         $booking->setStay($stay);
         $booking->setBookingDate(new DateTime());
 
+
         $user = $this->getUser();
         $booking->setUser($user);
 
