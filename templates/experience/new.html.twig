@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Experience{% endblock %}
+
+{% block body %}
+<div class="site-section">
+<div class="container">
+<div class="row">
+<div class="col-md-20 blog-content">
+    <h1>Create new Experience</h1>
+
+{#{{ include('Front-office/experience/_form.html.twig') }}#}
+
+        <div class=>
+            {{form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-10 mb-3">
+                            {{form_label(form.title)}}
+                            {{ form_widget(form.title,{'attr' : {'class' : 'form-control' , "placeholder":"Title" }} ) }}
+                            {{ form_errors(form.title) }}
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-10 mb-30">
+                            {{form_label(form.content)}}
+                            {{ form_widget(form.content,{'attr' : {'class' : 'form-control' , "placeholder":"Content" }} ) }}
+                            {{ form_errors(form.content) }}
+                        </div>
+                    </div>
+
+                    <br>
+                    <button class="btn">{{ button_label|default('Save') }}</button>
+                    {{ form_end(form) }}
+                </div>
+
+
+    <a href="{{ path('app_experience_index_front') }}">back to list</a>
+    </div>
+    </div>
+    </div>
+    </div>
+{% endblock %}

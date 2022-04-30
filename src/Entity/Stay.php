@@ -55,10 +55,16 @@ class Stay implements JsonSerializable
      * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="stay")
      */
     private $bookings;
+    //commentineh maa eli fel class experience
+    #/**
+    #* @ORM\OneToMany(targetEntity=Experience::class, mappedBy="stay")
+    #*/
+    #private $experiences;
 
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
+        $this->experiences = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -173,7 +179,38 @@ class Stay implements JsonSerializable
         return $this;
     }
 
-    public function jsonSerialize() {
-        return get_object_vars($this);     
-     }
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
+
+    /**
+     * @return Collection<int, Experience>
+     */
+    public function getExperiences(): Collection
+    {
+        return $this->experiences;
+    }
+
+    public function addExperience(Experience $experience): self
+    {
+        if (!$this->experiences->contains($experience)) {
+            $this->experiences[] = $experience;
+            $experience->setStay($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExperience(Experience $experience): self
+    {
+        if ($this->experiences->removeElement($experience)) {
+            // set the owning side to null (unless already changed)
+            if ($experience->getStay() === $this) {
+                $experience->setStay(null);
+            }
+        }
+
+        return $this;
+    }
 }

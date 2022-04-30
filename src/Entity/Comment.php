@@ -32,6 +32,16 @@ class Comment
      */
     private $likes;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Experience::class, inversedBy="comments")
+     */
+    private $experience;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +79,30 @@ class Comment
     public function setLikes(int $likes): self
     {
         $this->likes = $likes;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getExperience(): ?Experience
+    {
+        return $this->experience;
+    }
+
+    public function setExperience(?Experience $experience): self
+    {
+        $this->experience = $experience;
 
         return $this;
     }

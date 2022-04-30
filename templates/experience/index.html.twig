@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Experience index{% endblock %}
+
+{% block body %}
+    <div class="site-section">
+        <div class="container">
+
+            <input type="text" class="form-control" placeholder="Search" id="searchDynamic">
+
+
+            <div class="row">
+                <div class="col-md-20 blog-content">
+                    <br>
+                    <h1>Experience </h1>
+                    <a href="{{ path('app_experience_new_front') }}" class="btn btn-primary">Add Experience</a>
+                    <div class="row" id="experienceDynamic">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const experienceHolder = document.getElementById('experienceDynamic');
+        const searchField = document.getElementById('searchDynamic');
+        console.log(searchField.value);
+        function getExperiences(e) {
+            const title = searchField.value;
+            const PATH = title ? "/experience/sayebni/" + title : "/experience/searchAll";
+            fetch(PATH, {
+                method: 'GET',
+            }).then(res => res.json()).then((data) => {
+                experienceHolder.innerHTML = "";
+                data.forEach(
+                    experience => {
+                        experienceHolder.innerHTML += `<div class="col-lg-4 col-md-6 mb-4">
+                                   <div class="post-entry-1 h-100">
+                                     <div class="post-entry-1-contents">
+                                     <h2><a href="/experience/Front/${experience.id}"> ${experience.title}</a></h2>
+                                      <span class="meta d-inline-block mb-3">${experience.date} by ${experience.user}</span>
+                                      <p>${ experience.content }</p>
+                                     </div>
+                                   </div>
+                                </div>`
+                    })
+            }).catch((err) => console.log(err));
+        }
+
+        getExperiences(null)
+        searchField.addEventListener('change', getExperiences)
+    </script>
+    </script>
+{% endblock %}
+
+
+

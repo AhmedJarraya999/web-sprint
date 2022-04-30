@@ -9,8 +9,6 @@ use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Experience>
- *
  * @method Experience|null find($id, $lockMode = null, $lockVersion = null)
  * @method Experience|null findOneBy(array $criteria, array $orderBy = null)
  * @method Experience[]    findAll()
@@ -75,4 +73,31 @@ class ExperienceRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+    /**
+     * @return Experience[] Returns an array of Experiences objects
+     */
+    public function searchExperience($title)
+    {
+
+
+        $query = $this->createQueryBuilder('experience')
+            ->andWhere('experience.title LIKE :title')
+            ->setParameter('title', '%' . $title . '%')
+            ->getQuery();
+        $experinces = $query->getArrayResult();
+        return $experinces;
+    }
+
+    /**
+     * @return Experience[] Returns an array of Experiences objects
+     */
+    public function searchAllExperiences()
+    {
+        $query = $this->createQueryBuilder('experience')
+            ->getQuery();
+        $experiences = $query->getArrayResult();
+        return $experiences;
+    }
 }
