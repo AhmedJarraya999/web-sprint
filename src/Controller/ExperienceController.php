@@ -54,11 +54,11 @@ class ExperienceController extends AbstractController
         //$user=$this->getDoctrine()->getRepository(User::Class)->find($id_user);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $this->getUser();
-            $experience->setUser($user);
-            $experience->setLikes(0);
+            $user = $this->getUser(); #tekhou l'id mtaaa el user elmconnecti
+            $experience->setUser($user); #taffectih lel attribute user fel classe experience (author)
+            $experience->setLikes(0); #nbr likes par defaut 0
 
-            $experience->setDate(new DateTime());
+            $experience->setDate(new DateTime()); #taati date actuelle lel attribut date fel classe experience
             $entityManager->persist($experience);
             $entityManager->flush();
 
