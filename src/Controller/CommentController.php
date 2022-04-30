@@ -29,7 +29,7 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('ROLE_HOST')"|| ("is_granted('ROLE_GUEST'))
+     
      * @Route("/new/{experience}", name="comment_exp", methods={"GET", "POST"})
      * @Security("is_granted('ROLE_HOST') || is_granted('ROLE_GUEST')")
      */
