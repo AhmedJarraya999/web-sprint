@@ -9,6 +9,9 @@ use App\Repository\StayRepository;
 use App\Entity\Stay;
 use App\Form\StayType;
 use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdminStayController extends AbstractController
@@ -70,5 +73,35 @@ class AdminStayController extends AbstractController
         }
 
         return $this->redirectToRoute('app_admin_stay', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * Permet de supprimer une annonce
+     *
+     * @Route("/admin/stay/{id}/delete", name="admin_ads_delete")
+     * 
+     * @param Stay $stay
+     * @param ObjectManager $manager
+     * @return Response
+     */
+    public function delete2(Stay $stay, ManagerRegistry $managerRegistry)
+    {
+        if (count($stay->getBookings()) > 0) {
+            $this->addFlash(
+                'warning',
+                "Vous ne pouvez pas supprimer l'annonce <strong>{$stay->getId()}</strong> car elle possède déjà des réservations !"
+            );
+        } else {
+            $em = $managerRegistry->getManager();
+            $em->remove($stay);
+            $em->flush();
+
+            $this->addFlash(
+                'success',
+                "L'annonce <strong>{$stay->getId()}</strong> a bien été supprimée !"
+            );
+        }
+
+        return $this->redirectToRoute('app_admin_stay');
     }
 }

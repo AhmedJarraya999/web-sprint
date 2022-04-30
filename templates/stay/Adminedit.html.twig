@@ -41,7 +41,7 @@
                         
                         <a class="btn btn-primary" href="{{ path('app_admin_stay') }}">back to list</a>
                         {% if stay.id %}
-                        <a class="btn btn-danger" href="{{path('app_admin_stay_delete',{'id': stay.id})}}" onclick="beforeRemove()"><i class="fas fa-trash"></i> delete</a>
+                        <a class="btn btn-danger" href="{{path('admin_ads_delete',{'id': stay.id})}}" onclick="beforeRemove()"><i class="fas fa-trash"></i> delete</a>
                         {% endif %}
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Voyageur</th>
+                                <th>Our Guest</th>
                                 <th>Date de réservation</th>
                                 <th></th>
                             </tr>
@@ -66,7 +66,9 @@
                             {% for booking in stay.bookings %}
                             <tr>
                                 <td>{{booking.id}}</td>
-                                <td>{{booking.user.getFirstname()}}</td>
+                                <td>
+                                
+                                {{booking.user.getFirstname()}} </td>
                                 <td>{{booking.bookingDate | date('d/m/Y H:i')}}</td>
                                 <td>
                                     <a href="#" class="btn btn-primary">
