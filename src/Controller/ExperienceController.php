@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -45,6 +45,7 @@ class ExperienceController extends AbstractController
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
+     * @Security("is_granted('ROLE_HOST') || is_granted('ROLE_GUEST')")
      */
     public function newFront(Request $request, EntityManagerInterface $entityManager): Response
     {

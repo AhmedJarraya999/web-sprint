@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/comment")
@@ -28,7 +29,9 @@ class CommentController extends AbstractController
     }
 
     /**
+     * @Security("is_granted('ROLE_HOST')"|| ("is_granted('ROLE_GUEST'))
      * @Route("/new/{experience}", name="comment_exp", methods={"GET", "POST"})
+     * @Security("is_granted('ROLE_HOST') || is_granted('ROLE_GUEST')")
      */
     public function comment(Request $request, Experience $experience, CommentRepository $commentRepository): Response
     {
