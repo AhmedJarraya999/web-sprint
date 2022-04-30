@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Experience;
 use App\Form\CommentType;
+use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -32,26 +33,30 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/Front/new", name="app_comment_new_front", methods={"GET", "POST"})
+     * @Route("/Front/new/{id}", name="app_comment_new_front", methods={"GET", "POST"})
      */
-    public function newFront(Request $request, EntityManagerInterface $entityManager ): Response
+    public function newFront(Request $request, CommentRepository $commentRepository ,Experience $id ): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
-        //$user=$this->getDoctrine()->getRepository(User::Class)->find($id_user);
-        //$experience->getDoctrine()->getRepository(Experience::class)->find($id_experience);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
+            # tekhou l'id taa el user li mconnecti
+            $author = $this->getUser();
+            # taffecti el id taa el user lemconnecti lel attribut user fel class experience
             $comment->setAuthor(1);
-            $comment->setIdExp(3);
+
             $date = date('d-m-y h:i');
             $comment->setDate($date);
+            #taffecti 0 par defaut lel attribut likes fel classe comment
             $comment->setLikes(0);
-            $entityManager->persist($comment);
-            $entityManager->flush();
+            #beh tekhou l'id taa el experience eli fel route w  taffectih lel attribut experience fel classe commentaire
+            $comment->setExperience($id);
+            $commentRepository->add($comment);
 
-            return $this->redirectToRoute('experience/Front/19', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('experience/Front/{id}', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('Front-office/comment/new.html.twig', [

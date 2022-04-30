@@ -3,11 +3,15 @@
 {% block title %}Experience{% endblock %}
 
 {% block body %}
-<div class="site-section">
+<div class="site-section card">
 <div class="container">
 <div class="row">
-<div class="col-md-50 blog-content">
-    <div class="col-md-50 blog-content">
+
+<div class="col-md-150 blog-content">
+    <a href="{{ path('app_experience_index_front') }}">Go Back</a>
+    <br>
+    <br>
+    <div class="col-md-150 blog-content">
         <h3 > {{ experience.title }} </h3>
         <p > {{ experience.content }}</p>
 
@@ -27,6 +31,21 @@
 
         {#TO SHOW COMMENT FORM#}
         {{ include('Front-office/comment/new.html.twig') }}
+
+      {#  {{form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+        <div class="pt-20">
+
+            <div class="comment-form-wrap pt-20">
+                {{ form_widget(form.content,{'attr' : {'class' : 'form-control' , "placeholder":"Comment" }} ) }}
+                {{ form_errors(form.content) }}
+                <button action="{{ path('app_comment_new_front', {'id': experience.id}) }}"  class="btn">{{ button_label|default('Comment') }}</button>
+            </div>
+            {{ form_end(form) }}
+        </div>#}
+
+
+
+
 
 
 
@@ -49,7 +68,7 @@
     {% endfor %}
 
     <br>
-    <a href="{{ path('app_experience_index_front') }}">back to list </a>
+
     </div>
       </div>
         </div>

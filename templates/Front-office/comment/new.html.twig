@@ -16,11 +16,8 @@
             {{ form_errors(form.content) }}
             <button class="btn">{{ button_label|default('Comment') }}</button>
         </div>
-
-
-
         {{ form_end(form) }}
     </div>
 
-    <a href="{{ path('app_comment_index_front') }}">back to list</a>
+
 {% endblock %}

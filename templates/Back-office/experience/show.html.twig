@@ -38,9 +38,10 @@
         </tbody>
     </table>
     </div>
-    <a href="{{ path('app_experience_edit_back', {'id': experience.id}) }}" class="btn btn-warning">Edit</a>
+{#    <a href="{{ path('app_experience_edit_back', {'id': experience.id}) }}" class="btn btn-warning">Edit</a>#}
+{#    {{ include('Back-office/experience/_delete_form.html.twig') }}#}
     <a href="{{ path('app_experience_index_back') }}" class="btn btn-primary">back to list <br></a>
-      {{ include('Back-office/experience/_delete_form.html.twig') }}
+
     </div>
  
 {% endblock %}

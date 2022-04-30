@@ -5,6 +5,7 @@ use App\Repository\CommentRepository;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vangrg\ProfanityBundle\Validator\Constraints as ProfanityAssert;
 
 /**
  * Comment
@@ -33,6 +34,7 @@ class Comment
     /**
      * @var string
      * @Assert\NotBlank()
+     * @ProfanityAssert\ProfanityCheck
      * @ORM\Column(name="content", type="string", length=255, nullable=false)
      */
     private $content;

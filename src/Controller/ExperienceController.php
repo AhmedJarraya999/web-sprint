@@ -17,7 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -51,10 +51,14 @@ class ExperienceController extends AbstractController
         $experience = new Experience();
         $form = $this->createForm(ExperienceType::class, $experience);
         $form->handleRequest($request);
-        //$user=$this->getDoctrine()->getRepository(User::Class)->find($id_user);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            #tekhou l'id mtaaa el user elmconnecti
+            $user = $this->getUser();
+            #taffectih lel attribute user fel classe experience (author)
             $experience->setIdAuthor(1);
+
             $experience->setLikes(0);
             $date = date('d-m-y h:i');
             $experience->setDate($date);
@@ -84,18 +88,18 @@ class ExperienceController extends AbstractController
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
         //$user=$this->getDoctrine()->getRepository(User::Class)->find($id_user);
-        //$experience->getDoctrine()->getRepository(Experience::class)->find($id_experience);
+        //$experience->getDoctrine()->getRepository(Experience::class)->find($id);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setAuthor(1);
-            $comment->setIdExp(3);
+            $comment->setIdExp($id);
             $date = date('d-m-y h:i');
             $comment->setDate($date);
             $comment->setLikes(0);
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('experience/Front/3', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('experience/Front/{id}', [], Response::HTTP_SEE_OTHER);
         }
 
 
