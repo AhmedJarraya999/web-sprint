@@ -5,6 +5,12 @@
 {% block body %}
     <div class="addstay-container"> 
     {{ include('stay/_form.html.twig') }}
+     
+
+    <a href="{{ path('app_stay_index') }}" style="width: 200x" class="btn btn-primary">
+        Back to list
+        <img src="/front/images/return.png" alt="Image" class="maskImg" />
+    </a>
     </div>
     
 {% endblock %}
