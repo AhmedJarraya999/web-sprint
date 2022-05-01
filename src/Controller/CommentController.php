@@ -18,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
  */
 class CommentController extends AbstractController
 {
+
     /**
      * @Route("/", name="app_comment_index", methods={"GET"})
      */
@@ -51,7 +52,7 @@ class CommentController extends AbstractController
             #beh tekhou l'id taa el experience eli fel route w  taffectih lel attribut experience fel classe commentaire
             $comment->setExperience($experience);
             $commentRepository->add($comment);
-            return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_experience_index_front', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('comment/new.html.twig', [

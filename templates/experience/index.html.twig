@@ -32,30 +32,48 @@
             fetch(PATH, {
                 method: 'GET',
             }).then(res => res.json()).then((data) => {
+                
                 experienceHolder.innerHTML = "";
                 data.forEach(
+                    
                     experience => {
-                       
+
+                         const showexp = "{{ path('app_experience_show_front-details', {'id': '__code'}) }}".replaceAll('__code', experience.id);
+                    const makecomment = "{{ path('comment_exp', {'experience': '__code'}) }}".replaceAll('__code', experience.id);
+                    
+                   
                         experienceHolder.innerHTML += `<div class="col-lg-4 col-md-6 mb-4">
                                    <div class="post-entry-1 h-100">
                                      <div class="post-entry-1-contents">
                                      <h2><a href="/experience/Front/${experience.id}"> ${experience.title}</a></h2>
-                                      <span class="meta d-inline-block mb-3">${experience.date} by ${experience.user}</span>
-                                      <p>${experience.content}</p><a href="#" class="btn btn-info" style="margin:5px;width:400px">See More ?</a>
-                                      <a href="#" class="btn btn-primary" style="margin:5px;width:400px">Make a comment</a>
+                                      <span class="meta d-inline-block mb-3">${experience.date} by ${experience.user}   </span>
+                                      <p>${experience.content}</p><a href="${showexp}" class="btn btn-info" style="margin:5px;width:400px">See More ?</a>
+                                      <a href="${makecomment}" class="btn btn-primary" style="margin:5px;width:400px">Make a comment</a>
+                                      
                                      
   
                                      </div>
                                    </div>
                                 </div>`
+                                
+                                
                     })
-            }).catch((err) => console.log(err));
+            }
+            
+        )
+        
+            
+            .catch((err) => console.log(err));
         }
 
         getExperiences(null)
         searchField.addEventListener('change', getExperiences)
+        const showPath = "{{ path('app_experience_show_front', {'id': '__code'}) }}".replaceAll('__code', row.id);
+                   
     </script>
     </script>
+
+    
 {% endblock %}
 
 

@@ -23,7 +23,7 @@
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         {% if is_granted('ROLE_HOST') %}
                         <span class="badge badge-primary">{{user.stays | length}} annonces</span>
-                        <span class="badge badge-primary">{{user.expriences | length}} experiences</span>
+                        <span class="badge badge-primary">{{user.experiences | length}} experiences</span>
                         {% endif %}
                         {% if is_granted('ROLE_GUEST') %}
                         <span class="badge badge-primary">{{user.bookings | length}} réservations</span>

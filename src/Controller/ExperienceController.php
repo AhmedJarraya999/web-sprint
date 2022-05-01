@@ -71,6 +71,22 @@ class ExperienceController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/FrontshowDetail/{id}", name="app_experience_show_front-details", methods={"GET"})
+     */
+    public function seeMore(Experience $id): Response
+    {
+        return $this->render('experience/show.html.twig', [
+            'experience' => $id
+        ]);
+    }
+
+
+
+
+
+
+
 
     /**
      * @Route("/Front/{id}", name="app_experience_show_front", methods={"GET"})
@@ -78,7 +94,6 @@ class ExperienceController extends AbstractController
     public function showFront(Request $request, Experience $id, EntityManagerInterface $entityManager): Response
     {
         $experience = $this->getDoctrine()->getRepository(Experience::class)->find($id);
-        $comments = $this->getDoctrine()->getRepository(Comment::class)->listCommentByExperience($experience->getId());
 
 
 
@@ -108,8 +123,8 @@ class ExperienceController extends AbstractController
             'comment' => $comment,
             'form' => $form->createView(),
 
-            'experience' => $experience,
-            'comments' => $comments
+            'experience' => $experience
+
         ]);
     }
 
