@@ -7,35 +7,72 @@
 </br>
     {{ form_start(registrationForm) }}
     </br>
-        {{ form_row(registrationForm.username, { 'label':'Username', 'attr': {'placeholder' :'type a username...' } }) }}
-        </br>
-        {{ form_row(registrationForm.plainPassword, {
-            label: ' Password'   ,   'attr': {'placeholder' :'choose your password...' }
-        }) }} 
-        </br>
-         {{ form_row(registrationForm.firstname, {
-            label: 'Firstname  ' , 'attr': {'placeholder' :'Enter your firstname please' }
-        }) }} 
-        </br>
-         {{ form_row(registrationForm.lastname, {
-            label: 'Lastname', 'attr': {'placeholder' :'Enter your lastname please' }
-        }) }} 
-        </br>
-         {{ form_row(registrationForm.email, {
-            label: 'email    '  , 'attr': {'placeholder' :'Enter your email please' }
-        }) }} 
-        </br>
-         {{ form_row(registrationForm.phone , {
-            label: 'phone number', 'attr': {'placeholder' :'Enter your phone number please' }
-        }) }}
-        </br>
-         {{ form_row(registrationForm.roles , {
-            label: 'Register as', 'attr': {'class' :'form-control',  }
-        }) }}
-        </br>
-        {{ form_row(registrationForm.captchaCode , {
-            label: 'captcha code', 'attr': {'placeholder' :'Enter the captcha code' }
-        }) }}
+    <div class="form-group row" style="margin: 2%; text-align: center">
+        <div class="col">
+            {{ form_label(registrationForm.username) }}
+        </div>
+        <div class="col">
+             {{ form_widget(registrationForm.username, {'attr': {'class': 'form-control','placeholder' :'choose your username'}}) }}
+        </div>
+    </div>
+
+    <div class="form-group row" style="margin: 2%; text-align: center">
+        <div class="col">
+            {{ form_label(registrationForm.plainPassword) }}
+        </div>
+        <div class="col">
+             {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control','placeholder' :'choose your password...' }}) }}
+        </div>
+    </div>
+     <div class="form-group row" style="margin: 2%; text-align: center">
+        <div class="col">
+            {{ form_label(registrationForm.firstname) }}
+        </div>
+        <div class="col">
+             {{ form_widget(registrationForm.firstname, {'attr': {'class': 'form-control','placeholder' :'choose your username'}}) }}
+        </div>
+    </div>
+     <div class="form-group row" style="margin: 2%; text-align: center">
+        <div class="col">
+            {{ form_label(registrationForm.lastname) }}
+        </div>
+        <div class="col">
+             {{ form_widget(registrationForm.lastname, {'attr': {'class': 'form-control','placeholder' :'choose your lastname'}}) }}
+        </div>
+    </div>
+    <div class="form-group row" style="margin: 2%; text-align: center">
+        <div class="col">
+            {{ form_label(registrationForm.email) }}
+        </div>
+        <div class="col">
+             {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control','placeholder' :'choose your email'}}) }}
+        </div>
+    </div>
+    <div class="form-group row" style="margin: 2%; text-align: center">
+        <div class="col">
+            {{ form_label(registrationForm.phone) }}
+        </div>
+        <div class="col">
+             {{ form_widget(registrationForm.phone, {'attr': {'class': 'form-control','placeholder' :' your phone with your country code '}}) }}
+        </div>
+    </div>
+        
+   <div class="form-group row" style="margin: 2%; text-align: center">
+        <div class="col">
+            {{ form_label(registrationForm.roles) }}
+        </div>
+        <div class="col">
+             {{ form_widget(registrationForm.roles, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+       <div class="form-group row" style="margin: 2%; text-align: center">
+        <div class="col">
+            {{ form_label(registrationForm.captchaCode) }}
+        </div>
+        <div class="col">
+             {{ form_widget(registrationForm.captchaCode, {'attr': {'class': 'form-control','placeholder' :'Type the code below'}}) }}
+        </div>
+    </div>
         </br>
         <button class ="btn btn-primary"  href="{{path('app_register')}}">
            <img src="/front/images/add-user.png" alt="Image" class="maskImg" />
