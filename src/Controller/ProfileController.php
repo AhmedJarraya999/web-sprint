@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Stay;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -59,6 +60,8 @@ class ProfileController extends AbstractController
             'user' => $user
         ]);
     }
+
+
     /**
      * Permet d'afficher le profil de l'utilisateur connecté
      *
@@ -70,6 +73,19 @@ class ProfileController extends AbstractController
     {
         return $this->render('profile/myprof.html.twig', [
             'user' => $this->getUser()
+        ]);
+    }
+    /**
+     * Permet d'afficher le profil du host de  cette stay
+     *
+     * @Route("/accounthost/{stay}", name="accounthoststay")
+     * 
+     * @return Response
+     */
+    public function AccountHost(Stay $stay)
+    {
+        return $this->render('profile/myprof.html.twig', [
+            'user' => $stay->getUsers()
         ]);
     }
 }

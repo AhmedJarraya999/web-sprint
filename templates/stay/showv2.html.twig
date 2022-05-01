@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stay{% endblock %}
+
+{% block body %}
+   <div class="container rounded bg-white mt-5 mb-5" >
+     
+        <div class="row" >
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" />
+                    <span class="font-weight-bold"></br>{{ stay.users.firstname ~ ' ' ~ stay.users.lastname }}</span>
+                    <span class="text-black-50"> Email : {{ stay.users.email }}</span>
+                    <span> Username : {{ stay.users.username }} </span>
+                    <span> Mobile phone : {{ stay.users.phone }}</span>
+                    <span class="labels"></br><p>Introduction about the host </p> <p> {{ stay.users.introduction }} </p> </span>
+                    <span ><a href="{{ path('accounthoststay', {'stay': stay.id}) }}" class="btn btn-success mr-2 mb-2">Take a look to the host profile</a></span>
+                </div>
+            </div>
+           
+          
+        
+         <div class="col-md-9 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      
+                    </div>
+                    <hr />
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                           
+                                <div class="row" style="display: flex;align-items: center;">
+                                 
+                                  <table class="table">
+ </div>
+       </br>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ stay.id }}</td>
+            </tr>
+            <tr>
+                <th>Capacity</th>
+                <td>{{ stay.capacity }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ stay.description }}</td>
+            </tr>
+            <tr>
+              
+            </tr>
+            <tr>
+                <th>Startdateav</th>
+                <td>{{ stay.startdateav ? stay.startdateav|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Enddateav</th>
+                <td>{{ stay.enddateav ? stay.enddateav|date('Y-m-d') : '' }}</td>
+            
+            </tr>
+            
+        </tbody>
+    </table>
+     <a href="{{ path('app_stay_index') }}" class="btn btn-primary"style="margin:5px;width:90%"  >back 
+     <img src="/front/images/return.png" alt="Image" class="maskImg" /></a>
+
+  </br>
+    {% if is_granted('ROLE_GUEST') %}
+        <a href="{{ path('app_booking_stay', {'stay': stay.id}) }}" class="btn btn-info" style="margin:5px;width:90%;">Book now
+        <img src="/front/images/book.png" alt="Image" class="maskImg" >
+        </a>
+    {% endif %}
+                                </div>
+                       
+                        </div>  
+                    </div>
+                </div>
+            </div>
+    
+
+{% endblock %}

@@ -37,11 +37,11 @@ class StayController extends AbstractController
     public function search(StayRepository $stayRepository, Request $request): Response
     {
         $data = new StaySearchData();
-       
+
         $dateString = $request->request->get('date', '');
         $date = null;
-        
-        if($dateString !== ''){
+
+        if ($dateString !== '') {
             $date = DateTime::createFromFormat('Y-m-d', $dateString);
         }
 
@@ -91,7 +91,7 @@ class StayController extends AbstractController
      */
     public function show(Stay $stay): Response
     {
-        return $this->render('stay/show.html.twig', [
+        return $this->render('stay/showv2.html.twig', [
             'stay' => $stay
         ]);
     }
