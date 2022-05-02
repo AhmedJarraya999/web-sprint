@@ -24,7 +24,7 @@
 <th class="text-center">Guest</th>
 <th class="text-center">Starting Date</th>
 <th class="text-center">Ending Date</th>
-<th>Actions</th>
+<th  class="text-center">Actions</th>
 </tr>
 </thead>
 <tbody>
@@ -46,10 +46,10 @@
 <td class="text-center" ><span class="badge badge-primary rounded">{{booking.endDate | date}} </td>
 
 
-<td>
-<a href="#" class=" btn btn-primary"><i class="fas fa-edit"</i></a>
-<a  href="#" </a>
-<a href="#" class=" btn btn-danger"><i class="fas fa-trash"</i></a>
+<td  class="text-center" >
+<a href="{{ path('app_admin_booking_edit', {'id': booking.id}) }}" class=" btn btn-primary"> <i class="fas fa-edit"</i></a>
+
+<a href="{{ path('app_admin_booking_delete', {'id': booking.id}) }}" class=" btn btn-danger"><i class="fas fa-trash"</i></a>
 </td>
 
 

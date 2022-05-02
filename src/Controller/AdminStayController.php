@@ -22,7 +22,7 @@ class AdminStayController extends AbstractController
     public function index(StayRepository $repo): Response
     {
         return $this->render('admin_stay/index.html.twig', [
-            'controller_name' => 'AdminStayController',
+
             'stays' => $repo->findAll()
         ]);
     }

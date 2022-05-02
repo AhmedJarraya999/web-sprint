@@ -1,0 +1,81 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}Modification of the booking with id n° {{booking.id}}  {% endblock %}
+
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+     <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+</style>
+
+
+<div  class="container-fluid">
+</br>
+<h1 class="my-5">Modification of the booking with id n° {{booking.id}}</h1>
+
+  {{ form_start(form) }}
+        <div class="row" style="padding:30px">
+            <div class="col">
+                 First Date
+        </div>
+        <div class="col">
+            {{ form_widget(form.firstDate.date.day, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col">
+            {{ form_widget(form.firstDate.date.month, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col">
+            {{ form_widget(form.firstDate.date.year, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+            </div>
+            <div class="form-group row" style=" padding:30px; text-align: left">
+                <div class="col">
+                 First Date
+        </div>     
+        
+        <div class="col">
+            {{ form_widget(form.endDate.date.day, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col">
+            {{ form_widget(form.endDate.date.month, {'attr': {'class': 'form-control'}}) }}
+        </div>
+         <div class="col">
+            {{ form_widget(form.endDate.date.year, {'attr': {'class': 'form-control'}}) }}
+         </div>
+        
+    </div>
+            <div class="col">
+            <div class="col">Stay
+        </div>
+        <div class="col">
+             {{ form_widget(form.stay, {'attr': {'class': 'form-control'}}) }}
+             </div>
+                {{ form_row(form.stay) }}
+                </br>
+                <div class="col">
+            <div class="col">User
+        </div>
+        <div class="col">
+             {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
+             </div>
+                {{ form_row(form.user) }}
+               
+
+                <div style="display: none">
+        {{ form_rest(form) }}
+    </div>
+    </br>
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-check"></i>
+                    Enregistrer les modifications
+                </button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+</div>
+{% endblock %}
+
