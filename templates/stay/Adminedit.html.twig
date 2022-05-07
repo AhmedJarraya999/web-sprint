@@ -10,7 +10,7 @@
 </br>
 
 
-    <h1 class="my-5">Modification de l'annonce {{stay.id}}</h1>
+    <h1 class="my-5">Modification du stay numéro {{stay.id}}</h1>
       {%  if app.flashes('success') %}
             <div class="col-md-12 p-3 py-5">
                 {% for message in app.flashes('success') %}
@@ -59,6 +59,8 @@
                                 <th>Id</th>
                                 <th>Our Guest</th>
                                 <th>Date de réservation</th>
+                               
+                                <th> Premier jour de séjour</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -70,9 +72,15 @@
                                 
                                 {{booking.user.getFirstname()}} </td>
                                 <td>{{booking.bookingDate | date('d/m/Y H:i')}}</td>
+                                <td>{{booking.firstDate | date}}</td>
                                 <td>
-                                    <a href="#" class="btn btn-primary">
+                                    <a href="{{ path('app_admin_booking_edit', {'id': booking.id}) }}" class="btn btn-primary">
                                         <i class="fas fa-pen"></i>
+                                    </a>
+                                </td>
+                                 <td>
+                                    <a href="{{ path('app_admin_booking_delete', {'id': booking.id}) }}" class="btn btn-danger">
+                                        <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
                             </tr>

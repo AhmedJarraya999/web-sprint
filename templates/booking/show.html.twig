@@ -3,14 +3,14 @@
 {% block title %}Booking{% endblock %}
 
 {% block body %}
-    <h1>Booking</h1>
+   
 <div class="login1-container">
     <table class="table">
         <tbody>
+       
         </br>
             <tr>
-                <th>Id</th>
-                <td>{{ booking.id }}</td>  
+                
             </tr>
             </br>
             <tr>
@@ -30,11 +30,15 @@
             </tr>
         </tbody>
     </table>
+    <a  class="btn btn-primary" href="{{ path('account_index') }}">Back </a>
+    
+     <a  class="btn btn-info" href="{{ path('app_booking_edit', {'id': booking.id}) }}">edit</a>
+    </br>
+    </br>
+     {{ include('booking/_delete_form.html.twig') }}
+    </br>
+    </br>
     </div>
 
-    <a  href="{{ path('app_booking_index') }}">back to list</a>
-
-    <a href="{{ path('app_booking_edit', {'id': booking.id}) }}">edit</a>
-
-    {{ include('booking/_delete_form.html.twig') }}
+   
 {% endblock %}

@@ -3,7 +3,15 @@
     <div class="my-custom-class-for-errors">
         
     </div>
+    {#
+    mamchetlich 
+    {% if app.user and app.user.getRoles=="ROLE_HOST" %}
+#}
+<div class= "col"><a class="btn btn-success"  href="{{ path('app_stay_new') }}">Create new</a></div>
 
+</br>
+</br>
+{#{% endif %}#}
     <div class="row" style="padding-bottom: 3%">
         <div class="col">
         </div>
@@ -19,6 +27,9 @@
                 <img src="/front/images/magnifier.png" alt="Image" class="maskImg"/>
             </button>
         </div>
+        
+        
+        
         <div class="col">
         </div>
     </div>

@@ -15,9 +15,12 @@
                     <span> Username : {{ user.username }} </span>
                     <span> Mobile phone : {{ user.phone }}</span>
                     <span class="labels"></br><p>Introduction</p> <p> {{ user.introduction }} </p> </span>
+                    {% if app.user and app.user.id == user.id %}
                     <span><a href="{{ path('update_profile') }}" class="btn btn-primary mr-2 mb-2">Edit</a></span>
+                    {% endif %}
                 </div>
             </div>
+        
             <div class="col-md-9 border-right">
                 <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -34,31 +37,121 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             {% if user.stays | length > 0 %}
+                                  <h3>list of stays for user <strong> {{user.firstname}}</strong></h3>
+                                </br>
                                 <div class="row" style="display: flex;align-items: center;">
+                                
+                                </br>
+                                </br>
+                                </br>
                                     {% for stay in user.stays %}
-                                     <div class="col-lg-4 col-md-6 mb-4 aos-init aos-animate" data-aos="fade-up">
-                                        <div class="listing-item">
-                                            <div class="listing-image">
-                                                <img src="{{ asset('uploads/' ~ stay.photo) }}" alt="Image" class="img-fluid"></div>
-                                                <div class="listing-item-content">
-                                                    <a class="px-3 mb-3 category bg-primary" href="{{ path('app_stay_show', {'id': stay.id}) }}">Consult</a>
-                                                    <h2 class="mb-1">
-                                                        <a href="{{ path('app_stay_show', {'id': stay.id}) }}">{{ stay.description}}</a>
-                                                    </h2>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+</br>
+
+<div class="col-md-4">
+    <div class="card bg-light mb-3">
+        <div class="card-header text-center">
+                <small>Pas encore noté</small>
+        </div>
+        
+        
+            <img  src="{{ asset('uploads/'~stay.photo) }}" alt="Image de l'appartement" style="height: 200px; width: 100%; display: block"> </img>
+        </a>
+
+        <div class="card-body">
+            <h4 class="card-title">
+              
+            </h4>
+            <p class="card-text">
+              Capacity:  {{ stay.capacity }}
+            </p>
+            <p class="card-text">
+              Start avaliability:  {{ stay.startdateav | date }}
+            </p>
+            <p class="card-text">
+              End availability:  {{ stay.enddateav | date }}
+            </p>
+            <a href="{{ path('app_stay_show',  {'id': stay.id}) }}}"   class="btn btn-primary float-right">  More Details !!!!</a>
+
+            {% if app.user and app.user == stay.users %}
+               </br>
+               </br>
+                <a href="{{ path('app_stay_edit', {'id': stay.id}) }}" class="btn btn-secondary">Modifiy my stay! </a>
+            {% endif %}
+        </div>
+    </div>
+</div>                       
+  {% endfor %}
+ </div>
+  </br>
+                                <h3>list of experiences for user <strong> {{user.firstname}}</strong></h3>
+                                <div class="row" style="display: flex;align-items: center;background-color:white;">
+                                  
+                                    {% for experience in user.experiences %}
+                                    <div class="col-md-4">
+                                    <div class="card bg-light mb-3">
+                                     <div class="card-body">
+                                       <h4 class="card-title"><a href="{{ path('app_experience_show_front-details',  {'id': experience.id}) }}"> {{ experience.title }}</a> </h4>
+                                     
+                                        <span> Published : {{ experience.date |date('Y-m-d') }} </span>
+                                        </br>
+                                        <span> Number of likes : {{experience.likes}} </span>
+                                        
+                                     
+                                     </div>
+                                     </div>
+                                     </div>
+
+                                     </br>
+                                
                                     {% endfor %}
                                 </div>
+
+
+
                             {% elseif user.bookings | length > 0 %}    
-                                <div class="row" style="display: flex;align-items: center;background-color:white;padding:100px; border: 60px solid orange">
+                             <h3>List of bookings for user<strong> {{user.firstname}}</strong></h3>
+                                <div class="row" style="display: flex;align-items: center;background-color:white;">
+                                  
                                     {% for booking in user.bookings %}
-                                     <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                                    <div class="col-md-4">
+                                    <div class="card bg-light mb-3">
+                                     <div class="card-body">
+                                       <h4 class="card-title"><a href="{{ path('app_booking_show',  {'id': booking.id}) }}"> {{ booking.id }}</a> </h4>
+                                     
                                         <span> Start At : {{ booking.firstDate |date('Y-m-d') }} </span>
+                                        </br>
                                         <span> End At : {{ booking.endDate |date('Y-m-d') }} </span>
-                                        <span> Stay : {{ booking.stay.description }} </span>
+                                        
+                                     
                                      </div>
+                                     </div>
+                                     </div>
+
+                                     </br>
+                                
+                                    {% endfor %}
+                                </div>
+                                </br>
+                                <h3>list of experiences for user <strong> {{user.firstname}}</strong></h3>
+                                <div class="row" style="display: flex;align-items: center;background-color:white;">
+                                  
+                                    {% for experience in user.experiences %}
+                                    <div class="col-md-4">
+                                    <div class="card bg-light mb-3">
+                                     <div class="card-body">
+                                       <h4 class="card-title"><a href="{{ path('app_experience_show_front-details',  {'id': experience.id}) }}"> {{ experience.title }}</a> </h4>
+                                     
+                                        <span> Published : {{ experience.date |date('Y-m-d') }} </span>
+                                        </br>
+                                        <span> Number of likes  : {{experience.likes}} </span>
+                                        
+                                     
+                                     </div>
+                                     </div>
+                                     </div>
+
+                                     </br>
+                                
                                     {% endfor %}
                                 </div>
                             {% else %}
@@ -77,12 +170,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="p-3 py-5">
-                    
-                    
-                </div>
-            </div>
+            
         </div>
     </div>
 

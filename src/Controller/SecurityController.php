@@ -16,20 +16,20 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
-            
+
             // check if the user was host then redirect him to stays page
-            if (in_array('ROLE_ADMIN', $this->getUser()->getRoles())) { 
+            if (in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
                 return $this->redirectToRoute('app_user_index');
             }
 
             // check if the user was host then redirect him to stays page
-            if (in_array('ROLE_HOST', $this->getUser()->getRoles())) { 
+            if (in_array('ROLE_HOST', $this->getUser()->getRoles())) {
                 return $this->redirectToRoute('app_stay_index');
             }
 
             // check if the user was guest then redirect him to booking page
-            if (in_array('ROLE_GUEST', $this->getUser()->getRoles())) { 
-                return $this->redirectToRoute('app_booking_index');
+            if (in_array('ROLE_GUEST', $this->getUser()->getRoles())) {
+                return $this->redirectToRoute('app_stay_index');
             }
         }
 
@@ -48,6 +48,4 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
-
-   
 }

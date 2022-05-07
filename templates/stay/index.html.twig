@@ -16,8 +16,8 @@
     <div class="row" id="stay-carts-list" style="display: flex;align-items: center;background-color:white;padding:100px; border: 60px solid orange">
         
     </div>
-    <a class="btn" href="{{ path('app_stay_new') }}">Create new</a>
-    <table class="table" id="stays-list" style="display: none">
+    
+  {#  <table class="table" id="stays-list" style="display: none">
                 <thead>
                     <tr>
                         <th>Id</th>
@@ -33,9 +33,12 @@
                    
                 </tbody>
             </table>
+            #}
             <div class="row" style="width: 100%" id="stays-not-found">
                 <p> No stays found to display with this search criteria</p>
             </div>            
+
+
 {% endblock %}
 
 {% block javascripts %}
