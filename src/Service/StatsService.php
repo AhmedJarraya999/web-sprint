@@ -33,7 +33,7 @@ class StatsService
 
     public function getAdsCount()
     {
-        return $this->managerRegistry->createQuery('SELECT COUNT(a) FROM App\Entity\Ad a')->getSingleScalarResult();
+        return $this->managerRegistry->createQuery('SELECT COUNT(a) FROM App\Entity\Stay a')->getSingleScalarResult();
     }
 
     public function getBookingsCount()
