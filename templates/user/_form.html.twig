@@ -54,7 +54,7 @@
                         </button>
                         <a class="btn btn-primary" href="{{ path('app_user_index') }}">back to list</a>
                         {% if user.id %}
-                        <a class="btn btn-primary" href="#" onclick="beforeRemove()">delete</a>
+                        <a class="btn btn-primary" href="#" {#onclick="beforeRemove()"#}>delete</a>
                         {% endif %}
                     </div>
                 </div>
@@ -94,6 +94,7 @@
         
         {{ form_end(form) }}   
 
+{#
 <script>
     function beforeRemove() {
         if(confirm('Are you sure you want to delete this item?')) {
@@ -101,3 +102,4 @@
         }
     }
     </script>
+    #}

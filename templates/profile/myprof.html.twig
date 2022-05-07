@@ -37,7 +37,7 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             {% if user.stays | length > 0 %}
-                                  <h3>list of stays for user <strong> {{user.firstname}}</strong></h3>
+                                  <h3>list of stays from user <strong> {{user.firstname}}</strong></h3>
                                 </br>
                                 <div class="row" style="display: flex;align-items: center;">
                                 
@@ -70,8 +70,9 @@
             <p class="card-text">
               End availability:  {{ stay.enddateav | date }}
             </p>
+            {% if app.user and app.user.id == stay.users.id %}
             <a href="{{ path('app_stay_show',  {'id': stay.id}) }}}"   class="btn btn-primary float-right">  More Details !!!!</a>
-
+{% endif %}
             {% if app.user and app.user == stay.users %}
                </br>
                </br>
@@ -83,7 +84,7 @@
   {% endfor %}
  </div>
   </br>
-                                <h3>list of experiences for user <strong> {{user.firstname}}</strong></h3>
+                                <h3>list of experiences from user <strong> {{user.firstname}}</strong></h3>
                                 <div class="row" style="display: flex;align-items: center;background-color:white;">
                                   
                                     {% for experience in user.experiences %}
@@ -109,7 +110,7 @@
 
 
                             {% elseif user.bookings | length > 0 %}    
-                             <h3>List of bookings for user<strong> {{user.firstname}}</strong></h3>
+                             <h3>List of bookings from user<strong> {{user.firstname}}</strong></h3>
                                 <div class="row" style="display: flex;align-items: center;background-color:white;">
                                   
                                     {% for booking in user.bookings %}
@@ -132,7 +133,7 @@
                                     {% endfor %}
                                 </div>
                                 </br>
-                                <h3>list of experiences for user <strong> {{user.firstname}}</strong></h3>
+                                <h3>list of experiences from user <strong> {{user.firstname}}</strong></h3>
                                 <div class="row" style="display: flex;align-items: center;background-color:white;">
                                   
                                     {% for experience in user.experiences %}
@@ -156,14 +157,21 @@
                                 </div>
                             {% else %}
                                 <div class="alert alert-warning">
-                                    <p>
+                                    
                                         {% if is_granted('ROLE_HOST') %}
-                                        <strong>{{user.firstname}}</strong> n'a pas encore d'annonce sur le site !
+                                        <p><strong>{{user.firstname}}</strong> n'a pas encore d'annonce sur le site !</p>
+                                         </br>
+                                         
+                                        <p> <strong>{{user.firstname}}</strong> n'a pas encore publié aucune experience sur le site !</p>
                                         {% endif %}
                                         {% if is_granted('ROLE_GUEST') %}
                                         <strong>{{user.firstname}}</strong> n'a pas encore de réservations sur le site !
+                                    
+                                              </br>
+                                         </br>
+                                        <p> <strong>{{user.firstname}}</strong> n'a pas encore publié aucune experience sur le site !</p>
                                         {% endif %}
-                                    </p>
+                                  
                                 </div>
                             {% endif %}
                         </div>  
