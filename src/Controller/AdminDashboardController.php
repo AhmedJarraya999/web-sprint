@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-
+use App\Service\StatsService;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectManager as PersistenceObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,8 +14,9 @@ class AdminDashboardController extends AbstractController
     /**
      * @Route("/admins", name="admin_dashboard")
      */
-    public function index()
+    public function index(StatsService $statsService)
     {
-        return $this->render('admin/dashboard/index.html.twig');
+        $stats      = $statsService->getStats();
+        return $this->render('admin/dashboard/index.html.twig', ['stats' => $stats]);
     }
 }

@@ -3,15 +3,17 @@
 namespace App\Service;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager as PersistenceObjectManager;
 
 class StatsService
 {
     private $manager;
 
-    public function __construct(PersistenceObjectManager $manager)
+    public function __construct(PersistenceObjectManager $manager, ManagerRegistry $managerRegistry)
     {
-        $this->manager = $manager;
+        #$this->manager = $manager;
+        $this->manager = $managerRegistry;
     }
 
     public function getStats()
@@ -26,35 +28,36 @@ class StatsService
 
     public function getUsersCount()
     {
-        return $this->manager->createQuery('SELECT COUNT(u) FROM App\Entity\User u')->getSingleScalarResult();
+        return $this->managerRegistry->createQuery('SELECT COUNT(u) FROM App\Entity\User u')->getSingleScalarResult();
     }
 
     public function getAdsCount()
     {
-        return $this->manager->createQuery('SELECT COUNT(a) FROM App\Entity\Ad a')->getSingleScalarResult();
+        return $this->managerRegistry->createQuery('SELECT COUNT(a) FROM App\Entity\Ad a')->getSingleScalarResult();
     }
 
     public function getBookingsCount()
     {
-        return $this->manager->createQuery('SELECT COUNT(b) FROM App\Entity\Booking b')->getSingleScalarResult();
+        return $this->managerRegistry->createQuery('SELECT COUNT(b) FROM App\Entity\Booking b')->getSingleScalarResult();
     }
 
     public function getCommentsCount()
     {
-        return $this->manager->createQuery('SELECT COUNT(c) FROM App\Entity\Comment c')->getSingleScalarResult();
+        return $this->managerRegistry->createQuery('SELECT COUNT(c) FROM App\Entity\Comment c')->getSingleScalarResult();
     }
 
-    public function getAdsStats($direction)
-    {
-        return $this->manager->createQuery(
-            'SELECT AVG(c.rating) as note, a.title, a.id, u.firstName, u.lastName, u.picture
-            FROM App\Entity\Comment c 
-            JOIN c.ad a
-            JOIN a.author u
-            GROUP BY a
-            ORDER BY note ' . $direction
-        )
-            ->setMaxResults(5)
-            ->getResult();
-    }
+    #public function getAdsStats($direction)
+    #{
+    #   return $this->managerRegistry->createQuery(
+    #      'SELECT AVG(c.rating) as note, a.title, a.id, u.firstName, u.lastName, u.picture
+    #     FROM App\Entity\Comment c 
+    #    JOIN c.ad a
+    #   JOIN a.author u
+    #  GROUP BY a
+    # ORDER BY note ' . $direction
+    #)
+    #   ->setMaxResults(5)
+    #  ->getResult();
+    #}
+    #}
 }
