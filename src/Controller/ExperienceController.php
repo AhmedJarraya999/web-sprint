@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -265,6 +266,54 @@ class ExperienceController extends AbstractController
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
+
+
+    /**
+     * @Route("/AllExperiences", name="AllExperiences")
+     */
+    public function AllExperiences (NormalizerInterface $Normalizer)
+    {
+        $repository = $this -> getDoctrine()->getRepository(Experience::class);
+        $experiences = $repository->findAll();
+
+        $jsonContent = $Normalizer->normalize($experiences,'json',['groups'=>'post:read']);
+
+        return $this ->render('Front-office/experience/Allexperiences.html.twig',[
+        ]);
+        return new Response(json_encode($jsonContent));
+    }
+    /**
+     * @Route("/viewJSON/{id}", name="viewJSON")
+     */
+    public function viewJSON (Request $request,NormalizerInterface $Normalizer,$id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $experience=$em->getRepository(Experience::class)->find($id);
+        $jsonContent = $Normalizer->normalize($experience,'json',['groups'=>'post:read']);
+        return new Response((json_encode($jsonContent)));
+    }
+    /**
+     * @Route("/addJSON/new", name="addJSON")
+     */
+    public function addJSON (Request $request,NormalizerInterface $Normalizer)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $experience=new Experience();
+        $experience->setLikes($request->get('likes'));
+        $experience->setDate($request->get('date'));
+        $experience->setIdAuthor($request->get('idAuthor'));
+        $experience->setContent($request->get('content'));
+        $experience->setTitle($request->get('title'));
+
+        $em->persist($experience);
+        $em->flush();
+        $jsonContent = $Normalizer->normalize($experience,'json',['groups'=>'post:read']);
+        return new Response((json_encode($jsonContent)));
+    }
+
+
+
+
 
 
 }

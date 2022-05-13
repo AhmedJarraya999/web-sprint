@@ -6,8 +6,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vangrg\ProfanityBundle\Validator\Constraints as ProfanityAssert;
 use Symfony\Component\Validator\Constraints as Assert;
+
 
 
 use Doctrine\ORM\Mapping as ORM;
@@ -27,20 +29,24 @@ class Experience
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups("post:read")
      */
     private $id;
 
     /**
      * @var int
      * @ORM\Column(name="id_author", type="integer", nullable=false)
+     * @Groups("post:read")
      */
     private $idAuthor;
 
     /**
      * @var string
      *@Assert\NotBlank()
+     * @Assert\NotNull(message="Your title should not be blank")
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
      * @ProfanityAssert\ProfanityCheck
+     * @Groups("post:read")
      */
     private $title;
 
@@ -49,7 +55,9 @@ class Experience
      *
      * @ORM\Column(name="content", type="text", length=65535, nullable=false)
      * @Assert\NotBlank()
+     * @Assert\NotNull(message="Your content should not be blank")
      * @ProfanityAssert\ProfanityCheck
+     * @Groups("post:read")
      */
     private $content;
 
@@ -57,6 +65,7 @@ class Experience
      * @var int
      *
      * @ORM\Column(name="likes", type="integer", nullable=false)
+     * @Groups("post:read")
      *
      */
     private $likes;
@@ -65,11 +74,13 @@ class Experience
      * @var string
      *
      * @ORM\Column(name="date", type="string", length=255, nullable=false)
+     * @Groups("post:read")
      */
     private $date;
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="experience")
+     *
      */
     private $comments;
 

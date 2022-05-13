@@ -6,10 +6,11 @@
 <div>
 <br>
     <h1>Comment</h1>
+    <input type="text" class="form-control" placeholder="Search" id="searchDynamic">
     <br>
     <div class="card">
-    <table class="table">
-        <thead>
+        <table class="table" >
+            <thead>
             <tr>
 
                 <th>Author</th>
@@ -18,28 +19,56 @@
                 <th>Likes</th>
                 <th>actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for comment in comments %}
+            </thead>
+        </table>
+    <table class="table" id="commentDynamic">
+        <thead>
             <tr>
 
-                <td>{{ comment.author }}</td>
-                <td>{{ comment.content }}</td>
-                <td>{{ comment.date }}</td>
-                <td>{{ comment.likes }}</td>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+    </div>
+
+
+        <script>
+            const commentHolder = document.getElementById('commentDynamic');
+            const searchField = document.getElementById('searchDynamic');
+            console.log(searchField.value);
+            function getComments(c) {
+                const content = searchField.value;
+                const PATH = content ? "/comment/sayebni/" + content : "/comment/searchAll";
+                fetch(PATH, {
+                    method: 'GET',
+                }).then(res => res.json()).then((data) => {
+                    commentHolder.innerHTML = "";
+                    data.forEach(
+                        comment => {
+                            commentHolder.innerHTML += `<tr>
+
+                <td>${ comment.author }</td>
+                <td>${ comment.content }</td>
+                <td>${ comment.date }</td>
+                <td>${ comment.likes }</td>
                 <td>
-                    <a href="{{ path('app_comment_show_back', {'id': comment.id}) }}" class="btn btn-outline-success btn-fw">show</a>
+                    <a href="/comment/Back/${comment.id}" class="btn btn-outline-success btn-fw">show</a>
                     {#<a href="{{ path('app_comment_edit_back', {'id': comment.id}) }}" class="btn btn-outline-warning btn-fw">edit</a>#}
                 </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-        </div>
-    {#<a href="{{ path('app_comment_new_back') }}" class="btn btn-info">Create new</a>#}
-    </div>
+            </tr> `
+
+                        })
+                }).catch((err) => console.log(err));
+            }
+
+            getComments(null)
+            searchField.addEventListener('change', getComments)
+        </script>
+
+
+
 {% endblock %}

@@ -37,7 +37,7 @@
     </div>
 {#    <a href="{{ path('app_comment_edit_back', {'id': comment.id}) }}" class="btn btn-warning">edit</a>#}
 {#    {{ include('Back-office/comment/_delete_form.html.twig') }}#}
-
+    <a href="{{ path('app_experience_show_back', {'id': comment.idExp}) }}" class="btn btn-primary">Show the experience</a>
     <a href="{{ path('app_comment_index_back') }}" class="btn btn-primary">back to list</a>
 
 </div>

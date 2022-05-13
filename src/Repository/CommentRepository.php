@@ -85,4 +85,25 @@ class CommentRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function searchComment($content)
+    {
+        $query=$this->createQueryBuilder('comment')
+            ->andWhere('comment.content LIKE :content')
+            ->setParameter('content', '%'.$content.'%')
+            ->getQuery();
+        $comments=$query->getArrayResult();
+        return $comments;
+    }
+
+    /**
+     * @return Comment[] Returns an array of Experiences objects
+     */
+    public function searchAllComments(){
+        $query=$this->createQueryBuilder('comment')
+            ->getQuery();
+        $comments=$query->getArrayResult();
+        return $comments;
+
+    }
+
 }

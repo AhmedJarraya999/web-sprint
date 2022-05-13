@@ -8,10 +8,10 @@ use App\Form\CommentType;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/comment")
@@ -52,8 +52,9 @@ class CommentController extends AbstractController
             $comment->setDate($date);
             #taffecti 0 par defaut lel attribut likes fel classe comment
             $comment->setLikes(0);
-            #beh tekhou l'id taa el experience eli fel route w  taffectih lel attribut experience fel classe commentaire
-            $comment->setExperience($id);
+            #bech tekhou l'id taa el experience eli fel route w  taffectih lel attribut experience fel classe commentaire
+           # $comment->setExperience($id);
+            $comment->setIdExp($id);
             $commentRepository->add($comment);
 
             return $this->redirectToRoute('experience/Front/{id}', [], Response::HTTP_SEE_OTHER);
@@ -192,5 +193,37 @@ class CommentController extends AbstractController
         }
 
         return $this->redirectToRoute('app_comment_index_back', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+
+    /**
+     * @Route("/sayebni/{content}", name="app_comment_searchByContent", methods={"GET"})
+     */
+    public function findByContent($content) :Response
+    {
+        $rep=$this->getDoctrine()->getRepository(Comment::class);
+        $response = new JsonResponse();
+        if ($content != "") {
+            $comments = $rep->searchComment($content);
+            $response->setData(($comments));
+        } else {
+            $response->setData([]);
+        }
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    /**
+     * @Route("/searchAll", name="app_comment_searchAll", methods={"GET"})
+     */
+    public function finAllComments(Request $request):Response
+    {
+        $rep = $this->getDoctrine()->getRepository(Comment::class);
+        $comments = $rep->searchAllComments();
+        $response = new JsonResponse();
+        $response->setData($comments);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 }

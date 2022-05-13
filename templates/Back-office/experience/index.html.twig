@@ -7,42 +7,71 @@
     <br>
     <h1>Experience</h1>
     <br>
+    <input type="text" class="form-control" placeholder="Search" id="searchDynamic">
 <div class="card">
-    <table class="table">
+       <table class="table" >
+        <tr>
+
+            <th>IdAuthor</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Likes</th>
+            <th>Date</th>
+            <th>actions</th>
+        </tr>
+
+
+        {#<a href="{{ path('app_experience_new_back') }} " class="btn btn-info">Create new</a>#}
+</div>
+
+    <table class="table" id="experienceDynamic">
         <thead>
-            <tr>
+        <tr>
 
-                <th>IdAuthor</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>Likes</th>
-                <th>Date</th>
-                <th>actions</th>
-            </tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
         </thead>
-        <tbody>
-        {% for experience in experiences %}
-            <tr>
 
-                <td>{{ experience.idAuthor }}</td>
-                <td>{{ experience.title }}</td>
-                <td>{{ experience.content }}</td>
-                <td>{{ experience.likes }}</td>
-                <td>{{ experience.date }}</td>
+        {#<a href="{{ path('app_experience_new_back') }} " class="btn btn-info">Create new</a>#}
+</div>
+
+
+    <script>
+        const experienceHolder = document.getElementById('experienceDynamic');
+        const searchField = document.getElementById('searchDynamic');
+        console.log(searchField.value);
+        function getExperiences(e) {
+            const title = searchField.value;
+            const PATH = title ? "/experience/sayebni/" + title : "/experience/searchAll";
+            fetch(PATH, {
+                method: 'GET',
+            }).then(res => res.json()).then((data) => {
+                experienceHolder.innerHTML = "";
+                data.forEach(
+                    experience => {
+                        experienceHolder.innerHTML += ` <tr>
+                <td>${ experience.idAuthor }</td>
+                <td>${ experience.title }</td>
+                <td>${ experience.content }</td>
+                <td>${ experience.likes }</td>
+                <td>${ experience.date }</td>
                 <td>
-                    <a href="{{ path('app_experience_show_back', {'id': experience.id}) }}" class="btn btn-outline-success btn-fw">show</a>
+                    <a <a href="/experience/Back/${experience.id}" class="btn btn-outline-success btn-fw"> show</a>
                     {#<a href="{{ path('app_experience_edit_back', {'id': experience.id}) }}" class="btn btn-outline-warning btn-fw">edit</a>#}
                 </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    </div>
-    {#<a href="{{ path('app_experience_new_back') }} " class="btn btn-info">Create new</a>#}
-</div>
+            </tr> `
+
+                    })
+            }).catch((err) => console.log(err));
+        }
+
+        getExperiences(null)
+        searchField.addEventListener('change', getExperiences)
+    </script>
    
 {% endblock %}
